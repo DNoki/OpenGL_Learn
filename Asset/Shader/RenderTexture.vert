@@ -1,4 +1,4 @@
-#version 330 core
+﻿#version 330 core
 layout (location = 0) in vec3 position;
 layout (location = 4) in vec2 uv;
 

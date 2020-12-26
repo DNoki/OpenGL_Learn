@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <map>
 
@@ -11,15 +11,15 @@ namespace OpenGL_Learn
     using namespace std;
 
 
-    //¼ü
+    //é”®
     struct Key
     {
     public:
-        // ÔÚÕâÒ»Ö¡ŞôÏÂ£¿
+        // åœ¨è¿™ä¸€å¸§æ‘ä¸‹ï¼Ÿ
         bool IsPress;
-        // ÊÇ·ñŞôÏÂ×´Ì¬
+        // æ˜¯å¦æ‘ä¸‹çŠ¶æ€
         bool IsPressed;
-        // ÔÚÕâÒ»Ö¡ÊÍ·Å£¿
+        // åœ¨è¿™ä¸€å¸§é‡Šæ”¾ï¼Ÿ
         bool IsRelease;
 
         Key();
@@ -30,20 +30,20 @@ namespace OpenGL_Learn
     public:
         inline static Vector2 GetMouseOffset() { return _mouseOffset; }
 
-        // °´¼üÊÇ·ñ±»°´ÏÂ
+        // æŒ‰é”®æ˜¯å¦è¢«æŒ‰ä¸‹
         static bool GetKey(int key);
-        // °´¼üÊÇ·ñÔÚÕâÒ»Ö¡±»°´ÏÂ
+        // æŒ‰é”®æ˜¯å¦åœ¨è¿™ä¸€å¸§è¢«æŒ‰ä¸‹
         static bool GetKeyDown(int key);
-        // °´¼üÊÇ·ñÔÚÕâÒ»Ö¡±»ÊÍ·Å
+        // æŒ‰é”®æ˜¯å¦åœ¨è¿™ä¸€å¸§è¢«é‡Šæ”¾
         static bool GetKeyUp(int key);
 
-        // Ã¿Ò»Ö¡ÖØÖÃ
+        // æ¯ä¸€å¸§é‡ç½®
         static void ResetOnFrame();
-        // ÊäÈëÏµÍ³³õÊ¼»¯
+        // è¾“å…¥ç³»ç»Ÿåˆå§‹åŒ–
         static void Initialize();
-        // °´¼üµÄ»Øµ÷º¯Êı,µ±ÓĞ°´¼üÖ¸Áî´¥·¢Ê±µ÷ÓÃ
+        // æŒ‰é”®çš„å›è°ƒå‡½æ•°,å½“æœ‰æŒ‰é”®æŒ‡ä»¤è§¦å‘æ—¶è°ƒç”¨
         static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
-        // Êó±êÎ»ÖÃ»Øµ÷£¬µ±Êó±êÔÚ´°¿ÚÉÏÊ±´¥·¢
+        // é¼ æ ‡ä½ç½®å›è°ƒï¼Œå½“é¼ æ ‡åœ¨çª—å£ä¸Šæ—¶è§¦å‘
         static void MousePosCallback(GLFWwindow* window, double xpos, double ypos);
 
     private:

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include <memory>
@@ -18,26 +18,26 @@ namespace OpenGL_Learn
 
     enum class TestModeType
     {
-        NEVER = GL_NEVER, // ´Ó²»Í¨¹ı
-        LESS = GL_LESS, // Ğ¡ÓÚÊ±Í¨¹ı
-        EQUAL = GL_EQUAL, // ÏàµÈÊ±Í¨¹ı
-        LEQUAL = GL_LEQUAL, // Ğ¡ÓÚµÈÓÚÊ±Í¨¹ı
-        GREATER = GL_GREATER, // ´óÓÚÊ±Í¨¹ı
-        NOTEQUAL = GL_NOTEQUAL, // ²»ÏëµÈÊ±Í¨¹ı
-        GEQUAL = GL_GEQUAL, // ´óÓÚµÈÓÚÊ±Í¨¹ı
-        ALWAYS = GL_ALWAYS, // ÓÀÔ¶Í¨¹ı
+        NEVER = GL_NEVER, // ä»ä¸é€šè¿‡
+        LESS = GL_LESS, // å°äºæ—¶é€šè¿‡
+        EQUAL = GL_EQUAL, // ç›¸ç­‰æ—¶é€šè¿‡
+        LEQUAL = GL_LEQUAL, // å°äºç­‰äºæ—¶é€šè¿‡
+        GREATER = GL_GREATER, // å¤§äºæ—¶é€šè¿‡
+        NOTEQUAL = GL_NOTEQUAL, // ä¸æƒ³ç­‰æ—¶é€šè¿‡
+        GEQUAL = GL_GEQUAL, // å¤§äºç­‰äºæ—¶é€šè¿‡
+        ALWAYS = GL_ALWAYS, // æ°¸è¿œé€šè¿‡
     };
 
     enum class StencilOpType
     {
-        KEEP = GL_KEEP, // ±£³Öµ±Ç°´¢´æµÄÄ£°åÖµ
-        ZERO = GL_ZERO, // ½«Ä£°åÖµÉèÖÃÎª0
-        REPLACE = GL_REPLACE, // ½«Ä£°åÖµÉèÖÃÎªglStencilFuncº¯ÊıÉèÖÃµÄrefÖµ
-        INCR = GL_INCR, // Èç¹ûÄ£°åÖµĞ¡ÓÚ×î´óÖµÔò½«Ä£°åÖµ¼Ó1
-        INCR_WRAP = GL_INCR_WRAP, // ÓëGL_INCRÒ»Ñù£¬µ«Èç¹ûÄ£°åÖµ³¬¹ıÁË×î´óÖµÔò¹éÁã
-        DECR = GL_DECR, // Èç¹ûÄ£°åÖµ´óÓÚ×îĞ¡ÖµÔò½«Ä£°åÖµ¼õ1
-        DECR_WRAP = GL_DECR_WRAP, // ÓëGL_DECRÒ»Ñù£¬µ«Èç¹ûÄ£°åÖµĞ¡ÓÚ0Ôò½«ÆäÉèÖÃÎª×î´óÖµ
-        INVERT = GL_INVERT, // °´Î»·­×ªµ±Ç°µÄÄ£°å»º³åÖµ
+        KEEP = GL_KEEP, // ä¿æŒå½“å‰å‚¨å­˜çš„æ¨¡æ¿å€¼
+        ZERO = GL_ZERO, // å°†æ¨¡æ¿å€¼è®¾ç½®ä¸º0
+        REPLACE = GL_REPLACE, // å°†æ¨¡æ¿å€¼è®¾ç½®ä¸ºglStencilFuncå‡½æ•°è®¾ç½®çš„refå€¼
+        INCR = GL_INCR, // å¦‚æœæ¨¡æ¿å€¼å°äºæœ€å¤§å€¼åˆ™å°†æ¨¡æ¿å€¼åŠ 1
+        INCR_WRAP = GL_INCR_WRAP, // ä¸GL_INCRä¸€æ ·ï¼Œä½†å¦‚æœæ¨¡æ¿å€¼è¶…è¿‡äº†æœ€å¤§å€¼åˆ™å½’é›¶
+        DECR = GL_DECR, // å¦‚æœæ¨¡æ¿å€¼å¤§äºæœ€å°å€¼åˆ™å°†æ¨¡æ¿å€¼å‡1
+        DECR_WRAP = GL_DECR_WRAP, // ä¸GL_DECRä¸€æ ·ï¼Œä½†å¦‚æœæ¨¡æ¿å€¼å°äº0åˆ™å°†å…¶è®¾ç½®ä¸ºæœ€å¤§å€¼
+        INVERT = GL_INVERT, // æŒ‰ä½ç¿»è½¬å½“å‰çš„æ¨¡æ¿ç¼“å†²å€¼
     };
 
     enum class BlendFactorType
@@ -67,57 +67,57 @@ namespace OpenGL_Learn
     };
 
 
-    // ×ÅÉ«Æ÷×´Ì¬
+    // ç€è‰²å™¨çŠ¶æ€
     struct ShaderState
     {
     public:
-        // ÉèÖÃ×´Ì¬
-        // @ÒªÉèÖÃµÄÃû³Æ
-        // @ÉèÖÃ¿ªÆô»ò¹Ø±Õ
+        // è®¾ç½®çŠ¶æ€
+        // @è¦è®¾ç½®çš„åç§°
+        // @è®¾ç½®å¼€å¯æˆ–å…³é—­
         static void SetState(GLenum name, bool enable);
 
-        // ·ñÊÇ¿ªÆôÉî¶È²âÊÔ
+        // å¦æ˜¯å¼€å¯æ·±åº¦æµ‹è¯•
         bool DepthTest;
-        bool DepthMask;// ÊÇ·ñĞ´ÈëÉî¶È»º³å
-        // Éî¶È²âÊÔÄ£Ê½
-        // GL_ALWAYS    ÓÀÔ¶Í¨¹ıÉî¶È²âÊÔ
-        // GL_NEVER     ÓÀÔ¶²»Í¨¹ıÉî¶È²âÊÔ
-        // GL_LESS      ÔÚÆ¬¶ÎÉî¶ÈÖµ <  »º³åµÄÉî¶ÈÖµÊ±Í¨¹ı²âÊÔ
-        // GL_EQUAL     ÔÚÆ¬¶ÎÉî¶ÈÖµ =  »º³åÇøµÄÉî¶ÈÖµÊ±Í¨¹ı²âÊÔ
-        // GL_LEQUAL	ÔÚÆ¬¶ÎÉî¶ÈÖµ <= »º³åÇøµÄÉî¶ÈÖµÊ±Í¨¹ı²âÊÔ
-        // GL_GREATER	ÔÚÆ¬¶ÎÉî¶ÈÖµ >  »º³åÇøµÄÉî¶ÈÖµÊ±Í¨¹ı²âÊÔ
-        // GL_NOTEQUAL	ÔÚÆ¬¶ÎÉî¶ÈÖµ != »º³åÇøµÄÉî¶ÈÖµÊ±Í¨¹ı²âÊÔ
-        // GL_GEQUAL	ÔÚÆ¬¶ÎÉî¶ÈÖµ >= »º³åÇøµÄÉî¶ÈÖµÊ±Í¨¹ı²âÊÔ
+        bool DepthMask;// æ˜¯å¦å†™å…¥æ·±åº¦ç¼“å†²
+        // æ·±åº¦æµ‹è¯•æ¨¡å¼
+        // GL_ALWAYS    æ°¸è¿œé€šè¿‡æ·±åº¦æµ‹è¯•
+        // GL_NEVER     æ°¸è¿œä¸é€šè¿‡æ·±åº¦æµ‹è¯•
+        // GL_LESS      åœ¨ç‰‡æ®µæ·±åº¦å€¼ <  ç¼“å†²çš„æ·±åº¦å€¼æ—¶é€šè¿‡æµ‹è¯•
+        // GL_EQUAL     åœ¨ç‰‡æ®µæ·±åº¦å€¼ =  ç¼“å†²åŒºçš„æ·±åº¦å€¼æ—¶é€šè¿‡æµ‹è¯•
+        // GL_LEQUAL	åœ¨ç‰‡æ®µæ·±åº¦å€¼ <= ç¼“å†²åŒºçš„æ·±åº¦å€¼æ—¶é€šè¿‡æµ‹è¯•
+        // GL_GREATER	åœ¨ç‰‡æ®µæ·±åº¦å€¼ >  ç¼“å†²åŒºçš„æ·±åº¦å€¼æ—¶é€šè¿‡æµ‹è¯•
+        // GL_NOTEQUAL	åœ¨ç‰‡æ®µæ·±åº¦å€¼ != ç¼“å†²åŒºçš„æ·±åº¦å€¼æ—¶é€šè¿‡æµ‹è¯•
+        // GL_GEQUAL	åœ¨ç‰‡æ®µæ·±åº¦å€¼ >= ç¼“å†²åŒºçš„æ·±åº¦å€¼æ—¶é€šè¿‡æµ‹è¯•
         TestModeType DepthTestMode;
 
-        // ÊÇ·ñ¿ªÆôÄ£°å²âÊÔ
+        // æ˜¯å¦å¼€å¯æ¨¡æ¿æµ‹è¯•
         bool Stencil;
-        GLuint StencilMask; // Ğ´ÈëÄ£°å»º³åÇøµÄÕÚÕÖ Í¨³£ÊÇ0xFFĞ´Èë£¬0x00²»Ğ´Èë
-        TestModeType StencilTestMode; // Ä£°å²âÊÔÄ£Ê½
-        GLint StencilRef; // Ä£°åĞ´ÈëÓë±È½ÏÖµ
-        GLuint StencilRefMask; // Ä£°å±È½ÏÖµºÍ´æ´¢ÖµÕÚÕÖ
-        StencilOpType StencilFail; // Ä£°å²âÊÔÊ§°ÜÊ±¶¯×÷
-        StencilOpType StencilZfail; // Ä£°å²âÊÔÍ¨¹ıµ«Éî¶È²âÊÔÊ§°ÜÊ±¶¯×÷
-        StencilOpType StencilZpass; // Ä£°å²âÊÔºÍÉî¶È²âÊÔ¶¼Í¨¹ıÊ±¶¯×÷
+        GLuint StencilMask; // å†™å…¥æ¨¡æ¿ç¼“å†²åŒºçš„é®ç½© é€šå¸¸æ˜¯0xFFå†™å…¥ï¼Œ0x00ä¸å†™å…¥
+        TestModeType StencilTestMode; // æ¨¡æ¿æµ‹è¯•æ¨¡å¼
+        GLint StencilRef; // æ¨¡æ¿å†™å…¥ä¸æ¯”è¾ƒå€¼
+        GLuint StencilRefMask; // æ¨¡æ¿æ¯”è¾ƒå€¼å’Œå­˜å‚¨å€¼é®ç½©
+        StencilOpType StencilFail; // æ¨¡æ¿æµ‹è¯•å¤±è´¥æ—¶åŠ¨ä½œ
+        StencilOpType StencilZfail; // æ¨¡æ¿æµ‹è¯•é€šè¿‡ä½†æ·±åº¦æµ‹è¯•å¤±è´¥æ—¶åŠ¨ä½œ
+        StencilOpType StencilZpass; // æ¨¡æ¿æµ‹è¯•å’Œæ·±åº¦æµ‹è¯•éƒ½é€šè¿‡æ—¶åŠ¨ä½œ
 
-        // ·ñÊÇ¿ªÆô»ìºÏ
-        bool Blend; // ×îÖÕÑÕÉ«=(Ô´ÑÕÉ«xÔ´Òò×Ó)+(Ä¿±êÑÕÉ«xÄ¿±êÒò×Ó) https://www.khronos.org/registry/OpenGL-Refpages/es3/
-        BlendFactorType BlendSfactor; // Ô´ÑÕÉ«»ìºÏÒò×Ó // Ô´ÑÕÉ«ÊÇµ±Ç°Æ¬¶Î¼ÆËãµÄÑÕÉ«
-        BlendFactorType BlendDfactor; // Ä¿±êÑÕÉ«»ìºÏÒò×Ó // Ä¿±êÑÕÉ«ÊÇÔÚ»º³åÇøµÄÑÕÉ«
-        BlendFactorType BlendSfactorAlpha; // Ô´Alpha»ìºÏÒò×Ó
-        BlendFactorType BlendDfactorAlpha; // Ä¿±êAlpha»ìºÏÒò×Ó
+        // å¦æ˜¯å¼€å¯æ··åˆ
+        bool Blend; // æœ€ç»ˆé¢œè‰²=(æºé¢œè‰²xæºå› å­)+(ç›®æ ‡é¢œè‰²xç›®æ ‡å› å­) https://www.khronos.org/registry/OpenGL-Refpages/es3/
+        BlendFactorType BlendSfactor; // æºé¢œè‰²æ··åˆå› å­ // æºé¢œè‰²æ˜¯å½“å‰ç‰‡æ®µè®¡ç®—çš„é¢œè‰²
+        BlendFactorType BlendDfactor; // ç›®æ ‡é¢œè‰²æ··åˆå› å­ // ç›®æ ‡é¢œè‰²æ˜¯åœ¨ç¼“å†²åŒºçš„é¢œè‰²
+        BlendFactorType BlendSfactorAlpha; // æºAlphaæ··åˆå› å­
+        BlendFactorType BlendDfactorAlpha; // ç›®æ ‡Alphaæ··åˆå› å­
 
-        // ·ñÊÇ¿ªÆôÃæÌŞ³ı
+        // å¦æ˜¯å¼€å¯é¢å‰”é™¤
         bool CullFace;
-        // ÃæÌŞ³ıÄ£Ê½
-        // GL_BACK£ºÖ»ÌŞ³ı±³Ãæ¡£
-        // GL_FRONT£ºÖ»ÌŞ³ıÕıÃæ¡£
-        // GL_FRONT_AND_BACK£ºÌŞ³ı±³ÃæºÍÕıÃæ¡£
+        // é¢å‰”é™¤æ¨¡å¼
+        // GL_BACKï¼šåªå‰”é™¤èƒŒé¢ã€‚
+        // GL_FRONTï¼šåªå‰”é™¤æ­£é¢ã€‚
+        // GL_FRONT_AND_BACKï¼šå‰”é™¤èƒŒé¢å’Œæ­£é¢ã€‚
         CullFaceModeType CullFaceMode;
 
-        // ÕıÏòÃæ
-        // GL_CCW ÄæÊ±Õë
-        // GL_CW  Ë³Ê±Õë
+        // æ­£å‘é¢
+        // GL_CCW é€†æ—¶é’ˆ
+        // GL_CW  é¡ºæ—¶é’ˆ
         GLenum FrontFace;
 
         ShaderState() :
@@ -128,29 +128,29 @@ namespace OpenGL_Learn
             FrontFace(GL_CCW) {}
     };
 
-    // ×ÅÉ«Æ÷
+    // ç€è‰²å™¨
     class Shader final : public ResourceObject
     {
     public:
-        // Ê¹ÓÃÖ¸¶¨äÖÈ¾×´Ì¬
+        // ä½¿ç”¨æŒ‡å®šæ¸²æŸ“çŠ¶æ€
         static void UseState(const ShaderState& state);
-        // ²éÑ¯ÏÔ¿¨Ö§³Ö¿É´«µİ¶àÉÙ¶¥µãÊôĞÔ£¬Ò»°ãÎª16¸ö
+        // æŸ¥è¯¢æ˜¾å¡æ”¯æŒå¯ä¼ é€’å¤šå°‘é¡¶ç‚¹å±æ€§ï¼Œä¸€èˆ¬ä¸º16ä¸ª
         static int CheckMaxVertexAttribsCount();
 
-        // ×ÅÉ«Æ÷ID
+        // ç€è‰²å™¨ID
         GLuint ID;
-        // ×ÅÉ«Æ÷×´Ì¬
+        // ç€è‰²å™¨çŠ¶æ€
         ShaderState State;
-        // äÖÈ¾Ë³Ğò £¨Ô½Ğ¡µÄÖµ½«Ô½ÏÈ±»äÖÈ¾£©
+        // æ¸²æŸ“é¡ºåº ï¼ˆè¶Šå°çš„å€¼å°†è¶Šå…ˆè¢«æ¸²æŸ“ï¼‰
         unsigned int RenderSequence;
 
-        //@brief °ó¶¨2DÌùÍ¼
-        //@param texture Òª°ó¶¨µÄÌùÍ¼
-        //@param name ÔÚShaderÖĞÉùÃ÷µÄ²ÉÑùÆ÷Ãû³Æ
-        //@param unit °ó¶¨µÄÎÆÀíµ¥Ôª£¨²»Í¬ÌùÍ¼ÔÚÍ¬Ò»×ÅÉ«Æ÷ÖĞĞèÒªÖ¸¶¨²»Í¬ÎÆÀíµ¥Ôª£©(ÎÆÀíµ¥ÔªÓĞÉÏÏŞ)
+        //@brief ç»‘å®š2Dè´´å›¾
+        //@param texture è¦ç»‘å®šçš„è´´å›¾
+        //@param name åœ¨Shaderä¸­å£°æ˜çš„é‡‡æ ·å™¨åç§°
+        //@param unit ç»‘å®šçš„çº¹ç†å•å…ƒï¼ˆä¸åŒè´´å›¾åœ¨åŒä¸€ç€è‰²å™¨ä¸­éœ€è¦æŒ‡å®šä¸åŒçº¹ç†å•å…ƒï¼‰(çº¹ç†å•å…ƒæœ‰ä¸Šé™)
         void BindTexture(Texture& texture, const string& name, unsigned int unit);
         inline void BindTexture(Texture& texture, const string& name) { BindTexture(texture, name, *GetIntPtr(name)); }
-        // Ê¹ÓÃ×ÅÉ«Æ÷
+        // ä½¿ç”¨ç€è‰²å™¨
         void UseShader(bool willRender = false);
 
         inline int PropertyToID(const string& name)
@@ -159,20 +159,20 @@ namespace OpenGL_Learn
             return result;
         }
         List<Tuple2<UniformType, string>> GetAllUniforms();
-        // ÉèÖÃÕûĞÎ
+        // è®¾ç½®æ•´å½¢
         inline bool SetInt(const string& name, const int& value) { return SetInt(PropertyToID(name), value); }
         bool SetInt(const int& location, const int& value);
-        // ÉèÖÃFloat
+        // è®¾ç½®Float
         inline bool SetFloat(const string& name, const float& value) { return SetFloat(PropertyToID(name), value); }
         bool SetFloat(const int& location, const float& value);
-        // ÉèÖÃVector4
+        // è®¾ç½®Vector4
         inline bool SetVector4(const string& name, const Vector4& value) { return SetVector4(PropertyToID(name), value); }
         bool SetVector4(const int& location, const Vector4& value);
-        // ÉèÖÃMatrix4x4
+        // è®¾ç½®Matrix4x4
         inline bool SetMatrix4x4(const string& name, const Matrix4x4& value) { return SetMatrix4x4(PropertyToID(name), value); }
         bool SetMatrix4x4(const int& location, const Matrix4x4& value);
 
-        // »ñÈ¡ÕûĞÎ
+        // è·å–æ•´å½¢
         inline int GetInt(const string& name) { return GetInt(PropertyToID(name)); }
         inline int GetInt(const int& location)
         {
@@ -187,7 +187,7 @@ namespace OpenGL_Learn
                 _intUniforms.insert(make_pair(location, GetInt(location)));
             return &_intUniforms[location];
         }
-        // »ñÈ¡Float
+        // è·å–Float
         inline float GetFloat(const string& name) { return GetFloat(PropertyToID(name)); }
         inline float GetFloat(const int& location)
         {
@@ -202,7 +202,7 @@ namespace OpenGL_Learn
                 _floatUniforms.insert(make_pair(location, GetFloat(location)));
             return &_floatUniforms[location];
         }
-        // »ñÈ¡Vector4
+        // è·å–Vector4
         inline Vector4 GetVector4(const string& name) { return GetVector4(PropertyToID(name)); }
         inline Vector4 GetVector4(const int& location)
         {
@@ -223,9 +223,9 @@ namespace OpenGL_Learn
         inline map<int, Vector4>& GetVector4Uniforms() { return this->_vector4Uniforms; }
         inline map<int, Matrix4x4>& GetMatrix4x4Uniforms() { return this->_matrix4x4Uniforms; }
 
-        //@brief °ó¶¨Uniform¿é(Uniform»º³å¶ÔÏó)
-        //@param name ShaderÖĞµÄUniform¿éÃû³Æ
-        //@param index °ó¶¨µÄID £¨²»Í¬Uniform»º³å¶ÔÏóÔÚÍ¬Ò»×ÅÉ«Æ÷ÖĞĞèÒªÖ¸¶¨²»Í¬Ë÷Òı£©
+        //@brief ç»‘å®šUniformå—(Uniformç¼“å†²å¯¹è±¡)
+        //@param name Shaderä¸­çš„Uniformå—åç§°
+        //@param index ç»‘å®šçš„ID ï¼ˆä¸åŒUniformç¼“å†²å¯¹è±¡åœ¨åŒä¸€ç€è‰²å™¨ä¸­éœ€è¦æŒ‡å®šä¸åŒç´¢å¼•ï¼‰
         inline void SetUniformBlockBinding(const string& name, int uniformBlockBinding)
         {
             auto index = glGetUniformBlockIndex(this->ID, name.c_str());
@@ -237,38 +237,38 @@ namespace OpenGL_Learn
         //{
         //    auto id = this->ID;
         //    glDeleteProgram(this->ID);
-        //    cout << "LOG:: ×ÅÉ«Æ÷:: " << "ÒÑÊÍ·ÅID£º" << id << endl << endl;
+        //    cout << "LOG:: ç€è‰²å™¨:: " << "å·²é‡Šæ”¾IDï¼š" << id << endl << endl;
         //}
 
         Shader(const Shader& shader);
         Shader(const string& name, const string& vert, const string& frag, const string* geom = nullptr);
-        // Shader¹¹Ôìº¯Êı
-        // @ShaderÃû³Æ
-        // @¶¥µã×ÅÉ«Æ÷ÎÄ¼şÂ·¾¶
-        // @Æ¬¶Î×ÅÉ«Æ÷ÎÄ¼şÂ·¾¶
-        // @Í¼Ôª×ÅÉ«Æ÷ÎÄ¼şÂ·¾¶
+        // Shaderæ„é€ å‡½æ•°
+        // @Shaderåç§°
+        // @é¡¶ç‚¹ç€è‰²å™¨æ–‡ä»¶è·¯å¾„
+        // @ç‰‡æ®µç€è‰²å™¨æ–‡ä»¶è·¯å¾„
+        // @å›¾å…ƒç€è‰²å™¨æ–‡ä»¶è·¯å¾„
         Shader(const string& name, const char* vPath, const char* fPath, const char* gPath = nullptr);
         Shader(const string& name, const char* path);
         ~Shader();
     private:
-        // ×ÅÉ«Æ÷¿½±´¼ÆÊıÆ÷
+        // ç€è‰²å™¨æ‹·è´è®¡æ•°å™¨
         static map<int, unsigned int> Counter;
-        // ÕæÊµäÖÈ¾×´Ì¬
+        // çœŸå®æ¸²æŸ“çŠ¶æ€
         static unique_ptr<ShaderState> realShaderState;
 
-        // key=ID¡¢ datakey=Î»ÖÃ¡¢dataValue=Öµ
+        // key=IDã€ datakey=ä½ç½®ã€dataValue=å€¼
         static map<int, map<int, int>> StaticIntUniforms;
         static map<int, map<int, float>> StaticFloatUniforms;
         static map<int, map<int, Vector4>> StaticVector4Uniforms;
         static map<int, map<int, Matrix4x4>> StaticMatrix4x4Uniforms;
 
 
-        // °ó¶¨µÄÌùÍ¼ key=ÎÆÀíµ¥Ôª¡¢value=ÌùÍ¼
-        // shaderÖĞµÄsampler²ÉÑùÆ÷ÊµÖÊÉÏÊÇÒ»¸öint£¬´æ´¢ÁËÒ»¸öÎÆÀíµ¥Ôª
-        // äÖÈ¾Ê±¼¤»î¸Ãshader¶ÔÓ¦µÄÎÆÀíµ¥Ôª²¢°ó¶¨ÏàÓ¦µÄÌùÍ¼ £¨ÉÏÒ»¸öäÖÈ¾¼¤»îµÄÎÆÀíµ¥ÔªÈôÃ»ÓĞ±»ĞŞ¸Ä£¬ÈÔÈ»¿ÉÒÔÔÚshaderÖĞ¶ÁÈ¡µ½£©
+        // ç»‘å®šçš„è´´å›¾ key=çº¹ç†å•å…ƒã€value=è´´å›¾
+        // shaderä¸­çš„sampleré‡‡æ ·å™¨å®è´¨ä¸Šæ˜¯ä¸€ä¸ªintï¼Œå­˜å‚¨äº†ä¸€ä¸ªçº¹ç†å•å…ƒ
+        // æ¸²æŸ“æ—¶æ¿€æ´»è¯¥shaderå¯¹åº”çš„çº¹ç†å•å…ƒå¹¶ç»‘å®šç›¸åº”çš„è´´å›¾ ï¼ˆä¸Šä¸€ä¸ªæ¸²æŸ“æ¿€æ´»çš„çº¹ç†å•å…ƒè‹¥æ²¡æœ‰è¢«ä¿®æ”¹ï¼Œä»ç„¶å¯ä»¥åœ¨shaderä¸­è¯»å–åˆ°ï¼‰
         map<unsigned int, Texture*> _textures;
 
-        // key=Î»ÖÃ¡¢value=Öµ
+        // key=ä½ç½®ã€value=å€¼
         map<int, int> _intUniforms;
         map<int, float> _floatUniforms;
         map<int, Vector4> _vector4Uniforms;

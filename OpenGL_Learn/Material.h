@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include <initializer_list>
@@ -15,16 +15,16 @@ namespace OpenGL_Learn
     class Material;
 
 
-    // ²ÄÖÊ£¨°üº¬¶à¸ö×ÅÉ«Æ÷Pass£©
+    // æè´¨ï¼ˆåŒ…å«å¤šä¸ªç€è‰²å™¨Passï¼‰
     class Material final : public ResourceObject
     {
     public:
-        // ²ÄÖÊÊ¹ÓÃµÄShader
+        // æè´¨ä½¿ç”¨çš„Shader
         List<Shader*> Shaders;
 
         inline unsigned int GetPassCount() { return (unsigned int)Shaders.size(); }
         inline Shader* GetMainShader() { return GetPassCount() > 0 ? Shaders[0] : nullptr; }
-        // Ìí¼Ó×ÅÉ«Æ÷Í¨µÀ
+        // æ·»åŠ ç€è‰²å™¨é€šé“
         inline void AddShaderPass(Shader* shader) { if (shader) Shaders.push_back(shader); }
         bool UseShaderPass(unsigned int index)
         {
@@ -35,26 +35,26 @@ namespace OpenGL_Learn
             }
             else return false;
         }
-        //// ÉèÖÃÕûĞÎ
+        //// è®¾ç½®æ•´å½¢
         //inline void SetInt(const unsigned int& index, const string& name, const int& value)
         //{
         //    if (index < GetPassCount())
         //        this->Shaders[index]->SetInt(name, value);
         //}
-        //// ÉèÖÃFloat
+        //// è®¾ç½®Float
         //inline void SetFloat(const unsigned int& index, const string& name, const float& value)
         //{
         //    if (index < GetPassCount())
         //        this->Shaders[index]->SetFloat(name, value);
         //}
-        //// ÉèÖÃVector4
+        //// è®¾ç½®Vector4
         //inline void SetVector4(const unsigned int& index, const string& name, const Vector4& value)
         //{
         //    if (index < GetPassCount())
         //        this->Shaders[index]->SetVector4(name, value);
         //}
-        //// ÉèÖÃMatrix4x4
-        //inline void SetMatrix4x4(const unsigned int& index, const string& name, const Matrix4x4& value)// const³ÉÔ±º¯Êı£º·ÀÖ¹³ÉÔ±º¯ÊıĞŞ¸ÄÀà¶ÔÏóµÄÄÚÈİ
+        //// è®¾ç½®Matrix4x4
+        //inline void SetMatrix4x4(const unsigned int& index, const string& name, const Matrix4x4& value)// constæˆå‘˜å‡½æ•°ï¼šé˜²æ­¢æˆå‘˜å‡½æ•°ä¿®æ”¹ç±»å¯¹è±¡çš„å†…å®¹
         //{
         //    if (index < GetPassCount())
         //        this->Shaders[index]->SetMatrix4x4(name, value);

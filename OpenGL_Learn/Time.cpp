@@ -1,4 +1,4 @@
-#include "Time.h"
+ï»¿#include "Time.h"
 
 namespace OpenGL_Learn
 {
@@ -12,7 +12,7 @@ namespace OpenGL_Learn
 
     void Time::Update(double runTime)
     {
-        // ÉÏÒ»Ö¡µÄÓÎÏ·ÔËĞĞÊ±³¤£¨ÓÃÓÚ¼ÆËã£©
+        // ä¸Šä¸€å¸§çš„æ¸¸æˆè¿è¡Œæ—¶é•¿ï¼ˆç”¨äºè®¡ç®—ï¼‰
         static double _lastTime = 0.0f;
 
         _lastTime = _realtimeSinceStartup;
@@ -21,7 +21,7 @@ namespace OpenGL_Learn
         _time += _deltaTime;
         _frameCount++;
 
-        // ¼ÆËãFPS
+        // è®¡ç®—FPS
         static int counter = 0;
         static float totalFPS = 0.0f;
         counter++;

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <iostream>
 #include <string>
@@ -14,18 +14,18 @@ namespace OpenGL_Learn
     class Component;
     class Transform;
 
-    // ÓÎÏ·¶ÔÏó
+    // æ¸¸æˆå¯¹è±¡
     class GameObject final : public ResourceObject
     {
     public:
-        // ÊÇ·ñ¼¤»î
+        // æ˜¯å¦æ¿€æ´»
         bool Enabled;
 
-        // ÊÇ·ñÊÇ¸ù¶ÔÏó
+        // æ˜¯å¦æ˜¯æ ¹å¯¹è±¡
         inline bool IsRootObject() { return _transform->GetParent() == nullptr; }
         inline unsigned int GetChildsCount() { return _transform->GetChilds().size(); }
-        // ÊÇ·ñ´¦ÓÚ¼¤»î×´Ì¬
-        // @isInHierarchy ÔÚ³¡¾°ÖĞ
+        // æ˜¯å¦å¤„äºæ¿€æ´»çŠ¶æ€
+        // @isInHierarchy åœ¨åœºæ™¯ä¸­
         bool GetActive(bool isInHierarchy = true)
         {
             if (!isInHierarchy) return Enabled;
@@ -45,7 +45,7 @@ namespace OpenGL_Learn
             Enabled = value;
         }
 
-        // Ìí¼Ó×é¼ş
+        // æ·»åŠ ç»„ä»¶
         template <class T = Component>
         T& AddComponent()
         {
@@ -55,7 +55,7 @@ namespace OpenGL_Learn
             _components.push_back(move(component));
             return *result;
         }
-        // ·µ»ØÕÒµ½µÄµÚÒ»¸ö×é¼ş
+        // è¿”å›æ‰¾åˆ°çš„ç¬¬ä¸€ä¸ªç»„ä»¶
         template <typename T = Component>
         T* GetComponent() const
         {
@@ -66,7 +66,7 @@ namespace OpenGL_Learn
             }
             return nullptr;
         }
-        // »ñÈ¡ËùÓĞÖ¸¶¨×é¼ş
+        // è·å–æ‰€æœ‰æŒ‡å®šç»„ä»¶
         template <typename T = Component>
         List<T*> GetComponents()
         {
@@ -79,9 +79,9 @@ namespace OpenGL_Learn
             return result;
         }
 
-        // »ñÈ¡±ä»»
+        // è·å–å˜æ¢
         inline Transform& GetTransform() const { return *(_transform); }
-        // ·µ»ØËùÓĞ×é¼ş
+        // è¿”å›æ‰€æœ‰ç»„ä»¶
         inline List<unique_ptr<Component>>& GetAllComponents() { return _components; }
 
 

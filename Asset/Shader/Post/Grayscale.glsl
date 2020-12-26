@@ -1,4 +1,4 @@
-{_!Property_Start
+锘縶_!Property_Start
 {
 }
 _!Property_End
@@ -48,14 +48,14 @@ out vec4 FragColor;
 uniform sampler2D _MainTexture;
 //uniform sampler2D _ShadowMap;
 
-// 灰度
+// 鐏板害
 vec4 Grayscale(vec4 texColor)
 {
-    //float average = (texColor.r + texColor.g + texColor.b) / 3.0f;// 平均灰度
-    //float average = 0.2126 * texColor.r + 0.7152 * texColor.g + 0.0722 * texColor.b;// 加权灰度
-    float average = dot(texColor.rgb, vec3(0.2126, 0.7152, 0.0722));// 加权灰度
+    //float average = (texColor.r + texColor.g + texColor.b) / 3.0f;// 骞冲潎鐏板害
+    //float average = 0.2126 * texColor.r + 0.7152 * texColor.g + 0.0722 * texColor.b;// 鍔犳潈鐏板害
+    float average = dot(texColor.rgb, vec3(0.2126, 0.7152, 0.0722));// 鍔犳潈鐏板害
 
-    return vec4(vec3(average), 1.0f); // 灰度
+    return vec4(vec3(average), 1.0f); // 鐏板害
 }
 
 void main()

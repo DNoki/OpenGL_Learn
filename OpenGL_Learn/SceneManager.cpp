@@ -1,4 +1,4 @@
-#include "SceneManager.h"
+ï»¿#include "SceneManager.h"
 
 #include "Texture.h"
 #include "SampleScene.h"
@@ -14,7 +14,7 @@ namespace OpenGL_Learn
     {
         _scenes.push_back(unique_ptr<Scene>(new SampleScene("Test Scene")));
 
-        _activeScene = _scenes[0].get(); // µÚÒ»¸öÒª¼ÓÔØµÄ³¡¾°
+        _activeScene = _scenes[0].get(); // ç¬¬ä¸€ä¸ªè¦åŠ è½½çš„åœºæ™¯
 
         {
             auto pixels = vector<Tuple4<char, char, char, char>>(16 * 16, Tuple4<char, char, char, char>((char)0xFF, (char)0xFF, (char)0xFF, (char)0xFF));

@@ -1,34 +1,34 @@
-#pragma once
+ï»¿#pragma once
 
 namespace OpenGL_Learn
 {
     class Time
     {
     public:
-        // ÓÎÏ·Ê±¼äËõ·ÅÏµÊı £¨ÇëÎğĞ¡ÓÚ0£©
+        // æ¸¸æˆæ—¶é—´ç¼©æ”¾ç³»æ•° ï¼ˆè¯·å‹¿å°äº0ï¼‰
         static double TimeScale;
 
-        // ÉÏÒ»Ö¡äÖÈ¾ÓÃÊ±
+        // ä¸Šä¸€å¸§æ¸²æŸ“ç”¨æ—¶
         inline static float DeltaTime() { return (float)_deltaTime; }
-        // ÓÎÏ·ÔËĞĞÊ±³¤
+        // æ¸¸æˆè¿è¡Œæ—¶é•¿
         inline static float RunTime() { return (float)_time; }
-        // µ±Ç°äÖÈ¾Ö¡Êı
+        // å½“å‰æ¸²æŸ“å¸§æ•°
         inline static unsigned int FrameCount() { return _frameCount; }
-        // ÓÎÏ·ÕæÊµÔËĞĞÊ±¼ä
+        // æ¸¸æˆçœŸå®è¿è¡Œæ—¶é—´
         inline static float RealtimeSinceStartup() { return (float)_realtimeSinceStartup; }
         inline static float FPS() { return _fps; }
 
-        // ¸üĞÂÊ±¼äÊı¾İ
+        // æ›´æ–°æ—¶é—´æ•°æ®
         static void Update(double runTime);
 
     private:
-        // ÓÎÏ·ÕæÊµÔËĞĞÊ±³¤
+        // æ¸¸æˆçœŸå®è¿è¡Œæ—¶é•¿
         static double _realtimeSinceStartup;
-        // ÓÎÏ·ÔËĞĞÊ±³¤
+        // æ¸¸æˆè¿è¡Œæ—¶é•¿
         static double _time;
-        // ÉÏÒ»Ö¡äÖÈ¾ÓÃÊ±
+        // ä¸Šä¸€å¸§æ¸²æŸ“ç”¨æ—¶
         static double _deltaTime;
-        // µ±Ç°äÖÈ¾Ö¡Êı
+        // å½“å‰æ¸²æŸ“å¸§æ•°
         static unsigned int _frameCount;
         static float _fps;
     };

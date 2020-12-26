@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include <memory>
@@ -14,11 +14,11 @@ namespace OpenGL_Learn
     class Material;
     class Mesh;
 
-    // Ìì¿ÕºÐ
+    // å¤©ç©ºç›’
     class Skybox : public ResourceObject
     {
     public:
-        // »æÖÆÌì¿ÕºÐ
+        // ç»˜åˆ¶å¤©ç©ºç›’
         // DepthTest = GL_TRUE;
         // DepthTestMode = GL_LEQUAL;
         void DrawSkyBox();
@@ -26,7 +26,7 @@ namespace OpenGL_Learn
         Skybox(const string& name, Material* material);
 
     private:
-        // Ìì¿ÕºÐ»æÖÆËùÐèÍø¸ñ
+        // å¤©ç©ºç›’ç»˜åˆ¶æ‰€éœ€ç½‘æ ¼
         static Mesh* skyboxMesh;
 
         Material* _material;

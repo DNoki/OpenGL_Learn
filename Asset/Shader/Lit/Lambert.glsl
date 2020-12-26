@@ -1,4 +1,4 @@
-{_!Property_Start
+﻿{_!Property_Start
 {
     "RenderQueue": 2000,
     "_MainColor": [1, 1, 1, 1],
@@ -67,23 +67,23 @@ layout (std140) uniform TRANSFORM
 
 layout (std140) uniform CAMERA_DATA
 {
-    // ����ռ����λ��
+    // 世界空间相机位置
     vec4 WorldSpaceCameraPos;
-    // x��������Ӱ���Ŀ��ȣ�y��������Ӱ���ĸ߶ȣ�zΪ���߱ȣ�w��������Ӱ��ʱΪ1.0��͸��ʱΪ0.0��
+    // x是正交摄影机的宽度，y是正交摄影机的高度，z为宽高比，w当正交摄影机时为1.0，透视时为0.0。
     vec4 OrthoParams;
 };
 
 #define POINT_LIGHTS_COUNT 4
 layout (std140) uniform LIGHTING_DATA
 {
-    vec4 LightColor; // ������ɫ
-    vec4 WorldSpaceLightPos; // ƽ�й⣺������ռ䷽��, 0���������⣺������ռ�λ��, 1����
-    mat4 LightMatrix; // ���絽��ľ������ڲ���Cookie��˥��������
-    float ShadowStrength; // ��Ӱǿ�ȡ�
-    // ǰ����Ⱦʹ��4�����Դ
-    vec4[POINT_LIGHTS_COUNT] PointLight4Pos; // ���Դλ��
-    vec4[POINT_LIGHTS_COUNT] PointLight4Color; // ���Դ��ɫ
-    vec4[POINT_LIGHTS_COUNT] PointLight4Info; // ���Դ˥�� C=1.0, L=x, Q=y ˥��ǿ�� = 1.0 / (C + L * d + Q * d^2) �����Դ������z�����ԴԶ����w
+    vec4 LightColor; // 光照颜色
+    vec4 WorldSpaceLightPos; // 平行光：（世界空间方向, 0）。其他光：（世界空间位置, 1）。
+    mat4 LightMatrix; // 世界到光的矩阵。用于采样Cookie和衰减纹理。
+    float ShadowStrength; // 阴影强度。
+    // 前向渲染使用4个点光源
+    vec4[POINT_LIGHTS_COUNT] PointLight4Pos; // 点光源位置
+    vec4[POINT_LIGHTS_COUNT] PointLight4Color; // 点光源颜色
+    vec4[POINT_LIGHTS_COUNT] PointLight4Info; // 点光源衰减 C=1.0, L=x, Q=y 衰减强度 = 1.0 / (C + L * d + Q * d^2) ，点光源近裁面z，点光源远裁面w
 };
 
 layout (std140) uniform TIME
@@ -107,7 +107,7 @@ void main()
     FragColor = vec4(color, 1.0f);
     
     //vec3 viewDir = normalize(WorldSpaceCameraPos.xyz - f.worldSpacePosition.xyz);
-    //float value = 1.0f - dot(normal, viewDir); // ������Ч��
+    //float value = 1.0f - dot(normal, viewDir); // 菲涅尔效果
 }
 _!GLSL_FragmentProgram_End
 }

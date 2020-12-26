@@ -1,4 +1,4 @@
-{_!Property_Start
+锘縶_!Property_Start
 {
     "RenderQueue": 4000,
     "_Magnitude": 0.05
@@ -49,7 +49,7 @@ _!GLSL_VertexProgram_End
 layout (triangles) in;
 layout (line_strip, max_vertices = 18) out;
 
-// 内建变量
+// 鍐呭缓鍙橀噺
 //in gl_Vertex
 //{
 //    vec4  gl_Position;

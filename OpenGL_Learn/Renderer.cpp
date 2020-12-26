@@ -1,4 +1,4 @@
-#include "Renderer.h"
+ï»¿#include "Renderer.h"
 
 #include <iostream>
 
@@ -27,7 +27,7 @@ namespace OpenGL_Learn
     {
         if (!_material || !_mesh)
         {
-            cout << "WARNING:: " << "Íø¸ñºÍ²ÄÖÊ¶ÔÏóÎª¿Õ£¬ºöÂÔ¸ÃÍø¸ñäÖÈ¾¡£" << endl;
+            cout << "WARNING:: " << "ç½‘æ ¼å’Œæè´¨å¯¹è±¡ä¸ºç©ºï¼Œå¿½ç•¥è¯¥ç½‘æ ¼æ¸²æŸ“ã€‚" << endl;
             throw;
         }
         this->_mesh->DrawMesh(*_material, index);
@@ -36,7 +36,7 @@ namespace OpenGL_Learn
     {
         if (!material || !_mesh)
         {
-            cout << "WARNING:: " << "Íø¸ñºÍ²ÄÖÊ¶ÔÏóÎª¿Õ£¬ºöÂÔ¸ÃÍø¸ñäÖÈ¾¡£" << endl;
+            cout << "WARNING:: " << "ç½‘æ ¼å’Œæè´¨å¯¹è±¡ä¸ºç©ºï¼Œå¿½ç•¥è¯¥ç½‘æ ¼æ¸²æŸ“ã€‚" << endl;
             throw;
         }
         this->_mesh->DrawMesh(*material, index);

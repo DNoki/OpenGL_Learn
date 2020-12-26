@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 
@@ -16,7 +16,7 @@ namespace OpenGL_Learn
 
         //static void Render();
 
-        // ÓÎÏ·ÉúÃüÖÜÆÚ
+        // æ¸¸æˆç”Ÿå‘½å‘¨æœŸ
         static void LifeCycle();
 
         inline static GLFWwindow* GetGLFWwindow() { return _window; }

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <glad/glad.h>
 
@@ -17,18 +17,18 @@ namespace OpenGL_Learn
     class RenderTexture : public ResourceObject
     {
     public:
-        // Ê¹ÓÃÄ¬ÈÏ´°¿Ú»º³å
+        // ä½¿ç”¨é»˜è®¤çª—å£ç¼“å†²
         static inline void UnBindFramebuffer() { glBindFramebuffer(GL_FRAMEBUFFER, 0); }
-        //@brief ´´½¨äÖÈ¾ÌùÍ¼
-        //@param name Ãû³Æ
-        //@param width ¿í¶È
-        //@param height ¸ß¶È
-        //@param format ¸ñÊ½£ºGL_RGB¡¢GL_RGBA¡¢GL_DEPTH_COMPONENT
-        //@param wrapMode ÖØ¸´Ä£Ê½ GL_CLAMP_TO_EDGE¡¢GL_REPEAT
-        //@param scaleFilterMode Ëõ·ÅÄ£Ê½ GL_LINEAR¡¢GL_NEAREST
-        //@param attachment ÎÆÀí¸½¼ş¸ñÊ½ GL_COLOR_ATTACHMENT0¡¢GL_DEPTH_ATTACHMENT
-        //@param isDepthAndStencilOn ÊÇ·ñ¿ªÆôÉî¶ÈºÍÄ£°å GL_DEPTH24_STENCIL8
-        //@param rboFormat »º³å¶ÔÏó¸½¼ş¸ñÊ½
+        //@brief åˆ›å»ºæ¸²æŸ“è´´å›¾
+        //@param name åç§°
+        //@param width å®½åº¦
+        //@param height é«˜åº¦
+        //@param format æ ¼å¼ï¼šGL_RGBã€GL_RGBAã€GL_DEPTH_COMPONENT
+        //@param wrapMode é‡å¤æ¨¡å¼ GL_CLAMP_TO_EDGEã€GL_REPEAT
+        //@param scaleFilterMode ç¼©æ”¾æ¨¡å¼ GL_LINEARã€GL_NEAREST
+        //@param attachment çº¹ç†é™„ä»¶æ ¼å¼ GL_COLOR_ATTACHMENT0ã€GL_DEPTH_ATTACHMENT
+        //@param isDepthAndStencilOn æ˜¯å¦å¼€å¯æ·±åº¦å’Œæ¨¡æ¿ GL_DEPTH24_STENCIL8
+        //@param rboFormat ç¼“å†²å¯¹è±¡é™„ä»¶æ ¼å¼
         //static unique_ptr<RenderTexture> CreateRenderTexture(const string& name,
         //    GLsizei width, GLsizei height,
         //    GLenum internalformat, FormatType format,
@@ -42,7 +42,7 @@ namespace OpenGL_Learn
         {
             auto rt = unique_ptr<RenderTexture>(new RenderTexture(name, width, height));
             rt->_samples = samples;
-            // Éú³ÉÖ¡»º³å
+            // ç”Ÿæˆå¸§ç¼“å†²
             glGenFramebuffers(1, &rt->_framebufferID);
 
             return rt;
@@ -65,12 +65,12 @@ namespace OpenGL_Learn
         bool CheckFramebufferSuccess();
 
         //inline virtual GLenum GetTextureType() const override { return GL_TEXTURE_2D; }
-        // ¼¤»î°ó¶¨µÄÖ¡»º³å
+        // æ¿€æ´»ç»‘å®šçš„å¸§ç¼“å†²
         inline void BindFramebuffer() const { glBindFramebuffer(GL_FRAMEBUFFER, this->_framebufferID); }
-        // Î»¿é´«ËÍ ¿½±´µ½Ö¸¶¨Ö¡»º³å
-        // @renderTexture Ö¡»º³å£¨Ä¬ÈÏ¿½±´µ½´°¿Ú£©
-        // @mask Ö¸¶¨Òª¶ÁÈ¡µÄ»º³åÇø // GL_COLOR_BUFFER_BIT ÑÕÉ«»º³åÇø // GL_DEPTH_BUFFER_BIT Éî¶È»º³åÇø // GL_STENCIL_BUFFER_BIT Ä£°å»º³åÇø
-        // @filter ÉìËõ±äĞÎÊ±µÄ²åÖµ·½·¨ GL_NEAREST  GL_LINEAR
+        // ä½å—ä¼ é€ æ‹·è´åˆ°æŒ‡å®šå¸§ç¼“å†²
+        // @renderTexture å¸§ç¼“å†²ï¼ˆé»˜è®¤æ‹·è´åˆ°çª—å£ï¼‰
+        // @mask æŒ‡å®šè¦è¯»å–çš„ç¼“å†²åŒº // GL_COLOR_BUFFER_BIT é¢œè‰²ç¼“å†²åŒº // GL_DEPTH_BUFFER_BIT æ·±åº¦ç¼“å†²åŒº // GL_STENCIL_BUFFER_BIT æ¨¡æ¿ç¼“å†²åŒº
+        // @filter ä¼¸ç¼©å˜å½¢æ—¶çš„æ’å€¼æ–¹æ³• GL_NEAREST  GL_LINEAR
         void Blit(RenderTexture& renderTexture, GLbitfield mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT, ScaleFilterType filter = ScaleFilterType::NEAREST);
         inline Texture* GetTexture(UINT index)
         {
@@ -102,15 +102,15 @@ namespace OpenGL_Learn
     //class MultisampleRenderTexture final : public RenderTexture
     //{
     //public:
-    //    //@brief ´´½¨¶à²ÉÑùäÖÈ¾ÌùÍ¼
-    //    //@param name Ãû³Æ
-    //    //@param samples ²ÉÑùÊı
-    //    //@param width ¿í¶È
-    //    //@param height ¸ß¶È
-    //    //@param format ¸ñÊ½£ºGL_RGB¡¢GL_RGBA
-    //    //@param attachment ÎÆÀí¸½¼ş¸ñÊ½ GL_COLOR_ATTACHMENT0¡¢GL_DEPTH_ATTACHMENT
-    //    //@param isDepthAndStencilOn ÊÇ·ñ¿ªÆôÉî¶ÈºÍÄ£°å GL_DEPTH24_STENCIL8
-    //    //@param rboFormat »º³å¶ÔÏó¸½¼ş¸ñÊ½
+    //    //@brief åˆ›å»ºå¤šé‡‡æ ·æ¸²æŸ“è´´å›¾
+    //    //@param name åç§°
+    //    //@param samples é‡‡æ ·æ•°
+    //    //@param width å®½åº¦
+    //    //@param height é«˜åº¦
+    //    //@param format æ ¼å¼ï¼šGL_RGBã€GL_RGBA
+    //    //@param attachment çº¹ç†é™„ä»¶æ ¼å¼ GL_COLOR_ATTACHMENT0ã€GL_DEPTH_ATTACHMENT
+    //    //@param isDepthAndStencilOn æ˜¯å¦å¼€å¯æ·±åº¦å’Œæ¨¡æ¿ GL_DEPTH24_STENCIL8
+    //    //@param rboFormat ç¼“å†²å¯¹è±¡é™„ä»¶æ ¼å¼
     //    static unique_ptr<MultisampleRenderTexture> CreateRenderTexture(const string& name,
     //        int samples, GLsizei width, GLsizei height, GLenum internalformat,
     //        AttachmentType attachment = AttachmentType::COLOR_ATTACHMENT0,
@@ -119,7 +119,7 @@ namespace OpenGL_Learn
 
     //    //inline GLenum GetTextureType() const override { return GL_TEXTURE_2D_MULTISAMPLE; }
 
-    //    // »ñÈ¡²ÉÑùÊı
+    //    // è·å–é‡‡æ ·æ•°
     //    inline int GetSamples() const { return _samples; }
 
     //private:

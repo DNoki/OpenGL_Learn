@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <iostream>
 #include <map>
@@ -18,10 +18,10 @@ namespace OpenGL_Learn
     class Scene
     {
     public:
-        // ³¡¾°Ãû³Æ
+        // åœºæ™¯åç§°
         string Name;
 
-        // ´Ë³¡¾°µÄ¸ù±ä»»ÊıÁ¿¡£
+        // æ­¤åœºæ™¯çš„æ ¹å˜æ¢æ•°é‡ã€‚
         inline unsigned int GetRootCount() const { return (unsigned int)this->_hierarchy.size(); }
         inline List<unique_ptr<GameObject>>& GetAllGameObjects() { return this->_hierarchy; }
         List<GameObject*> GetAllRootGameObjects(bool isUnActiveInclude = false)
@@ -39,13 +39,13 @@ namespace OpenGL_Learn
         inline List<unique_ptr<ResourceObject>>& GetDestroyedObjects() { return _destroyedObjects; }
 
 
-        // Ìí¼Ó×ÊÔ´
+        // æ·»åŠ èµ„æº
         template <typename T = ResourceObject>
         T* AddResourceObject(unique_ptr<T>&& obj)
         {
             return AddResourceObject(obj);
         }
-        // Ìí¼Ó×ÊÔ´
+        // æ·»åŠ èµ„æº
         template <typename T = ResourceObject>
         T* AddResourceObject(unique_ptr<T>& obj)
         {
@@ -56,14 +56,14 @@ namespace OpenGL_Learn
             _resourceObjects[key].push_back(move(obj));
             return result;
         }
-        // Ñ°ÕÒÖ¸¶¨Ãû³Æ×ÊÔ´
+        // å¯»æ‰¾æŒ‡å®šåç§°èµ„æº
         template <typename T = ResourceObject>
         T* FindResourceObject(const string& name)
         {
             auto key = typeid(T).name();
             if (_resourceObjects.count(key) == 0)
             {
-                cout << "WARNING:: " << "×ÊÔ´×Ü±íÖĞ²»´æÔÚ " << key << " ÀàĞÍ¡£" << endl;
+                cout << "WARNING:: " << "èµ„æºæ€»è¡¨ä¸­ä¸å­˜åœ¨ " << key << " ç±»å‹ã€‚" << endl;
                 return nullptr;
             }
 
@@ -75,18 +75,18 @@ namespace OpenGL_Learn
             return nullptr;
         }
 
-        // Ìí¼ÓÓÎÏ·¶ÔÏó
+        // æ·»åŠ æ¸¸æˆå¯¹è±¡
         GameObject& AddGameObject(unique_ptr<GameObject>&& gameObj);
-        // Ìí¼ÓÓÎÏ·¶ÔÏó
+        // æ·»åŠ æ¸¸æˆå¯¹è±¡
         GameObject& AddGameObject(unique_ptr<GameObject>& gameObj);
-        // ²éÕÒ²¢·µ»Ø³¡¾°ÄÚÕÒµ½µÄµÚÒ»¸öÒÑ¼¤»î¶ÔÏó(½ö¼ìË÷¸ù¶ÔÏó)
+        // æŸ¥æ‰¾å¹¶è¿”å›åœºæ™¯å†…æ‰¾åˆ°çš„ç¬¬ä¸€ä¸ªå·²æ¿€æ´»å¯¹è±¡(ä»…æ£€ç´¢æ ¹å¯¹è±¡)
         GameObject* FindGameObject(const string& name) const;
 
-        // ²éÕÒ²¢·µ»Ø³¡¾°ÄÚÕÒµ½µÄµÚÒ»¸öÒÑ¼¤»î×é¼ş
+        // æŸ¥æ‰¾å¹¶è¿”å›åœºæ™¯å†…æ‰¾åˆ°çš„ç¬¬ä¸€ä¸ªå·²æ¿€æ´»ç»„ä»¶
         template <typename T = Component>
         T* FindComponent(bool isUnActiveInclude = false) const
         {
-            // ±éÀúËùÓĞ¶ÔÏó£¬²éÕÒ²¢·µ»ØµÚÒ»¸öÕÒµ½µÄ¶ÔÏó
+            // éå†æ‰€æœ‰å¯¹è±¡ï¼ŒæŸ¥æ‰¾å¹¶è¿”å›ç¬¬ä¸€ä¸ªæ‰¾åˆ°çš„å¯¹è±¡
             for (auto& obj : _hierarchy)
             {
                 if (!isUnActiveInclude && !obj->GetActive()) continue;
@@ -97,8 +97,8 @@ namespace OpenGL_Learn
             }
             return nullptr;
         }
-        // »ñÈ¡³¡¾°ÄÚËùÓĞÖ¸¶¨×é¼ş
-        // @isUnActiveInclude ÊÇ·ñ°üÀ¨Î´¼¤»î¶ÔÏó
+        // è·å–åœºæ™¯å†…æ‰€æœ‰æŒ‡å®šç»„ä»¶
+        // @isUnActiveInclude æ˜¯å¦åŒ…æ‹¬æœªæ¿€æ´»å¯¹è±¡
         template <typename T = Component>
         List<T*> FindComponents(bool isUnActiveInclude = false)
         {
@@ -117,7 +117,7 @@ namespace OpenGL_Learn
         }
 
 
-        // ³õÊ¼»¯³¡¾°
+        // åˆå§‹åŒ–åœºæ™¯
         inline void Initialize()
         {
             ImportResource();
@@ -129,17 +129,17 @@ namespace OpenGL_Learn
 
     protected:
 
-        // ²ãµ¼Èë
+        // å±‚å¯¼å…¥
         virtual void ImportResource() = 0;
 
     private:
-        // ÓÎÏ·¶ÔÏóÁĞ±í
+        // æ¸¸æˆå¯¹è±¡åˆ—è¡¨
         List<unique_ptr<GameObject>> _hierarchy;
-        // ×ÊÔ´×Ü±í
+        // èµ„æºæ€»è¡¨
         map<string, List<unique_ptr<ResourceObject>>> _resourceObjects;
         List<unique_ptr<ResourceObject>> _destroyedObjects;
 
-        // Éè¶¨È«¾ÖÖ÷Òª¶ÔÏó
+        // è®¾å®šå…¨å±€ä¸»è¦å¯¹è±¡
         void BindMainObject();
     };
 }

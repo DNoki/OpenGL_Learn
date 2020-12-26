@@ -1,35 +1,35 @@
-#pragma once
+ï»¿#pragma once
 
 #include <glad/glad.h>
 
 
 namespace OpenGL_Learn
 {
-    // »º³å¶ÔÏó
+    // ç¼“å†²å¯¹è±¡
     struct BufferObject
     {
     public:
         GLuint ID;
-        // »º³åÀàÐÍ
+        // ç¼“å†²ç±»åž‹
         // GL_ARRAY_BUFFER
         // GL_ELEMENT_ARRAY_BUFFER
         // GL_UNIFORM_BUFFER
         GLenum Type;
 
-        // °ó¶¨»º³å
+        // ç»‘å®šç¼“å†²
         inline void BindBuffer() { glBindBuffer(Type, ID); }
-        // ½â°ó»º³å
+        // è§£ç»‘ç¼“å†²
         inline void UnBindBuffer() { glBindBuffer(Type, 0); }
-        // ÊäÈëÊý¾Ý
-        // size Êý¾Ý´óÐ¡
-        // data Êý¾ÝÖ¸Õë glm::value_ptr(data)
+        // è¾“å…¥æ•°æ®
+        // size æ•°æ®å¤§å°
+        // data æ•°æ®æŒ‡é’ˆ glm::value_ptr(data)
         void BufferData(GLsizeiptr size, const void* data, GLenum usage = GL_STATIC_DRAW);
-        // ÊäÈëÆ«ÒÆÊý¾Ý
-        // offset Æ«ÒÆÁ¿
-        // size Êý¾Ý´óÐ¡
-        // data Êý¾ÝÖ¸Õë glm::value_ptr(data)
+        // è¾“å…¥åç§»æ•°æ®
+        // offset åç§»é‡
+        // size æ•°æ®å¤§å°
+        // data æ•°æ®æŒ‡é’ˆ glm::value_ptr(data)
         void BufferSubData(GLintptr offset, GLsizeiptr size, const void* data);
-        // ½«offsetºÍsize±íÊ¾µÄ»º³åÇø¶ÔÏó»º³åÇøµÄ·¶Î§°ó¶¨µ½ÓÉ...Ö¸¶¨µÄÄ¿±êÊý×éµÄË÷ÒýË÷Òý´¦µÄ°ó¶¨µã
+        // å°†offsetå’Œsizeè¡¨ç¤ºçš„ç¼“å†²åŒºå¯¹è±¡ç¼“å†²åŒºçš„èŒƒå›´ç»‘å®šåˆ°ç”±...æŒ‡å®šçš„ç›®æ ‡æ•°ç»„çš„ç´¢å¼•ç´¢å¼•å¤„çš„ç»‘å®šç‚¹
         inline void BindBufferRange(GLuint index, GLsizeiptr size, GLintptr offset = 0)
         {
             glBindBufferRange(this->Type, index, this->ID, offset, size);

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include <memory>
@@ -17,25 +17,25 @@ namespace OpenGL_Learn
 
     enum class MeshMode
     {
-        ARRAYS,// ¶¥µãÊı×éÄ£Ê½
-        ELEMENTS, // Ë÷Òı»æÖÆÄ£Ê½
+        ARRAYS,// é¡¶ç‚¹æ•°ç»„æ¨¡å¼
+        ELEMENTS, // ç´¢å¼•ç»˜åˆ¶æ¨¡å¼
     };
     enum class PresetMesh
     {
-        TRIANGLE,// Èı½ÇĞÎ
-        SQUARE, // Õı·½ĞÎ
-        BOX, // Õı·½Ìå
+        TRIANGLE,// ä¸‰è§’å½¢
+        SQUARE, // æ­£æ–¹å½¢
+        BOX, // æ­£æ–¹ä½“
     };
 
     class Mesh : public ResourceObject
     {
     public:
-        // ´´½¨Ô¤ÖÃÍø¸ñ
+        // åˆ›å»ºé¢„ç½®ç½‘æ ¼
         static unique_ptr<Mesh> CreatePresetMesh(PresetMesh name);
 
         bool Completed;
 
-        /*  Íø¸ñÊı¾İ  */
+        /*  ç½‘æ ¼æ•°æ®  */
         List<Vector3> vertices;
         List<Vector3> normals;
         List<Vector3> tangents;
@@ -44,13 +44,13 @@ namespace OpenGL_Learn
 
         List<unsigned int> indices;
 
-        // Ê¹ÓÃÖ¸¶¨×ÅÉ«Æ÷Pass»æÖÆÄ£ĞÍ »æÖÆÇ°ĞèÊäÈë±ä»»¡¢²ÄÖÊ
+        // ä½¿ç”¨æŒ‡å®šç€è‰²å™¨Passç»˜åˆ¶æ¨¡å‹ ç»˜åˆ¶å‰éœ€è¾“å…¥å˜æ¢ã€æè´¨
         void DrawMesh(Material& mat, unsigned int index);
 
         inline MeshMode GetMode() const { return this->mode; }
-        // »ñÈ¡¶¥µãÊıÁ¿
+        // è·å–é¡¶ç‚¹æ•°é‡
         inline unsigned int GetVertexCount() const { return (unsigned int)vertices.size(); }
-        // »ñÈ¡Ë÷ÒıÊıÁ¿
+        // è·å–ç´¢å¼•æ•°é‡
         inline unsigned int GetIndiceCount() const { return (unsigned int)indices.size(); }
 
         void Complete();
@@ -63,12 +63,12 @@ namespace OpenGL_Learn
 
         MeshMode mode;
 
-        /*  äÖÈ¾Êı¾İ  */
-        // ¶¥µãÊı×é¶ÔÏó£ºVertex Array Object£¬VAO
+        /*  æ¸²æŸ“æ•°æ®  */
+        // é¡¶ç‚¹æ•°ç»„å¯¹è±¡ï¼šVertex Array Objectï¼ŒVAO
         VertexArrays VAO;
-        // ¶¥µã»º³å¶ÔÏó£ºVertex Buffer Object£¬VBO
+        // é¡¶ç‚¹ç¼“å†²å¯¹è±¡ï¼šVertex Buffer Objectï¼ŒVBO
         BufferObject VBO;
-        // Ë÷Òı»º³å¶ÔÏó£ºElement Buffer Object£¬EBO
+        // ç´¢å¼•ç¼“å†²å¯¹è±¡ï¼šElement Buffer Objectï¼ŒEBO
         BufferObject EBO;
 
 

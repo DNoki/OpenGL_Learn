@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <memory>
 
@@ -7,15 +7,15 @@
 namespace OpenGL_Learn
 {
 
-    // ºó´¦Àí
+    // åå¤„ç†
     class PostProcess final : public ScriptBehaviour
     {
     public:
         RenderTexture* EffectRenderTexture = nullptr;
 
-        // Ìí¼ÓÌØĞ§
-        // @material ²ÄÖÊ
-        // @rt äÖÈ¾ÌùÍ¼
+        // æ·»åŠ ç‰¹æ•ˆ
+        // @material æè´¨
+        // @rt æ¸²æŸ“è´´å›¾
         void AddEffect(Material& material)
         {
             if (!EffectRenderTexture)
@@ -29,7 +29,7 @@ namespace OpenGL_Learn
             for (unsigned int i = 0; i < material.GetPassCount(); i++)
             {
                 material[i]->BindTexture(*EffectRenderTexture->GetTexture(0), "_MainTexture", 0);
-                cout << "LOG:: " << "ÒÑÌí¼Óºó´¦ÀíĞ§¹û£º"
+                cout << "LOG:: " << "å·²æ·»åŠ åå¤„ç†æ•ˆæœï¼š"
                     << " Material: " << material[i]->Name << endl;
             }
         }
@@ -40,7 +40,7 @@ namespace OpenGL_Learn
             return nullptr;
         }
 
-        // »ñÈ¡ÌØĞ§ÊıÁ¿
+        // è·å–ç‰¹æ•ˆæ•°é‡
         inline unsigned int GetEffectCount() { return (unsigned int)_materials.size(); }
 
         void Awake() override
@@ -52,18 +52,18 @@ namespace OpenGL_Learn
         }
         void OnPostRender() override
         {
-            // ½öµ±Ç°Ïà»úäÖÈ¾Íê³Éºó´¦ÀíµÄºóÆÚÌØĞ§
-            // ÈıÖÖÇé¿ö£º
-            // 1. äÖÈ¾Êı¾İÔÚÖ¸¶¨Ä¿±êäÖÈ¾ÌùÍ¼ÉÏ
-            // 2. äÖÈ¾Êı¾İÔÚÄ¬ÈÏ¶à²ÉÑùäÖÈ¾ÌùÍ¼ÉÏ
-            // 3. äÖÈ¾Êı¾İÔÚÄ¬ÈÏäÖÈ¾ÌùÍ¼ÉÏ
+            // ä»…å½“å‰ç›¸æœºæ¸²æŸ“å®Œæˆåå¤„ç†çš„åæœŸç‰¹æ•ˆ
+            // ä¸‰ç§æƒ…å†µï¼š
+            // 1. æ¸²æŸ“æ•°æ®åœ¨æŒ‡å®šç›®æ ‡æ¸²æŸ“è´´å›¾ä¸Š
+            // 2. æ¸²æŸ“æ•°æ®åœ¨é»˜è®¤å¤šé‡‡æ ·æ¸²æŸ“è´´å›¾ä¸Š
+            // 3. æ¸²æŸ“æ•°æ®åœ¨é»˜è®¤æ¸²æŸ“è´´å›¾ä¸Š
             //for (unsigned int i = 0; i < _materials.size(); i++)
             //{
-            //    // ¼ÓÔØÒÑÑ¡È¾³¡¾°µ½ÎÆÀí »ò ´Ó¶à²ÉÑùÎÆÀíÖĞ¼ÓÔØÎÆÀí
+            //    // åŠ è½½å·²é€‰æŸ“åœºæ™¯åˆ°çº¹ç† æˆ– ä»å¤šé‡‡æ ·çº¹ç†ä¸­åŠ è½½çº¹ç†
             //    _camera->RenderToTargetTexture(EffectRenderTexture.get());
-            //    // °ó¶¨äÖÈ¾Ïà»ú
+            //    // ç»‘å®šæ¸²æŸ“ç›¸æœº
             //    _camera->BindTarget();
-            //    // Ó¦ÓÃÌØĞ§²ÄÖÊ²¢äÖÈ¾ËÄ±ßĞÎµ½´°¿Ú
+            //    // åº”ç”¨ç‰¹æ•ˆæè´¨å¹¶æ¸²æŸ“å››è¾¹å½¢åˆ°çª—å£
             //    for (unsigned int j = 0; j < _materials[i]->GetPassCount(); j++)
             //        Camera::DefaultTargetTextureMesh->DrawMesh(*_materials[i], j);
             //}
@@ -71,12 +71,12 @@ namespace OpenGL_Learn
 
         void OnRenderImage(RenderTexture* targetTex) override
         {
-            // Ã¿¸ö½Å±¾¶¼»á´¦ÀíµÄºóÆÚÌØĞ§
+            // æ¯ä¸ªè„šæœ¬éƒ½ä¼šå¤„ç†çš„åæœŸç‰¹æ•ˆ
             for (unsigned int i = 0; i < _materials.size(); i++)
             {
                 if (!_materials[i].Item1) continue;
-                targetTex->Blit(*EffectRenderTexture);// ½«Ä¬ÈÏäÖÈ¾ÌùÍ¼Êı¾İ¿½±´µ½Ğ§¹ûäÖÈ¾ÌùÍ¼ÉÏ
-                targetTex->BindFramebuffer();// äÖÈ¾µ½Ä¬ÈÏäÖÈ¾ÌùÍ¼ÉÏ
+                targetTex->Blit(*EffectRenderTexture);// å°†é»˜è®¤æ¸²æŸ“è´´å›¾æ•°æ®æ‹·è´åˆ°æ•ˆæœæ¸²æŸ“è´´å›¾ä¸Š
+                targetTex->BindFramebuffer();// æ¸²æŸ“åˆ°é»˜è®¤æ¸²æŸ“è´´å›¾ä¸Š
                 for (unsigned int j = 0; j < _materials[i].Item2->GetPassCount(); j++)
                     Camera::DefaultTargetTextureMesh->DrawMesh(*_materials[i].Item2, j);
             }

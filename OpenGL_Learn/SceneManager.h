@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <memory>
 
@@ -9,11 +9,11 @@ namespace OpenGL_Learn
     using namespace std;
 
 
-    // ³¡¾°¹ÜÀíÆ÷
+    // åœºæ™¯ç®¡ç†å™¨
     class SceneManager final
     {
     public:
-        // »ñÈ¡»î¶¯³¡¾°
+        // è·å–æ´»åŠ¨åœºæ™¯
         inline static Scene& GetActiveScene() { return *_activeScene; }
 
         static void Initialize();

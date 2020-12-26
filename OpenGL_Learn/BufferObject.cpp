@@ -1,4 +1,4 @@
-#include "BufferObject.h"
+ï»¿#include "BufferObject.h"
 
 #include <iostream>
 
@@ -26,14 +26,14 @@ namespace OpenGL_Learn
         this->ID = id;
         this->Type = bufferType;
 
-        //cout << "LOG:: " << "»º³å¶ÔÏó:: " << "ID=" << id << "ÒÑÉú³É" << endl;
+        //cout << "LOG:: " << "ç¼“å†²å¯¹è±¡:: " << "ID=" << id << "å·²ç”Ÿæˆ" << endl;
     }
 
     BufferObject::~BufferObject()
     {
         //auto id = this->ID;
         glDeleteBuffers(1, &this->ID);
-        //cout << "LOG:: " << "»º³å¶ÔÏó:: " << "ID=" << id << "ÒÑÊÍ·Å" << endl;
+        //cout << "LOG:: " << "ç¼“å†²å¯¹è±¡:: " << "ID=" << id << "å·²é‡Šæ”¾" << endl;
     }
 
 }

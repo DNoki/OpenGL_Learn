@@ -1,4 +1,4 @@
-#include "Light.h"
+ï»¿#include "Light.h"
 
 #include "UniformManager.h"
 
@@ -14,7 +14,7 @@ namespace OpenGL_Learn
 
     Matrix4x4 DirectionalLight::GetLightSpaceMatrix(Camera* camera) const
     {
-        // ÊÓÍ¼¾ØÕó
+        // è§†å›¾çŸ©é˜µ
         auto lightRotate = this->GetTransform().GetRotationMatrix();
         auto lightPosition = Matrix4x4::Translate(camera->GetTransform().GetPosition()
             + camera->GetTransform().GetForward() * ShadowDistance * 0.5f
@@ -22,7 +22,7 @@ namespace OpenGL_Learn
         );
         Matrix4x4 lightView = Matrix4x4::ZInverse * (lightPosition * lightRotate).Inverse();
 
-        // Í¶Ó°¾ØÕó
+        // æŠ•å½±çŸ©é˜µ
         auto size = ShadowDistance * 0.5f;
         Matrix4x4 lightProjection = Matrix4x4::Ortho(-size, size, -size, size, ShadowNearPlaneOffset, 2 * ShadowDistance);
 
@@ -60,9 +60,9 @@ namespace OpenGL_Learn
             for (auto& item : *geometrys)
             {
                 auto m = item->renderer->GetTransform().GetTransformMatrix();
-                UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), m.GetPtr()); // Ä£ÐÍ±ä»»Êý¾Ý
+                UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), m.GetPtr()); // æ¨¡åž‹å˜æ¢æ•°æ®
                 item->renderer->Draw(DirectionalLightShadowmapMaterial, item->index);
-                // °ó¶¨ÒõÓ°ÌùÍ¼
+                // ç»‘å®šé˜´å½±è´´å›¾
                 (*item->material)[item->index]->BindTexture(*this->ShadowMap->GetTexture(0), "_ShadowMap", 10);
             }
     }
@@ -88,17 +88,17 @@ namespace OpenGL_Learn
 
     unique_ptr<List<Matrix4x4>> PointLight::GetLightSpaceMatrix() const
     {
-        // ÊÓÍ¼¾ØÕó
+        // è§†å›¾çŸ©é˜µ
         auto shadowTransforms = make_unique<List<Matrix4x4>>();
         auto lightPos = this->GetTransform().GetPosition();
-        shadowTransforms->push_back(Matrix4x4::LookAt(lightPos, lightPos + Vector3::Right, Vector3::Down)); // ÓÒ
-        shadowTransforms->push_back(Matrix4x4::LookAt(lightPos, lightPos + Vector3::Left, Vector3::Down)); // ×ó
-        shadowTransforms->push_back(Matrix4x4::LookAt(lightPos, lightPos + Vector3::Up, Vector3::Forward)); // ÉÏ
-        shadowTransforms->push_back(Matrix4x4::LookAt(lightPos, lightPos + Vector3::Down, Vector3::Back)); // ÏÂ
-        shadowTransforms->push_back(Matrix4x4::LookAt(lightPos, lightPos + Vector3::Forward, Vector3::Down)); // Ç°
-        shadowTransforms->push_back(Matrix4x4::LookAt(lightPos, lightPos + Vector3::Back, Vector3::Down)); // ºó
+        shadowTransforms->push_back(Matrix4x4::LookAt(lightPos, lightPos + Vector3::Right, Vector3::Down)); // å³
+        shadowTransforms->push_back(Matrix4x4::LookAt(lightPos, lightPos + Vector3::Left, Vector3::Down)); // å·¦
+        shadowTransforms->push_back(Matrix4x4::LookAt(lightPos, lightPos + Vector3::Up, Vector3::Forward)); // ä¸Š
+        shadowTransforms->push_back(Matrix4x4::LookAt(lightPos, lightPos + Vector3::Down, Vector3::Back)); // ä¸‹
+        shadowTransforms->push_back(Matrix4x4::LookAt(lightPos, lightPos + Vector3::Forward, Vector3::Down)); // å‰
+        shadowTransforms->push_back(Matrix4x4::LookAt(lightPos, lightPos + Vector3::Back, Vector3::Down)); // åŽ
 
-        // Í¶Ó°¾ØÕó
+        // æŠ•å½±çŸ©é˜µ
         auto aspect = (float)this->CubeShadowMap->GetTexture(0)->GetWidth() / this->CubeShadowMap->GetTexture(0)->GetHeight();
         auto shadowProj = Matrix4x4::Perspective(90.0f, aspect, ShadowNearPlaneOffset, ShadowDistance);
 
@@ -130,9 +130,9 @@ namespace OpenGL_Learn
             for (auto& item : *geometrys)
             {
                 auto m = item->renderer->GetTransform().GetTransformMatrix();
-                UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), m.GetPtr()); // Ä£ÐÍ±ä»»Êý¾Ý
+                UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), m.GetPtr()); // æ¨¡åž‹å˜æ¢æ•°æ®
                 item->renderer->Draw(PointLightShadowmapMaterial, item->index);
-                // °ó¶¨ÒõÓ°ÌùÍ¼
+                // ç»‘å®šé˜´å½±è´´å›¾
                 (*item->material)[item->index]->BindTexture(*this->CubeShadowMap->GetTexture(0), "_PointLight4ShadowMap[" + to_string(index) + "]", 11 + index);
             }
     }

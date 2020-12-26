@@ -1,4 +1,4 @@
-#include "InputSystem.h"
+ï»¿#include "InputSystem.h"
 
 #include <GLFW/glfw3.h>
 
@@ -86,7 +86,7 @@ namespace OpenGL_Learn
 
     void InputSystem::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
     {
-        // µ±ÓĞ°´¼üÖ¸Áî´¥·¢Ê±µ÷ÓÃ£¬ÅĞ¶ÏÒÑ°ó¶¨°´¼üÊÇ·ñ°üº¬´¥·¢°´¼ü£¬Èô°üº¬ÔòĞŞ¸Ä¸Ã°´¼üÏàÓ¦×´Ì¬
+        // å½“æœ‰æŒ‰é”®æŒ‡ä»¤è§¦å‘æ—¶è°ƒç”¨ï¼Œåˆ¤æ–­å·²ç»‘å®šæŒ‰é”®æ˜¯å¦åŒ…å«è§¦å‘æŒ‰é”®ï¼Œè‹¥åŒ…å«åˆ™ä¿®æ”¹è¯¥æŒ‰é”®ç›¸åº”çŠ¶æ€
         if (InputSystem::_keys.count(key))
         {
             if (action == GLFW_PRESS)

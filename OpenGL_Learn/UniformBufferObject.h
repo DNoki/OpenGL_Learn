@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <glad/glad.h>
 
@@ -9,28 +9,28 @@
 namespace OpenGL_Learn
 {
 
-    // Uniform»º³å¶ÔÏó ¶¨ÒåÒ»ÏµÁĞÔÚ¶à¸ö×ÅÉ«Æ÷ÖĞÏàÍ¬µÄÈ«¾ÖUniform±äÁ¿¡£
+    // Uniformç¼“å†²å¯¹è±¡ å®šä¹‰ä¸€ç³»åˆ—åœ¨å¤šä¸ªç€è‰²å™¨ä¸­ç›¸åŒçš„å…¨å±€Uniformå˜é‡ã€‚
     class UniformBufferObject final :public ResourceObject
     {
     public:
-        // °ó¶¨Á´½ÓË÷Òı
+        // ç»‘å®šé“¾æ¥ç´¢å¼•
         GLuint BindedIndex;
-        // »º³å¶ÔÏó
+        // ç¼“å†²å¯¹è±¡
         BufferObject Buffer;
 
-        // ÊäÈëÆ«ÒÆÊı¾İ
-        // @offset Æ«ÒÆÁ¿
-        // @data Êı¾İ
+        // è¾“å…¥åç§»æ•°æ®
+        // @offset åç§»é‡
+        // @data æ•°æ®
         inline void SetSubData(GLintptr offset, GLsizeiptr size, const void* data)
         {
-            //cout << "¸ø¶¨Êı¾İ´óĞ¡£º"<< size <<"  ¼ÆËã½á¹û´óĞ¡£º"<< sizeof(data) << endl;
+            //cout << "ç»™å®šæ•°æ®å¤§å°ï¼š"<< size <<"  è®¡ç®—ç»“æœå¤§å°ï¼š"<< sizeof(data) << endl;
             Buffer.BufferSubData(offset, size, data);
         }
 
 
-        // ´´½¨UniformBufferObject
-        // size ·ÖÅäÄÚ´æ´óĞ¡
-        // index °ó¶¨Á´½ÓË÷Òı£¨²»Í¬Uniform»º³å¶ÔÏóÔÚÍ¬Ò»×ÅÉ«Æ÷ÖĞĞèÒªÖ¸¶¨²»Í¬Ë÷Òı£©
+        // åˆ›å»ºUniformBufferObject
+        // size åˆ†é…å†…å­˜å¤§å°
+        // index ç»‘å®šé“¾æ¥ç´¢å¼•ï¼ˆä¸åŒUniformç¼“å†²å¯¹è±¡åœ¨åŒä¸€ç€è‰²å™¨ä¸­éœ€è¦æŒ‡å®šä¸åŒç´¢å¼•ï¼‰
         UniformBufferObject(const string& name, GLsizeiptr size, GLuint index) :ResourceObject(name), BindedIndex(index), Buffer(GL_UNIFORM_BUFFER)
         {
             this->Buffer.BindBuffer();

@@ -1,4 +1,4 @@
-#include "Skybox.h"
+ï»¿#include "Skybox.h"
 
 #include "SceneManager.h"
 
@@ -18,7 +18,7 @@ namespace OpenGL_Learn
 
     Skybox::Skybox(const string& name, Material* material) :ResourceObject(name), _material(material)
     {
-        // ³õÊ¼»¯Ìì¿ÕºĞÄ£ĞÍ
+        // åˆå§‹åŒ–å¤©ç©ºç›’æ¨¡å‹
         if (!skyboxMesh)
         {
             skyboxMesh = SceneManager::GetActiveScene().AddResourceObject(make_unique<Mesh>("SkyboxMesh"));

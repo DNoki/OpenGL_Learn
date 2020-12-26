@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Component.h"
 
@@ -13,25 +13,25 @@ namespace OpenGL_Learn
 {
     using namespace std;
 
-    // ĞĞÎªÊÇ¿ÉÒÔÆôÓÃ»ò½ûÓÃµÄ×é¼ş
+    // è¡Œä¸ºæ˜¯å¯ä»¥å¯ç”¨æˆ–ç¦ç”¨çš„ç»„ä»¶
     class Behaviour : public Component
     {
     public:
-        // ÊÇ·ñ¼¤»î
+        // æ˜¯å¦æ¿€æ´»
         bool Enabled;
-        // ¸ÃĞĞÎªÊÇ·ñÒÑ¼¤»î²¢ÒÑÆôÓÃ£¿
+        // è¯¥è¡Œä¸ºæ˜¯å¦å·²æ¿€æ´»å¹¶å·²å¯ç”¨ï¼Ÿ
         inline bool GetIsActiveAndEnabled()
         {
             return Enabled && GetGameObject().GetActive();
         }
 
-        // ·µ»ØÕÒµ½µÄµÚÒ»¸ö×é¼ş
+        // è¿”å›æ‰¾åˆ°çš„ç¬¬ä¸€ä¸ªç»„ä»¶
         template <typename T = Component>
         T * GetComponent() const
         {
             return GetGameObject().GetComponent<T>();
         }
-        // ·µ»ØÕÒµ½µÄ×é¼ş
+        // è¿”å›æ‰¾åˆ°çš„ç»„ä»¶
         template <typename T = Component>
         List<T*> GetComponents() const
         {

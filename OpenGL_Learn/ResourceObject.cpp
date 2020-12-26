@@ -1,4 +1,4 @@
-#include "ResourceObject.h"
+ï»¿#include "ResourceObject.h"
 
 #include "SceneManager.h"
 #include "RenderTexture.h"
@@ -14,8 +14,8 @@ namespace OpenGL_Learn
         {
             auto& Objects = SceneManager::GetActiveScene().GetAllGameObjects();
             auto uniqueptr = Objects.Find([&](const unique_ptr<GameObject>& o) { return o.get() == &_object; });
-            if (!uniqueptr) return; // ³¡¾°ÀïÃ»ÕÒµ½Õâ¸ö¶ÔÏó
-            destroyList.push_back(move(*uniqueptr)); // Ìí¼Óµ½´ýÊÍ·ÅÁÐ±í
+            if (!uniqueptr) return; // åœºæ™¯é‡Œæ²¡æ‰¾åˆ°è¿™ä¸ªå¯¹è±¡
+            destroyList.push_back(move(*uniqueptr)); // æ·»åŠ åˆ°å¾…é‡Šæ”¾åˆ—è¡¨
             Objects.Remove(*uniqueptr);
             return;
         }
@@ -27,7 +27,7 @@ namespace OpenGL_Learn
                 auto uniqueptr = pairObjs.second.Find([&](const unique_ptr<ResourceObject>& o) { return o.get() == &_object; });
                 if (uniqueptr) 
                 {
-                    destroyList.push_back(move(*uniqueptr)); // Ìí¼Óµ½´ýÊÍ·ÅÁÐ±í
+                    destroyList.push_back(move(*uniqueptr)); // æ·»åŠ åˆ°å¾…é‡Šæ”¾åˆ—è¡¨
                     pairObjs.second.Remove(*uniqueptr);
                     return;
                 }
@@ -41,7 +41,7 @@ namespace OpenGL_Learn
         {
             auto& Objects = SceneManager::GetActiveScene().GetAllGameObjects();
             auto uniqueptr = Objects.Find([&](const unique_ptr<GameObject>& o) { return o.get() == &_object; });
-            if (!uniqueptr) return; // ³¡¾°ÀïÃ»ÕÒµ½Õâ¸ö¶ÔÏó
+            if (!uniqueptr) return; // åœºæ™¯é‡Œæ²¡æ‰¾åˆ°è¿™ä¸ªå¯¹è±¡
             Objects.Remove(*uniqueptr);
             return;
         }

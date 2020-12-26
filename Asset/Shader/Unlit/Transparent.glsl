@@ -1,4 +1,4 @@
-{_!Property_Start
+﻿{_!Property_Start
 {
     "RenderQueue": 3000,
     "_MainColor": [1, 1, 1, 1],

@@ -1,4 +1,4 @@
-#include "GameSystem.h"
+ï»¿#include "GameSystem.h"
 
 #include <iostream>
 
@@ -21,14 +21,14 @@ namespace OpenGL_Learn
 
     void GameSystem::LifeCycle()
     {
-        // ³õÊ¼»¯ GLFW ´°¿Ú ------------------------------------------------------
-        glfwInit();//³õÊ¼»¯  ºÍglfwTerminate¶ÔÓ¦
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);//ÅäÖÃGLFW
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);//ÅäÖÃGLFW
+        // åˆå§‹åŒ– GLFW çª—å£ ------------------------------------------------------
+        glfwInit();//åˆå§‹åŒ–  å’ŒglfwTerminateå¯¹åº”
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);//é…ç½®GLFW
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);//é…ç½®GLFW
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-        //glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);// ½ûÓÃË«»º³å
-        // ¶àÖØ²ÉÑù¿¹¾â³İ(Multisample Anti-aliasing, MSAA)
+        //glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);// ç¦ç”¨åŒç¼“å†²
+        // å¤šé‡é‡‡æ ·æŠ—é”¯é½¿(Multisample Anti-aliasing, MSAA)
         //glfwWindowHint(GLFW_SAMPLES, 4);
 
         _window = glfwCreateWindow(GameSystem::ScreenWidth, GameSystem::ScreenHeight, "OpenGL", nullptr, nullptr);
@@ -38,57 +38,57 @@ namespace OpenGL_Learn
             glfwTerminate();
             return;
         }
-        glfwMakeContextCurrent(_window);// Ö¸¶¨´°¿ÚµÄÉÏÏÂÎÄ³ÉÎªµ±Ç°Ïß³Ì¡£
-        glfwSwapInterval(0);// ½»»»»º³åÇøÖ®Ç°ÒªµÈ´ıµÄ×îĞ¡ÆÁÄ»¸üĞÂÊı¡£ ´¹Ö±Í¬²½
+        glfwMakeContextCurrent(_window);// æŒ‡å®šçª—å£çš„ä¸Šä¸‹æ–‡æˆä¸ºå½“å‰çº¿ç¨‹ã€‚
+        glfwSwapInterval(0);// äº¤æ¢ç¼“å†²åŒºä¹‹å‰è¦ç­‰å¾…çš„æœ€å°å±å¹•æ›´æ–°æ•°ã€‚ å‚ç›´åŒæ­¥
 
-        // ³õÊ¼»¯ GLAD £¨OpenGLº¯Êı·â×°¿â£©------------------------------------------------------
-        // GLADÊÇÓÃÀ´¹ÜÀíOpenGLµÄº¯ÊıÖ¸ÕëµÄ£¬ËùÒÔÔÚµ÷ÓÃÈÎºÎOpenGLµÄº¯ÊıÖ®Ç°ĞèÒª³õÊ¼»¯GLAD¡£
+        // åˆå§‹åŒ– GLAD ï¼ˆOpenGLå‡½æ•°å°è£…åº“ï¼‰------------------------------------------------------
+        // GLADæ˜¯ç”¨æ¥ç®¡ç†OpenGLçš„å‡½æ•°æŒ‡é’ˆçš„ï¼Œæ‰€ä»¥åœ¨è°ƒç”¨ä»»ä½•OpenGLçš„å‡½æ•°ä¹‹å‰éœ€è¦åˆå§‹åŒ–GLADã€‚
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
             cout << "ERROR:: " << "Failed to initialize GLAD" << endl;
             return;
         }
-        // ¶àÖØ²ÉÑù¿¹¾â³İ(Multisample Anti-aliasing, MSAA)
+        // å¤šé‡é‡‡æ ·æŠ—é”¯é½¿(Multisample Anti-aliasing, MSAA)
         //glEnable(GL_MULTISAMPLE);
 
 
-        // ĞŞ¸ÄÊÓ¿Ú ------------------------------------------------------
+        // ä¿®æ”¹è§†å£ ------------------------------------------------------
         int width, height;
         glfwGetFramebufferSize(_window, &width, &height);
         glViewport(0, 0, width, height);
 
 
-        // ³õÊ¼»¯ÊäÈëÏµÍ³ ------------------------------------------------------
+        // åˆå§‹åŒ–è¾“å…¥ç³»ç»Ÿ ------------------------------------------------------
         InputSystem::Initialize();
-        glfwSetKeyCallback(_window, InputSystem::KeyCallback);// ×¢²á°´¼ü»Øµ÷
-        glfwSetCursorPosCallback(_window, InputSystem::MousePosCallback); // Êó±êÎ»ÖÃ»Øµ÷º¯Êı
+        glfwSetKeyCallback(_window, InputSystem::KeyCallback);// æ³¨å†ŒæŒ‰é”®å›è°ƒ
+        glfwSetCursorPosCallback(_window, InputSystem::MousePosCallback); // é¼ æ ‡ä½ç½®å›è°ƒå‡½æ•°
 
 
         UniformManager::Initialize();
         SceneManager::Initialize();
 
-        // ÓÎÏ·Ñ­»·
-        while (!glfwWindowShouldClose(_window))// glfwWindowShouldCloseº¯ÊıÔÚÎÒÃÇÃ¿´ÎÑ­»·µÄ¿ªÊ¼Ç°¼ì²éÒ»´ÎGLFWÊÇ·ñ±»ÒªÇóÍË³ö£¬Èç¹ûÊÇµÄ»°¸Ãº¯Êı·µ»ØtrueÈ»ºóÓÎÏ·Ñ­»·±ã½áÊøÁË£¬Ö®ºóÎªÎÒÃÇ¾Í¿ÉÒÔ¹Ø±ÕÓ¦ÓÃ³ÌĞòÁË¡£
+        // æ¸¸æˆå¾ªç¯
+        while (!glfwWindowShouldClose(_window))// glfwWindowShouldCloseå‡½æ•°åœ¨æˆ‘ä»¬æ¯æ¬¡å¾ªç¯çš„å¼€å§‹å‰æ£€æŸ¥ä¸€æ¬¡GLFWæ˜¯å¦è¢«è¦æ±‚é€€å‡ºï¼Œå¦‚æœæ˜¯çš„è¯è¯¥å‡½æ•°è¿”å›trueç„¶åæ¸¸æˆå¾ªç¯ä¾¿ç»“æŸäº†ï¼Œä¹‹åä¸ºæˆ‘ä»¬å°±å¯ä»¥å…³é—­åº”ç”¨ç¨‹åºäº†ã€‚
         {
 
             auto timeData = Vector4(Time::RunTime(), sin(Time::RunTime()), cos(Time::RunTime()), Time::DeltaTime());
             UniformManager::Time->SetSubData(0, sizeof(Vector4), timeData.GetPtr());
 
-            // ¼ì²éÊÂ¼ş £¨ÊäÈëÊÂ¼ş£©
+            // æ£€æŸ¥äº‹ä»¶ ï¼ˆè¾“å…¥äº‹ä»¶ï¼‰
             InputSystem::ResetOnFrame();
-            glfwPollEvents();// glfwPollEventsº¯Êı¼ì²éÓĞÃ»ÓĞ´¥·¢Ê²Ã´ÊÂ¼ş£¨±ÈÈç¼üÅÌÊäÈë¡¢Êó±êÒÆ¶¯µÈ£©£¬È»ºóµ÷ÓÃ¶ÔÓ¦µÄ»Øµ÷º¯Êı£¨¿ÉÒÔÍ¨¹ı»Øµ÷·½·¨ÊÖ¶¯ÉèÖÃ£©¡£ÎÒÃÇÒ»°ãÔÚÓÎÏ·Ñ­»·µÄ¿ªÊ¼µ÷ÓÃÊÂ¼ş´¦Àíº¯Êı¡£
+            glfwPollEvents();// glfwPollEventså‡½æ•°æ£€æŸ¥æœ‰æ²¡æœ‰è§¦å‘ä»€ä¹ˆäº‹ä»¶ï¼ˆæ¯”å¦‚é”®ç›˜è¾“å…¥ã€é¼ æ ‡ç§»åŠ¨ç­‰ï¼‰ï¼Œç„¶åè°ƒç”¨å¯¹åº”çš„å›è°ƒå‡½æ•°ï¼ˆå¯ä»¥é€šè¿‡å›è°ƒæ–¹æ³•æ‰‹åŠ¨è®¾ç½®ï¼‰ã€‚æˆ‘ä»¬ä¸€èˆ¬åœ¨æ¸¸æˆå¾ªç¯çš„å¼€å§‹è°ƒç”¨äº‹ä»¶å¤„ç†å‡½æ•°ã€‚
 
             SceneManager::GetActiveScene().ExcuteUpdate();
 
-            // ½»»»»º³å
-            glfwSwapBuffers(_window);// glfwSwapBuffersº¯Êı»á½»»»ÑÕÉ«»º³å£¨ËüÊÇÒ»¸ö´¢´æ×ÅGLFW´°¿ÚÃ¿Ò»¸öÏñËØÑÕÉ«µÄ´ó»º³å£©£¬ËüÔÚÕâÒ»µü´úÖĞ±»ÓÃÀ´»æÖÆ£¬²¢ÇÒ½«»á×÷ÎªÊä³öÏÔÊ¾ÔÚÆÁÄ»ÉÏ¡£
+            // äº¤æ¢ç¼“å†²
+            glfwSwapBuffers(_window);// glfwSwapBufferså‡½æ•°ä¼šäº¤æ¢é¢œè‰²ç¼“å†²ï¼ˆå®ƒæ˜¯ä¸€ä¸ªå‚¨å­˜ç€GLFWçª—å£æ¯ä¸€ä¸ªåƒç´ é¢œè‰²çš„å¤§ç¼“å†²ï¼‰ï¼Œå®ƒåœ¨è¿™ä¸€è¿­ä»£ä¸­è¢«ç”¨æ¥ç»˜åˆ¶ï¼Œå¹¶ä¸”å°†ä¼šä½œä¸ºè¾“å‡ºæ˜¾ç¤ºåœ¨å±å¹•ä¸Šã€‚
 
             if (InputSystem::GetKeyDown(KeyCode::ESCAPE))
                 glfwSetWindowShouldClose(_window, GL_TRUE);
 
-            PrintError("Ö÷Ñ­»·Ä©Î²£º");
+            PrintError("ä¸»å¾ªç¯æœ«å°¾ï¼š");
 
-            // ¸üĞÂÊ±¼ä
+            // æ›´æ–°æ—¶é—´
             Time::Update(glfwGetTime());
             //cout << Time::RunTime() << " | " << Time::RealtimeSinceStartup() << endl;
         }
@@ -104,13 +104,13 @@ namespace OpenGL_Learn
         std::string error;
         switch (errorCode)
         {
-        case GL_INVALID_ENUM:                  error = "Ã¶¾Ù²ÎÊı²»ºÏ·¨"; break;
-        case GL_INVALID_VALUE:                 error = "Öµ²ÎÊı²»ºÏ·¨"; break;
-        case GL_INVALID_OPERATION:             error = "Ò»¸öÖ¸ÁîµÄ×´Ì¬¶ÔÖ¸ÁîµÄ²ÎÊı²»ºÏ·¨"; break;
-        case GL_STACK_OVERFLOW:                error = "Ñ¹Õ»²Ù×÷Ôì³ÉÕ»ÉÏÒç(Overflow)"; break;
-        case GL_STACK_UNDERFLOW:               error = "µ¯Õ»²Ù×÷Ê±Õ»ÔÚ×îµÍµã,¼´Õ»ÏÂÒç(Underflow)"; break;
-        case GL_OUT_OF_MEMORY:                 error = "ÄÚ´æµ÷ÓÃ²Ù×÷ÎŞ·¨µ÷ÓÃ£¨×ã¹»µÄ£©ÄÚ´æ"; break;
-        case GL_INVALID_FRAMEBUFFER_OPERATION: error = "¶ÁÈ¡»òĞ´ÈëÒ»¸ö²»ÍêÕûµÄÖ¡»º³å"; break;
+        case GL_INVALID_ENUM:                  error = "æšä¸¾å‚æ•°ä¸åˆæ³•"; break;
+        case GL_INVALID_VALUE:                 error = "å€¼å‚æ•°ä¸åˆæ³•"; break;
+        case GL_INVALID_OPERATION:             error = "ä¸€ä¸ªæŒ‡ä»¤çš„çŠ¶æ€å¯¹æŒ‡ä»¤çš„å‚æ•°ä¸åˆæ³•"; break;
+        case GL_STACK_OVERFLOW:                error = "å‹æ ˆæ“ä½œé€ æˆæ ˆä¸Šæº¢(Overflow)"; break;
+        case GL_STACK_UNDERFLOW:               error = "å¼¹æ ˆæ“ä½œæ—¶æ ˆåœ¨æœ€ä½ç‚¹,å³æ ˆä¸‹æº¢(Underflow)"; break;
+        case GL_OUT_OF_MEMORY:                 error = "å†…å­˜è°ƒç”¨æ“ä½œæ— æ³•è°ƒç”¨ï¼ˆè¶³å¤Ÿçš„ï¼‰å†…å­˜"; break;
+        case GL_INVALID_FRAMEBUFFER_OPERATION: error = "è¯»å–æˆ–å†™å…¥ä¸€ä¸ªä¸å®Œæ•´çš„å¸§ç¼“å†²"; break;
         }
         cout << "ERROR:: " << text << error << endl;
     }

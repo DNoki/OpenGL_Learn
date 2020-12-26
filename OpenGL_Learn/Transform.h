@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Math.h"
 
@@ -6,71 +6,71 @@
 
 namespace OpenGL_Learn
 {
-    // ±ä»»
+    // å˜æ¢
     class Transform final : public Component
     {
     public:
-        // ±¾µØ×ø±êÎ»ÖÃ
+        // æœ¬åœ°åæ ‡ä½ç½®
         Vector3 LocalPosition;
-        // ±¾µØ×ø±êĞı×ª
+        // æœ¬åœ°åæ ‡æ—‹è½¬
         Vector3 LocalEulerAngles;
-        // ±¾µØ×ø±êËõ·Å
+        // æœ¬åœ°åæ ‡ç¼©æ”¾
         Vector3 LocalScale;
 
-        // »ñÈ¡ÊÀ½ç×ø±êÎ»ÖÃ
+        // è·å–ä¸–ç•Œåæ ‡ä½ç½®
         Vector3 GetPosition(bool isWorld = true) const;
-        // ÉèÖÃÎ»ÖÃ
+        // è®¾ç½®ä½ç½®
         void SetPosition(const Vector3& pos, bool isWorld = true);
-        // »ñÈ¡ÊÀ½ç×ø±êĞı×ª
+        // è·å–ä¸–ç•Œåæ ‡æ—‹è½¬
         Quaternion GetRotation(bool isWorld = true) const;
-        // ÉèÖÃĞı×ª
+        // è®¾ç½®æ—‹è½¬
         void SetRotation(const Quaternion& rot, bool isWorld = true);
-        // »ñÈ¡ÊÀ½ç×ø±êÅ·À­½Ç
+        // è·å–ä¸–ç•Œåæ ‡æ¬§æ‹‰è§’
         Vector3 GetEulerAngles(bool isWorld = true) const;
-        // ÉèÖÃÅ·À­½Ç
+        // è®¾ç½®æ¬§æ‹‰è§’
         void SetEulerAngles(const Vector3& e, bool isWorld = true);
-        // »ñÈ¡È«¾Ö±ÈÀı
+        // è·å–å…¨å±€æ¯”ä¾‹
         Vector3 GetLossyScale() const;
 
-        // »ñÈ¡±ä»»¾ØÕó
+        // è·å–å˜æ¢çŸ©é˜µ
         Matrix4x4 GetTransformMatrix() const;
-        // »ñÈ¡Æ½ÒÆ¾ØÕó
+        // è·å–å¹³ç§»çŸ©é˜µ
         Matrix4x4 GetPositionMatrix() const;
-        // »ñÈ¡Ğı×ª¾ØÕó
+        // è·å–æ—‹è½¬çŸ©é˜µ
         Matrix4x4 GetRotationMatrix() const;
-        // ³¢ÊÔÉèÖÃ±ä»»¾ØÕó
+        // å°è¯•è®¾ç½®å˜æ¢çŸ©é˜µ
         void SetTransformMatrix(Matrix4x4 matrix, bool isWorld = false);
 
-        // »ñÈ¡Ç°·½Ïò
+        // è·å–å‰æ–¹å‘
         Vector3 GetForward() const;
-        // »ñÈ¡ÉÏ·½Ïò
+        // è·å–ä¸Šæ–¹å‘
         Vector3 GetUp() const;
-        // »ñÈ¡ÓÒ·½Ïò
+        // è·å–å³æ–¹å‘
         Vector3 GetRight() const;
 
-        // »ñÈ¡¸ù±ä»»
+        // è·å–æ ¹å˜æ¢
         Transform* GetRootTransfom();
-        // ÉèÖÃ¸¸¶ÔÏó
-        // @¸¸¶ÔÏó
-        // @±£³ÖÊÀ½ç¿Õ¼äÎ»ÖÃ
+        // è®¾ç½®çˆ¶å¯¹è±¡
+        // @çˆ¶å¯¹è±¡
+        // @ä¿æŒä¸–ç•Œç©ºé—´ä½ç½®
         void SetParent(Transform* parent, bool worldPositionStays = true);
         inline Transform* GetParent() { return this->_parent; }
         inline List<Transform*>& GetChilds() { return _childs; }
 
-        // Æ½ÒÆ
+        // å¹³ç§»
         void Translate(Vector3 value, bool isWorld = false);
-        // ÈÆÖ¸¶¨ÖáÏòĞı×ª
+        // ç»•æŒ‡å®šè½´å‘æ—‹è½¬
         void Rotate(Vector3 axis, float angle, bool isWorld = false);
         void RotateAround(Vector3 point, Vector3 axis, float angle);
 
-        // È¡µÃ×¢ÊÓ·½Ïò
+        // å–å¾—æ³¨è§†æ–¹å‘
         void LookAt(Vector3 target, Vector3 up = Vector3::Up);
 
         Transform(GameObject& obj);
         Transform(GameObject& obj, Vector3 p, Quaternion r, Vector3 s);
 
     private:
-        // ¸¸¶ÔÏó±ä»»
+        // çˆ¶å¯¹è±¡å˜æ¢
         Transform* _parent;
         List<Transform*> _childs;
 

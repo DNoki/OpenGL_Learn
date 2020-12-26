@@ -1,4 +1,4 @@
-#include "Camera.h"
+ï»¿#include "Camera.h"
 
 #include <algorithm>
 
@@ -90,32 +90,32 @@ namespace OpenGL_Learn
 
     void Camera::BindTarget() const
     {
-        // äÖÈ¾µ½Ö¸¶¨Ä¿±ê
+        // æ¸²æŸ“åˆ°æŒ‡å®šç›®æ ‡
         if (this->TargetTexture)
             this->TargetTexture->BindFramebuffer();
 
-        // äÖÈ¾µ½Ä¬ÈÏÌùÍ¼ÉÏ £¨Ö±½ÓäÖÈ¾µ½´°¿Ú»á³ö´í£©
+        // æ¸²æŸ“åˆ°é»˜è®¤è´´å›¾ä¸Š ï¼ˆç›´æŽ¥æ¸²æŸ“åˆ°çª—å£ä¼šå‡ºé”™ï¼‰
         if (this->IsMSAA)
             DefaultTargetMultisampleTexture->BindFramebuffer();
         else DefaultTargetTexture->BindFramebuffer();
     }
     void Camera::RenderToTargetTexture(RenderTexture* targetTex)
     {
-        if (targetTex) // äÖÈ¾µ½Ö¸¶¨ÌùÍ¼´æÔÚ
+        if (targetTex) // æ¸²æŸ“åˆ°æŒ‡å®šè´´å›¾å­˜åœ¨
         {
-            if (this->TargetTexture) // Ïà»úÖ¸¶¨ÌùÍ¼Êý¾Ý¿½±´
+            if (this->TargetTexture) // ç›¸æœºæŒ‡å®šè´´å›¾æ•°æ®æ‹·è´
                 this->TargetTexture->Blit(*targetTex);
-            else if (this->IsMSAA) // Ä¬ÈÏ¶à²ÉÑùäÖÈ¾ÌùÍ¼Êý¾Ý¿½±´
+            else if (this->IsMSAA) // é»˜è®¤å¤šé‡‡æ ·æ¸²æŸ“è´´å›¾æ•°æ®æ‹·è´
                 Camera::DefaultTargetMultisampleTexture->Blit(*targetTex);
-            else // Ä¬ÈÏäÖÈ¾ÌùÍ¼Êý¾Ý¿½±´
+            else // é»˜è®¤æ¸²æŸ“è´´å›¾æ•°æ®æ‹·è´
                 Camera::DefaultTargetTexture->Blit(*targetTex);
         }
         else
         {
-            if (this->TargetTexture) return; // Ïà»úÖ¸¶¨ÌùÍ¼²»ÐÞ¸Ä
-            else if (this->IsMSAA) // Ä¬ÈÏ¶à²ÉÑùäÖÈ¾ÌùÍ¼Êý¾Ý¿½±´µ½Ä¬ÈÏäÖÈ¾ÌùÍ¼
+            if (this->TargetTexture) return; // ç›¸æœºæŒ‡å®šè´´å›¾ä¸ä¿®æ”¹
+            else if (this->IsMSAA) // é»˜è®¤å¤šé‡‡æ ·æ¸²æŸ“è´´å›¾æ•°æ®æ‹·è´åˆ°é»˜è®¤æ¸²æŸ“è´´å›¾
                 Camera::DefaultTargetMultisampleTexture->Blit(*Camera::DefaultTargetTexture);
-            else return; // Ä¬ÈÏäÖÈ¾ÌùÍ¼²»ÐÞ¸Ä
+            else return; // é»˜è®¤æ¸²æŸ“è´´å›¾ä¸ä¿®æ”¹
         }
     }
 
@@ -153,14 +153,14 @@ namespace OpenGL_Learn
                 item->renderer->Draw(item->index);
             }
         // 3000~3999 Transparent 
-        // °´ÀëÏà»ú¾àÀëÓÉ´óµ½Ð¡ÅÅÐò
+        // æŒ‰ç¦»ç›¸æœºè·ç¦»ç”±å¤§åˆ°å°æŽ’åº
         if (transparents)
         {
             auto cameraPos = this->GetTransform().GetPosition();
             for (auto& item : *transparents)
             {
                 auto pos = item->renderer->GetTransform().GetPosition() - cameraPos;
-                item->depth = Vector3::Dot(pos, pos);// ½ö×ö±È½ÏÊ±ÎÞÐè¿ª·½
+                item->depth = Vector3::Dot(pos, pos);// ä»…åšæ¯”è¾ƒæ—¶æ— éœ€å¼€æ–¹
             }
             sort(transparents->begin(), transparents->end(), [](const unique_ptr<RenderItem>& left, const unique_ptr<RenderItem>& right) { return left->depth > right->depth; });
             for (auto& item : *transparents)
@@ -185,7 +185,7 @@ namespace OpenGL_Learn
         if (this->ClearFlags == CameraClearFlags::SKYBOX || this->ClearFlags == CameraClearFlags::SOLID_COLOR)
         {
             Camera::UseRenderState(this->State);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); //×´Ì¬Ê¹ÓÃº¯Êý
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); //çŠ¶æ€ä½¿ç”¨å‡½æ•°
         }
         else if (this->ClearFlags == CameraClearFlags::DEPTH)
         {
@@ -202,10 +202,10 @@ namespace OpenGL_Learn
 
     Matrix4x4 Camera::GetViewMatrix() const
     {
-        // ½«ÊÀ½çÖÐµÄÏà»úµÄ»ù±ä»»µ½OpenGlÊÓ¿Ú»ù
-        /*Ïà»ú¿Õ¼äÓëOpenGLÔ¼¶¨ÏàÆ¥Åä£ºÏà»úµÄÇ°ÏòÊÇ¸ºZÖá¡£
-        ÔÚÊÀ½ç×ø±êÏµÖÐ£¬Ê¹ÓÃ×óÊÖ×ø±êÏµ£¬
-        ÔÚÊÓ¿ÚÖÐ£¬Ê¹ÓÃÓÒÊÖ×ø±êÏµ£¬ÆÁÄ»¶Ô×ÅÄãµÄ·½ÏòÊÇ+Z
+        // å°†ä¸–ç•Œä¸­çš„ç›¸æœºçš„åŸºå˜æ¢åˆ°OpenGlè§†å£åŸº
+        /*ç›¸æœºç©ºé—´ä¸ŽOpenGLçº¦å®šç›¸åŒ¹é…ï¼šç›¸æœºçš„å‰å‘æ˜¯è´ŸZè½´ã€‚
+        åœ¨ä¸–ç•Œåæ ‡ç³»ä¸­ï¼Œä½¿ç”¨å·¦æ‰‹åæ ‡ç³»ï¼Œ
+        åœ¨è§†å£ä¸­ï¼Œä½¿ç”¨å³æ‰‹åæ ‡ç³»ï¼Œå±å¹•å¯¹ç€ä½ çš„æ–¹å‘æ˜¯+Z
         */
         auto T = Matrix4x4::Translate(-this->GetTransform().GetPosition());
         auto R = this->GetTransform().GetRotationMatrix().Transpose();
@@ -251,7 +251,7 @@ namespace OpenGL_Learn
             DefaultTargetTextureMesh = SceneManager::GetActiveScene().AddResourceObject(make_unique<Mesh>("Default TargetTexture Mesh"));
             DefaultTargetTextureMesh->HideFlag = HideFlagType::STATIC;
 
-            // ³õÊ¼»¯ÌØÐ§ÒªÊ¹ÓÃµÄÆ½Ãæ
+            // åˆå§‹åŒ–ç‰¹æ•ˆè¦ä½¿ç”¨çš„å¹³é¢
             DefaultTargetTextureMesh->vertices.push_back(Vector3(-1.0f, -1.0f, 0.0f));
             DefaultTargetTextureMesh->vertices.push_back(Vector3(1.0f, -1.0f, 0.0f));
             DefaultTargetTextureMesh->vertices.push_back(Vector3(-1.0f, 1.0f, 0.0f));

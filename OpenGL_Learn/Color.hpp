@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Math.h"
 
@@ -17,7 +17,7 @@ namespace OpenGL_Learn
         inline static Color Magenta() { return Color(1.0f, 0.0f, 1.0f); }
         inline static Color Cyan() { return Color(0.0f, 1.0f, 1.0f); }
 
-        // HSVÑÕÉ«×ªRGB
+        // HSVé¢œè‰²è½¬RGB
         static Color HSVtoRGB(float hue, float saturation, float value)
         {
             Color result = Color();
@@ -80,10 +80,10 @@ namespace OpenGL_Learn
         //Color(const int& r, const int& g, const int& b) :Color(r / 255.f, g / 255.f, b / 255.f, 1.0f) {}
         Color(const float& r, const float& g, const float& b) :Color(r, g, b, 1.0f) {}
         Color(const float& r, const float& g, const float& b, const float& a) :r(r), g(g), b(b), a(a) {}
-        // ÒşÊ½¹¹Ôìº¯Êı
+        // éšå¼æ„é€ å‡½æ•°
         Color(const Vector4& v) :r(v.x), g(v.y), b(v.z), a(v.w) {}
 
-        // ×Ô¶¨ÒåÒşÊ½ÀàĞÍ×ª»»
+        // è‡ªå®šä¹‰éšå¼ç±»å‹è½¬æ¢
         operator Vector4() const { return Vector4(r, g, b, a); }
 
         bool operator ==(const Color& color) const { return Math::Approximately((*this).r, color.r) && Math::Approximately((*this).g, color.g) && Math::Approximately((*this).b, color.b) && Math::Approximately((*this).a, color.a); }
@@ -92,10 +92,10 @@ namespace OpenGL_Learn
 
 
     /*
-    .hppµÄÏà¹ØµÄÊ¹ÓÃ¹æÔò
+    .hppçš„ç›¸å…³çš„ä½¿ç”¨è§„åˆ™
 
-    a)²»¿É°üº¬È«¾Ö¶ÔÏóºÍÈ«¾Öº¯Êı
-    b)ÀàÖ®¼ä²»¿ÉÑ­»·µ÷ÓÃ
-    c)²»¿ÉÊ¹ÓÃ¾²Ì¬³ÉÔ±
+    a)ä¸å¯åŒ…å«å…¨å±€å¯¹è±¡å’Œå…¨å±€å‡½æ•°
+    b)ç±»ä¹‹é—´ä¸å¯å¾ªç¯è°ƒç”¨
+    c)ä¸å¯ä½¿ç”¨é™æ€æˆå‘˜
     */
 }

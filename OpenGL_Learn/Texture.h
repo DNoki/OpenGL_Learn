@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include <memory>
@@ -61,8 +61,8 @@ namespace OpenGL_Learn
     };
     enum class ScaleFilterType
     {
-        NEAREST = GL_NEAREST, // ÁÚ½ü¹ıÂË
-        LINEAR = GL_LINEAR, // ÏßĞÔ¹ıÂË(»ìºÏÖÜÎ§ÑÕÉ«)
+        NEAREST = GL_NEAREST, // é‚»è¿‘è¿‡æ»¤
+        LINEAR = GL_LINEAR, // çº¿æ€§è¿‡æ»¤(æ··åˆå‘¨å›´é¢œè‰²)
     };
 
 
@@ -71,11 +71,11 @@ namespace OpenGL_Learn
     public:
         GLuint ID;
 
-        // »ñÈ¡ÌùÍ¼ÀàĞÍ
+        // è·å–è´´å›¾ç±»å‹
         virtual GLenum GetTextureType() const = 0;
-        // »ñÈ¡¿í¶È
+        // è·å–å®½åº¦
         inline int GetWidth() const { return _width; }
-        // »ñÈ¡¸ß¶È
+        // è·å–é«˜åº¦
         inline int GetHeight() const { return _height; }
         inline void BindTexture() const { glBindTexture(GetTextureType(), ID); }
 
@@ -93,14 +93,14 @@ namespace OpenGL_Learn
     class Texture2D final : public Texture
     {
     public:
-        //@brief ´ÓÎÄ¼ş¶ÁÈ¡2DÌùÍ¼
-        //@param path		Â·¾¶
-        //@param isSRGB		ÊÇ·ñÊ¶±ğÎªsRGBÌùÍ¼
-        //@param wrapMode   ÖØ¸´Ä£Ê½
-        //@param scaleFilterMode	Ëõ·ÅÄ£Ê½
-        //@param flipY	ÊÇ·ñ·­×ªY
+        //@brief ä»æ–‡ä»¶è¯»å–2Dè´´å›¾
+        //@param path		è·¯å¾„
+        //@param isSRGB		æ˜¯å¦è¯†åˆ«ä¸ºsRGBè´´å›¾
+        //@param wrapMode   é‡å¤æ¨¡å¼
+        //@param scaleFilterMode	ç¼©æ”¾æ¨¡å¼
+        //@param flipY	æ˜¯å¦ç¿»è½¬Y
         //
-        //@return ·µ»Ø¼ÓÔØµÄÌùÍ¼ID
+        //@return è¿”å›åŠ è½½çš„è´´å›¾ID
         //static Texture2D& LoadTexture2D(const string& name, const string& path, GLenum wrapMode = GL_REPEAT, GLenum scaleFilterMode = GL_LINEAR);
         static unique_ptr<Texture2D> CreateTexture2D(const string& name,
             const string& path, bool isSRGB,
@@ -161,12 +161,12 @@ namespace OpenGL_Learn
     //GLuint texture;
     //glGenTextures(1, &texture);
     //glBindTexture(GL_TEXTURE_2D, texture);
-    //// Îªµ±Ç°°ó¶¨µÄÎÆÀí¶ÔÏóÉèÖÃ»·ÈÆ¡¢¹ıÂË·½Ê½
+    //// ä¸ºå½“å‰ç»‘å®šçš„çº¹ç†å¯¹è±¡è®¾ç½®ç¯ç»•ã€è¿‡æ»¤æ–¹å¼
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    //// ¼ÓÔØ²¢Éú³ÉÎÆÀí
+    //// åŠ è½½å¹¶ç”Ÿæˆçº¹ç†
     //int texWidth, texHeight, nrChannels;
     //unsigned char *data = stbi_load("Resource/TestImage.png", &texWidth, &texHeight, &nrChannels, 0);
     //if (data)
@@ -175,7 +175,7 @@ namespace OpenGL_Learn
     //	glGenerateMipmap(GL_TEXTURE_2D);
     //}
     //else cout << "Failed to load texture" << endl;
-    //stbi_image_free(data);// ÊÍ·ÅÍ¼ÏñµÄÄÚ´æ
+    //stbi_image_free(data);// é‡Šæ”¾å›¾åƒçš„å†…å­˜
     //glActiveTexture(GL_TEXTURE0);
     //glBindTexture(GL_TEXTURE_2D, texture);
     //enum TextureType

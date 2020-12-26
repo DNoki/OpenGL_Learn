@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 //#include <GLFW/glfw3.h>
 
@@ -58,7 +58,7 @@ namespace OpenGL_Learn
                         {
                             fmt.str(""); fmt << j << " " << typeid(*components[j]).name() << "  0x" << components[j].get();
                             if (ImGui::TreeNode(fmt.str().c_str()))
-                                // ÆäËûÎ´Éè¶¨×é¼ş
+                                // å…¶ä»–æœªè®¾å®šç»„ä»¶
                                 ImGui::TreePop();
                         }
                     }
@@ -311,7 +311,7 @@ namespace OpenGL_Learn
                     ImGui::TreePop();
                 }
 
-                { // Éî¶È²âÊÔ
+                { // æ·±åº¦æµ‹è¯•
                     ImGui::Checkbox("Depth Test", &shader->State.DepthTest);
                     if (shader->State.DepthTest)
                     {
@@ -321,7 +321,7 @@ namespace OpenGL_Learn
                         shader->State.DepthTestMode = static_cast<TestModeType>(mode + static_cast<int>(TestModeType::NEVER));
                     }
                 }
-                { // Ä£°å²âÊÔ
+                { // æ¨¡æ¿æµ‹è¯•
                     ImGui::Checkbox("Stencil Test", &shader->State.Stencil);
                     if (shader->State.Stencil)
                     {
@@ -333,7 +333,7 @@ namespace OpenGL_Learn
                         ImGui::SliderInt("Stencil Ref Mask", (int*)&shader->State.StencilRefMask, 0x00, 0xFF, "%d");
                     }
                 }
-                { // »ìºÏ
+                { // æ··åˆ
                     ImGui::Checkbox("Blend", &shader->State.Blend);
                     if (shader->State.Blend)
                     {
@@ -369,7 +369,7 @@ namespace OpenGL_Learn
                         shader->State.BlendDfactorAlpha = items.Find([&](const Tuple2<int, BlendFactorType>& t)->bool {return t.Item1 == index; })->Item2;
                     }
                 }
-                { // ÃæÌŞ³ı
+                { // é¢å‰”é™¤
                     ImGui::Checkbox("Cull Face", &shader->State.CullFace);
                     if (shader->State.CullFace)
                     {
@@ -381,7 +381,7 @@ namespace OpenGL_Learn
                         ImGui::RadioButton("FRONT_AND_BACK", (int*)&shader->State.CullFaceMode, static_cast<int>(CullFaceModeType::FRONT_AND_BACK));
                     }
                 }
-                // ÕıÏòÃæ
+                // æ­£å‘é¢
                 ImGui::Text("Front Face");
                 ImGui::RadioButton("CCW", (int*)&shader->State.FrontFace, GL_CCW);
                 ImGui::SameLine();
@@ -564,9 +564,9 @@ namespace OpenGL_Learn
             //        counter++;
 
             //        isVsyn = !isVsyn;
-            //        glfwMakeContextCurrent(GameSystem::GetGLFWwindow());// Ö¸¶¨´°¿ÚµÄÉÏÏÂÎÄ³ÉÎªµ±Ç°Ïß³Ì¡£
+            //        glfwMakeContextCurrent(GameSystem::GetGLFWwindow());// æŒ‡å®šçª—å£çš„ä¸Šä¸‹æ–‡æˆä¸ºå½“å‰çº¿ç¨‹ã€‚
             //        if (isVsyn)
-            //            glfwSwapInterval(1);// ½»»»»º³åÇøÖ®Ç°ÒªµÈ´ıµÄ×îĞ¡ÆÁÄ»¸üĞÂÊı¡£ ´¹Ö±Í¬²½
+            //            glfwSwapInterval(1);// äº¤æ¢ç¼“å†²åŒºä¹‹å‰è¦ç­‰å¾…çš„æœ€å°å±å¹•æ›´æ–°æ•°ã€‚ å‚ç›´åŒæ­¥
             //        else
             //            glfwSwapInterval(0);
             //    }

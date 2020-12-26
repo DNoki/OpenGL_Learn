@@ -1,4 +1,4 @@
-#include "RenderTexture.h"
+ï»¿#include "RenderTexture.h"
 
 #include <iostream>
 
@@ -12,9 +12,9 @@ namespace OpenGL_Learn
         auto tex = Texture2D::CreateTexture2D(this->Name, this->_width, this->_height,
             internalformat, format, type, NULL, wrapMode, scaleFilterMode);
 
-        // ÎÆÀí¸½¼ş
+        // çº¹ç†é™„ä»¶
         glFramebufferTexture2D(GL_FRAMEBUFFER, static_cast<int>(attachment), GL_TEXTURE_2D, tex->ID, 0);
-        if (attachment == AttachmentType::DEPTH_ATTACHMENT) // ÎÆÀí¸½¼şÊÇÉî¶ÈÊ±£¬ÏÔÊ½¸æËßOpenGL²»ÊÊÓÃÈÎºÎÑÕÉ«Êı¾İ½øĞĞäÖÈ¾
+        if (attachment == AttachmentType::DEPTH_ATTACHMENT) // çº¹ç†é™„ä»¶æ˜¯æ·±åº¦æ—¶ï¼Œæ˜¾å¼å‘Šè¯‰OpenGLä¸é€‚ç”¨ä»»ä½•é¢œè‰²æ•°æ®è¿›è¡Œæ¸²æŸ“
         {
             glDrawBuffer(GL_NONE);
             glReadBuffer(GL_NONE);
@@ -32,9 +32,9 @@ namespace OpenGL_Learn
         auto tex = Texture2DMultisample::CreateTexture2DMultisample(this->Name, this->_samples,
             this->_width, this->_height, internalformat);
 
-        // ÎÆÀí¸½¼ş
+        // çº¹ç†é™„ä»¶
         glFramebufferTexture2D(GL_FRAMEBUFFER, static_cast<int>(attachment), GL_TEXTURE_2D_MULTISAMPLE, tex->ID, 0);
-        if (attachment == AttachmentType::DEPTH_ATTACHMENT) // ÎÆÀí¸½¼şÊÇÉî¶ÈÊ±£¬ÏÔÊ½¸æËßOpenGL²»ÊÊÓÃÈÎºÎÑÕÉ«Êı¾İ½øĞĞäÖÈ¾
+        if (attachment == AttachmentType::DEPTH_ATTACHMENT) // çº¹ç†é™„ä»¶æ˜¯æ·±åº¦æ—¶ï¼Œæ˜¾å¼å‘Šè¯‰OpenGLä¸é€‚ç”¨ä»»ä½•é¢œè‰²æ•°æ®è¿›è¡Œæ¸²æŸ“
         {
             glDrawBuffer(GL_NONE);
             glReadBuffer(GL_NONE);
@@ -53,9 +53,9 @@ namespace OpenGL_Learn
         auto tex = TextureCube::CreateTextureCube(this->Name, this->_width, this->_height,
             internalformat, format, type, NULL, wrapMode, scaleFilterMode);
 
-        // ÎÆÀí¸½¼ş
+        // çº¹ç†é™„ä»¶
         glFramebufferTexture(GL_FRAMEBUFFER, static_cast<int>(attachment), tex->ID, 0);
-        if (attachment == AttachmentType::DEPTH_ATTACHMENT) // ÎÆÀí¸½¼şÊÇÉî¶ÈÊ±£¬ÏÔÊ½¸æËßOpenGL²»ÊÊÓÃÈÎºÎÑÕÉ«Êı¾İ½øĞĞäÖÈ¾
+        if (attachment == AttachmentType::DEPTH_ATTACHMENT) // çº¹ç†é™„ä»¶æ˜¯æ·±åº¦æ—¶ï¼Œæ˜¾å¼å‘Šè¯‰OpenGLä¸é€‚ç”¨ä»»ä½•é¢œè‰²æ•°æ®è¿›è¡Œæ¸²æŸ“
         {
             glDrawBuffer(GL_NONE);
             glReadBuffer(GL_NONE);
@@ -88,7 +88,7 @@ namespace OpenGL_Learn
     bool RenderTexture::CheckFramebufferSuccess()
     {
         this->BindFramebuffer();
-        // ¼ì²éÖ¡»º³åÊÇ·ñÍêÕû
+        // æ£€æŸ¥å¸§ç¼“å†²æ˜¯å¦å®Œæ•´
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         {
             cout << "ERROR::FRAMEBUFFER:: RenderTexture::Framebuffer is not complete!" << endl;
@@ -110,12 +110,12 @@ namespace OpenGL_Learn
         GLuint framebufferID = this->_framebufferID, renderBufferObjectID = this->_renderBufferObjectID;
 
         glDeleteFramebuffers(1, &(this->_framebufferID));
-        cout << "LOG:: äÖÈ¾ÌùÍ¼:: Name£º" << Name << " FramebufferID£º" << framebufferID << " Ö¡»º³åÒÑÊÍ·Å¡£";
+        cout << "LOG:: æ¸²æŸ“è´´å›¾:: Nameï¼š" << Name << " FramebufferIDï¼š" << framebufferID << " å¸§ç¼“å†²å·²é‡Šæ”¾ã€‚";
 
         if (this->_renderBufferObjectID != GL_INVALID_INDEX)
         {
             glDeleteRenderbuffers(1, &(this->_renderBufferObjectID));
-            cout << " RenderBufferID£º" << renderBufferObjectID << " äÖÈ¾»º³å¸½¼şÒÑÊÍ·Å¡£";
+            cout << " RenderBufferIDï¼š" << renderBufferObjectID << " æ¸²æŸ“ç¼“å†²é™„ä»¶å·²é‡Šæ”¾ã€‚";
         }
         cout << endl;
     }
@@ -129,7 +129,7 @@ namespace OpenGL_Learn
     //{
     //    GLuint id, framebufferID, renderBufferObjectID(GL_INVALID_INDEX);
 
-    //    // Éú³ÉÎÆÀí
+    //    // ç”Ÿæˆçº¹ç†
     //    glGenTextures(1, &id);
     //    glBindTexture(GL_TEXTURE_2D, id);
     //    glTexImage2D(GL_TEXTURE_2D, 0, internalformat, width, height, 0, static_cast<int>(format), static_cast<int>(type), NULL);
@@ -139,19 +139,19 @@ namespace OpenGL_Learn
     //    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<int>(scaleFilterMode));
     //    glBindTexture(GL_TEXTURE_2D, 0);
 
-    //    // Éú³ÉÖ¡»º³å
+    //    // ç”Ÿæˆå¸§ç¼“å†²
     //    glGenFramebuffers(1, &framebufferID);
     //    glBindFramebuffer(GL_FRAMEBUFFER, framebufferID);
 
-    //    // ÎÆÀí¸½¼ş
+    //    // çº¹ç†é™„ä»¶
     //    glFramebufferTexture2D(GL_FRAMEBUFFER, static_cast<int>(attachment), GL_TEXTURE_2D, id, 0);
-    //    if (attachment == AttachmentType::DEPTH_ATTACHMENT) // ÎÆÀí¸½¼şÊÇÉî¶ÈÊ±£¬ÏÔÊ½¸æËßOpenGL²»ÊÊÓÃÈÎºÎÑÕÉ«Êı¾İ½øĞĞäÖÈ¾
+    //    if (attachment == AttachmentType::DEPTH_ATTACHMENT) // çº¹ç†é™„ä»¶æ˜¯æ·±åº¦æ—¶ï¼Œæ˜¾å¼å‘Šè¯‰OpenGLä¸é€‚ç”¨ä»»ä½•é¢œè‰²æ•°æ®è¿›è¡Œæ¸²æŸ“
     //    {
     //        glDrawBuffer(GL_NONE);
     //        glReadBuffer(GL_NONE);
     //    }
 
-    //    // äÖÈ¾»º³å¶ÔÏó¸½¼ş
+    //    // æ¸²æŸ“ç¼“å†²å¯¹è±¡é™„ä»¶
     //    if (isDepthAndStencilOn)
     //    {
     //        glGenRenderbuffers(1, &renderBufferObjectID);
@@ -162,7 +162,7 @@ namespace OpenGL_Learn
     //        glBindRenderbuffer(GL_RENDERBUFFER, 0);
     //    }
 
-    //    // ¼ì²éÖ¡»º³åÊÇ·ñÍêÕû
+    //    // æ£€æŸ¥å¸§ç¼“å†²æ˜¯å¦å®Œæ•´
     //    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     //    {
     //        cout << "ERROR::FRAMEBUFFER:: RenderTexture::Framebuffer is not complete!" << endl;
@@ -174,9 +174,9 @@ namespace OpenGL_Learn
     //    rt->_framebufferID = framebufferID;
     //    rt->_renderBufferObjectID = renderBufferObjectID;
 
-    //    cout << "LOG:: " << "äÖÈ¾ÌùÍ¼:: " << "ID=" << id << " Name£º" << name
-    //        << " ÒÑÉú³ÉÖ¡»º³å£ºID=" << framebufferID;
-    //    if (isDepthAndStencilOn)cout << " ÒÑÉú³ÉäÖÈ¾»º³å¶ÔÏó£ºID=" << renderBufferObjectID;
+    //    cout << "LOG:: " << "æ¸²æŸ“è´´å›¾:: " << "ID=" << id << " Nameï¼š" << name
+    //        << " å·²ç”Ÿæˆå¸§ç¼“å†²ï¼šID=" << framebufferID;
+    //    if (isDepthAndStencilOn)cout << " å·²ç”Ÿæˆæ¸²æŸ“ç¼“å†²å¯¹è±¡ï¼šID=" << renderBufferObjectID;
     //    cout << endl << endl;
 
     //    return rt;
@@ -188,26 +188,26 @@ namespace OpenGL_Learn
     //{
     //    GLuint id, framebufferID, renderBufferObjectID(GL_INVALID_INDEX);
 
-    //    // Éú³ÉÎÆÀí
+    //    // ç”Ÿæˆçº¹ç†
     //    glGenTextures(1, &id);
     //    glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, id);
     //    glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, internalformat, width, height, GL_TRUE);
     //    glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
 
 
-    //    // Éú³ÉÖ¡»º³å
+    //    // ç”Ÿæˆå¸§ç¼“å†²
     //    glGenFramebuffers(1, &framebufferID);
     //    glBindFramebuffer(GL_FRAMEBUFFER, framebufferID);
 
-    //    // ÎÆÀí¸½¼ş
+    //    // çº¹ç†é™„ä»¶
     //    glFramebufferTexture2D(GL_FRAMEBUFFER, static_cast<int>(attachment), GL_TEXTURE_2D_MULTISAMPLE, id, 0);
-    //    if (attachment == AttachmentType::DEPTH_ATTACHMENT) // ÎÆÀí¸½¼şÊÇÉî¶ÈÊ±£¬ÏÔÊ½¸æËßOpenGL²»ÊÊÓÃÈÎºÎÑÕÉ«Êı¾İ½øĞĞäÖÈ¾
+    //    if (attachment == AttachmentType::DEPTH_ATTACHMENT) // çº¹ç†é™„ä»¶æ˜¯æ·±åº¦æ—¶ï¼Œæ˜¾å¼å‘Šè¯‰OpenGLä¸é€‚ç”¨ä»»ä½•é¢œè‰²æ•°æ®è¿›è¡Œæ¸²æŸ“
     //    {
     //        glDrawBuffer(GL_NONE);
     //        glReadBuffer(GL_NONE);
     //    }
 
-    //    // äÖÈ¾»º³å¶ÔÏó¸½¼ş
+    //    // æ¸²æŸ“ç¼“å†²å¯¹è±¡é™„ä»¶
     //    if (isDepthAndStencilOn)
     //    {
     //        glGenRenderbuffers(1, &renderBufferObjectID);
@@ -217,7 +217,7 @@ namespace OpenGL_Learn
     //        glBindRenderbuffer(GL_RENDERBUFFER, 0);
     //    }
 
-    //    // ¼ì²éÖ¡»º³åÊÇ·ñÍêÕû
+    //    // æ£€æŸ¥å¸§ç¼“å†²æ˜¯å¦å®Œæ•´
     //    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     //    {
     //        cout << "ERROR::FRAMEBUFFER:: RenderTexture::Framebuffer is not complete!" << endl;
@@ -230,9 +230,9 @@ namespace OpenGL_Learn
     //    rt->_framebufferID = framebufferID;
     //    rt->_renderBufferObjectID = renderBufferObjectID;
 
-    //    cout << "LOG:: " << "¶à²ÉÑùäÖÈ¾ÌùÍ¼:: " << "ID=" << id << " Name£º" << name
-    //        << " ÒÑÉú³É¶à²ÉÑùÖ¡»º³å£ºID=" << framebufferID;
-    //    if (isDepthAndStencilOn)cout << " ÒÑÉú³É¶à²ÉÑùäÖÈ¾»º³å¶ÔÏó£ºID=" << renderBufferObjectID;
+    //    cout << "LOG:: " << "å¤šé‡‡æ ·æ¸²æŸ“è´´å›¾:: " << "ID=" << id << " Nameï¼š" << name
+    //        << " å·²ç”Ÿæˆå¤šé‡‡æ ·å¸§ç¼“å†²ï¼šID=" << framebufferID;
+    //    if (isDepthAndStencilOn)cout << " å·²ç”Ÿæˆå¤šé‡‡æ ·æ¸²æŸ“ç¼“å†²å¯¹è±¡ï¼šID=" << renderBufferObjectID;
     //    cout << endl << endl;
 
     //    return rt;
@@ -245,7 +245,7 @@ namespace OpenGL_Learn
     //{
     //    GLuint id, framebufferID, renderBufferObjectID(GL_INVALID_INDEX);
 
-    //    // Éú³ÉÎÆÀí
+    //    // ç”Ÿæˆçº¹ç†
     //    glGenTextures(1, &id);
     //    glBindTexture(GL_TEXTURE_CUBE_MAP, id);
     //    for (size_t i = 0; i < 6; i++)
@@ -258,20 +258,20 @@ namespace OpenGL_Learn
     //    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, static_cast<int>(scaleFilterMode));
     //    glBindTexture(GL_TEXTURE_2D, 0);
 
-    //    // Éú³ÉÖ¡»º³å
+    //    // ç”Ÿæˆå¸§ç¼“å†²
     //    glGenFramebuffers(1, &framebufferID);
     //    glBindFramebuffer(GL_FRAMEBUFFER, framebufferID);
 
-    //    // ÎÆÀí¸½¼ş
+    //    // çº¹ç†é™„ä»¶
     //    glFramebufferTexture(GL_FRAMEBUFFER, static_cast<int>(attachment), id, 0);
     //    //glFramebufferTexture2D(GL_FRAMEBUFFER, static_cast<int>(attachment), GL_TEXTURE_2D, id, 0);
-    //    if (attachment == AttachmentType::DEPTH_ATTACHMENT) // ÎÆÀí¸½¼şÊÇÉî¶ÈÊ±£¬ÏÔÊ½¸æËßOpenGL²»ÊÊÓÃÈÎºÎÑÕÉ«Êı¾İ½øĞĞäÖÈ¾
+    //    if (attachment == AttachmentType::DEPTH_ATTACHMENT) // çº¹ç†é™„ä»¶æ˜¯æ·±åº¦æ—¶ï¼Œæ˜¾å¼å‘Šè¯‰OpenGLä¸é€‚ç”¨ä»»ä½•é¢œè‰²æ•°æ®è¿›è¡Œæ¸²æŸ“
     //    {
     //        glDrawBuffer(GL_NONE);
     //        glReadBuffer(GL_NONE);
     //    }
 
-    //    // ¼ì²éÖ¡»º³åÊÇ·ñÍêÕû
+    //    // æ£€æŸ¥å¸§ç¼“å†²æ˜¯å¦å®Œæ•´
     //    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     //    {
     //        cout << "ERROR::FRAMEBUFFER:: RenderTexture::Framebuffer is not complete!" << endl;
@@ -283,8 +283,8 @@ namespace OpenGL_Learn
     //    rt->_framebufferID = framebufferID;
     //    rt->_renderBufferObjectID = renderBufferObjectID;
 
-    //    cout << "LOG:: " << "CubeäÖÈ¾ÌùÍ¼:: " << "ID=" << id << " Name£º" << name
-    //        << " ÒÑÉú³ÉÖ¡»º³å£ºID=" << framebufferID << endl << endl;
+    //    cout << "LOG:: " << "Cubeæ¸²æŸ“è´´å›¾:: " << "ID=" << id << " Nameï¼š" << name
+    //        << " å·²ç”Ÿæˆå¸§ç¼“å†²ï¼šID=" << framebufferID << endl << endl;
     //    return rt;
     //}
 

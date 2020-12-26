@@ -1,4 +1,4 @@
-#include "Scene.h"
+ï»¿#include "Scene.h"
 
 #include "GameSystem.h"
 #include "UniformManager.h"
@@ -35,9 +35,9 @@ namespace OpenGL_Learn
     {
         GetDestroyedObjects().clear();
 
-        // È¡µÃËùÓĞ½Å±¾¶ÔÏó
+        // å–å¾—æ‰€æœ‰è„šæœ¬å¯¹è±¡
         auto scripts = FindComponents<ScriptBehaviour>(true);
-        // Awake ³¡¾°ÔËĞĞÊ±Ìí¼ÓµÄ½Å±¾»½ĞÑ
+        // Awake åœºæ™¯è¿è¡Œæ—¶æ·»åŠ çš„è„šæœ¬å”¤é†’
         for (auto script : scripts)
             if (!script->GetAwaked())
             {
@@ -46,7 +46,7 @@ namespace OpenGL_Learn
             }
 
 
-        // È¡µÃËùÓĞÒÑ¶ÔÏóµÄÒÑ¿ªÆô½Å±¾×é¼ş
+        // å–å¾—æ‰€æœ‰å·²å¯¹è±¡çš„å·²å¼€å¯è„šæœ¬ç»„ä»¶
         auto activeObjScript = FindComponents<ScriptBehaviour>();
         auto activeScripts = List<ScriptBehaviour*>();
         for (auto script : activeObjScript)
@@ -70,15 +70,15 @@ namespace OpenGL_Learn
             script->LateUpdate();
 
 
-        // È¡µÃËùÓĞÒÑ¿ªÆô¶ÔÏóµÄÏà»ú×é¼ş
+        // å–å¾—æ‰€æœ‰å·²å¼€å¯å¯¹è±¡çš„ç›¸æœºç»„ä»¶
         auto cameras = this->FindComponents<Camera>();
-        // È¡µÃµÚÒ»¸öÒÑ¿ªÆô¶ÔÏóµÄÆ½ĞĞ¹â×é¼ş
+        // å–å¾—ç¬¬ä¸€ä¸ªå·²å¼€å¯å¯¹è±¡çš„å¹³è¡Œå…‰ç»„ä»¶
         auto dirLight = this->FindComponent<DirectionalLight>();
         auto pointLights = this->FindComponents<PointLight>();
 
-        // È¡µÃËùÓĞÒÑ¿ªÆô¶ÔÏóµÄäÖÈ¾×é¼ş
+        // å–å¾—æ‰€æœ‰å·²å¼€å¯å¯¹è±¡çš„æ¸²æŸ“ç»„ä»¶
         auto renderers = this->FindComponents<Renderer>();
-        // °´äÖÈ¾Ë³ĞòÅÅĞò  
+        // æŒ‰æ¸²æŸ“é¡ºåºæ’åº  
         List<unique_ptr<RenderItem>> backgrounds = List<unique_ptr<RenderItem>>();
         List<unique_ptr<RenderItem>> geometrys = List<unique_ptr<RenderItem>>();
         List<unique_ptr<RenderItem>> alphaTests = List<unique_ptr<RenderItem>>();
@@ -86,7 +86,7 @@ namespace OpenGL_Learn
         List<unique_ptr<RenderItem>> overlays = List<unique_ptr<RenderItem>>();
         for (auto renderer : renderers)
         {
-            if (!renderer->Enabled) continue; // Èô×é¼şÎ´¿ªÆôÔòÌø¹ı
+            if (!renderer->Enabled) continue; // è‹¥ç»„ä»¶æœªå¼€å¯åˆ™è·³è¿‡
             auto items = renderer->GetRenderItems();
             for (auto& item : *items)
             {
@@ -108,7 +108,7 @@ namespace OpenGL_Learn
         overlays.Sort([](const unique_ptr<RenderItem>& left, const unique_ptr<RenderItem>& right) {return left->sequence < right->sequence; });
 
 
-        // °´Ïà»úÉî¶ÈÅÅĞò
+        // æŒ‰ç›¸æœºæ·±åº¦æ’åº
         cameras.Sort([](const Camera* left, const Camera* right) { return left->Depth < right->Depth; });
         auto renderCount = 0;
         for (auto camera : cameras)
@@ -116,22 +116,22 @@ namespace OpenGL_Learn
             if (!camera->Enabled) continue;
 
 
-            // »ñÈ¡¸ÃÏà»úµÄËùÓĞ½Å±¾×é¼ş
+            // è·å–è¯¥ç›¸æœºçš„æ‰€æœ‰è„šæœ¬ç»„ä»¶
             auto cameraScripts = camera->GetComponents<ScriptBehaviour>();
 
-            // OnPreCull ÌŞ³ıÇ°µ÷ÓÃ
+            // OnPreCull å‰”é™¤å‰è°ƒç”¨
             for (auto script : cameraScripts)
                 script->OnPreCull();
 
-            // ´«ËÍÏà»úÊı¾İ
-            UniformManager::Transform->SetSubData(0, sizeof(Matrix4x4), camera->GetProjectionMatrix().GetPtr()); // Ïà»úÍ¶Ó°Êı¾İ
-            UniformManager::Transform->SetSubData(sizeof(Matrix4x4), sizeof(Matrix4x4), camera->GetViewMatrix().GetPtr()); // Ïà»úÊÓ½ÇÊı¾İ
-            UniformManager::CameraData->SetSubData(0 * sizeof(float), sizeof(Vector4), Vector4(camera->GetTransform().GetPosition(), 1.0f).GetPtr()); // Ïà»úÊÀ½çÎ»ÖÃ
-            UniformManager::CameraData->SetSubData(4 * sizeof(float), sizeof(Vector4), camera->GetOrthoParams().GetPtr()); // Ïà»úÕı½»Êı¾İ
+            // ä¼ é€ç›¸æœºæ•°æ®
+            UniformManager::Transform->SetSubData(0, sizeof(Matrix4x4), camera->GetProjectionMatrix().GetPtr()); // ç›¸æœºæŠ•å½±æ•°æ®
+            UniformManager::Transform->SetSubData(sizeof(Matrix4x4), sizeof(Matrix4x4), camera->GetViewMatrix().GetPtr()); // ç›¸æœºè§†è§’æ•°æ®
+            UniformManager::CameraData->SetSubData(0 * sizeof(float), sizeof(Vector4), Vector4(camera->GetTransform().GetPosition(), 1.0f).GetPtr()); // ç›¸æœºä¸–ç•Œä½ç½®
+            UniformManager::CameraData->SetSubData(4 * sizeof(float), sizeof(Vector4), camera->GetOrthoParams().GetPtr()); // ç›¸æœºæ­£äº¤æ•°æ®
             UniformManager::CameraData->SetSubData(8 * sizeof(float), sizeof(Vector4),
-                Vector4(GameSystem::ScreenWidth, GameSystem::ScreenHeight, 1.0f / GameSystem::ScreenWidth, 1.0f / GameSystem::ScreenHeight).GetPtr()); // ÆÁÄ»Êı¾İ
+                Vector4(GameSystem::ScreenWidth, GameSystem::ScreenHeight, 1.0f / GameSystem::ScreenWidth, 1.0f / GameSystem::ScreenHeight).GetPtr()); // å±å¹•æ•°æ®
 
-#pragma message("ÊµÏÖÏà»úÍâ¶ÔÏóÌŞ³ı")
+#pragma message("å®ç°ç›¸æœºå¤–å¯¹è±¡å‰”é™¤")
 
             // OnPerRender
             for (auto script : cameraScripts)
@@ -139,7 +139,7 @@ namespace OpenGL_Learn
 
             if (dirLight && dirLight->Enabled)
             {
-                // ´«ËÍ¹âÕÕÊı¾İ
+                // ä¼ é€å…‰ç…§æ•°æ®
                 UniformManager::LightingData->SetSubData(0 * sizeof(float), sizeof(Vector4),
                     (static_cast<Vector4>(dirLight->LightColor) * dirLight->Intensity).GetPtr());
                 UniformManager::LightingData->SetSubData(4 * sizeof(float), sizeof(Vector4),
@@ -175,16 +175,16 @@ namespace OpenGL_Learn
             }
 
             renderCount++;
-            camera->BindTarget(); // äÖÈ¾µ½Ä¿±êäÖÈ¾ÌùÍ¼
+            camera->BindTarget(); // æ¸²æŸ“åˆ°ç›®æ ‡æ¸²æŸ“è´´å›¾
             camera->ExcuteRender(&backgrounds, &geometrys, &alphaTests, &transparents, &overlays);
 
             // OnPostRender
             for (auto script : cameraScripts)
                 script->OnPostRender();
 
-            // ÈôÊÇ¶à²ÉÑùäÖÈ¾ÌùÍ¼£¬Ôò½«Êı¾İ¿½±´µ½Ä¬ÈÏäÖÈ¾ÌùÍ¼
+            // è‹¥æ˜¯å¤šé‡‡æ ·æ¸²æŸ“è´´å›¾ï¼Œåˆ™å°†æ•°æ®æ‹·è´åˆ°é»˜è®¤æ¸²æŸ“è´´å›¾
             camera->RenderToTargetTexture();
-            // Ïà»ú½áÊøºó½«ÄÚÈİ½«±£´æÔÚ Ä¬ÈÏäÖÈ¾ÌùÍ¼ »ò Ö¸¶¨Ä¿±êäÖÈ¾ÌùÍ¼ ÉÏ
+            // ç›¸æœºç»“æŸåå°†å†…å®¹å°†ä¿å­˜åœ¨ é»˜è®¤æ¸²æŸ“è´´å›¾ æˆ– æŒ‡å®šç›®æ ‡æ¸²æŸ“è´´å›¾ ä¸Š
         }
         if (renderCount == 0) Camera::DefaultClear();
 
@@ -192,7 +192,7 @@ namespace OpenGL_Learn
         for (auto script : activeScripts)
             script->OnRenderImage(Camera::DefaultTargetTexture);
 
-        // µ÷ÊÔÏÔÊ¾äÖÈ¾ÌùÍ¼
+        // è°ƒè¯•æ˜¾ç¤ºæ¸²æŸ“è´´å›¾
         if (dirLight)
             Camera::DebugRenderTexture(*dirLight->ShadowMap,
                 0.75f, 0.5f,
@@ -206,7 +206,7 @@ namespace OpenGL_Learn
         for (auto script : activeScripts)
             script->OnGui();
 
-        // äÖÈ¾µ½´°¿Ú
+        // æ¸²æŸ“åˆ°çª—å£
         Camera::RenderToWindow();
 
     }

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 
@@ -12,13 +12,13 @@ namespace OpenGL_Learn
     class GameObject;
     class Transform;
 
-    // ×é¼þ
+    // ç»„ä»¶
     class Component
     {
     public:
-        // »ñÈ¡ÓÎÏ·¶ÔÏó
+        // èŽ·å–æ¸¸æˆå¯¹è±¡
         inline GameObject& GetGameObject() const { return this->_gameObject; }
-        // »ñÈ¡±ä»»
+        // èŽ·å–å˜æ¢
         inline Transform& GetTransform() const { return this->_transform; }
 
         virtual ~Component() {}

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <memory>
 
@@ -10,36 +10,36 @@ namespace OpenGL_Learn
 
 	class Shader;
 
-	// Uniform»º³å¶ÔÏó¹ÜÀíÆ÷
+	// Uniformç¼“å†²å¯¹è±¡ç®¡ç†å™¨
 	class UniformManager
 	{
 	public:
-		// ±ä»» 
+		// å˜æ¢ 
 		// mat4 Matrix_P; 
 		// mat4 Matrix_V;
 		// mat4 Matrix_M;
 		static unique_ptr<UniformBufferObject> Transform;
-		// Ïà»úÊı¾İ
-		// vec4 WorldSpaceCameraPos; // ÊÀ½ç¿Õ¼äÏà»úÎ»ÖÃ
-		// vec4 OrthoParams; // x=Õı½»ÉãÓ°»úµÄ¿í¶È£¬y=Õı½»ÉãÓ°»úµÄ¸ß¶È£¬z=¿í¸ß±È£¬w=Õı½»ÉãÓ°»úÊ±Îª1.0£¬Í¸ÊÓÊ±Îª0.0¡£
-		// vec4 ScreenParams; // x=Ïà»úÄ¿±êÎÆÀíµÄ¿í¶È£¬y=Ïà»úÄ¿±êÎÆÀíµÄ¸ß¶È£¬z=1.0/width£¬w=1.0/height¡£
+		// ç›¸æœºæ•°æ®
+		// vec4 WorldSpaceCameraPos; // ä¸–ç•Œç©ºé—´ç›¸æœºä½ç½®
+		// vec4 OrthoParams; // x=æ­£äº¤æ‘„å½±æœºçš„å®½åº¦ï¼Œy=æ­£äº¤æ‘„å½±æœºçš„é«˜åº¦ï¼Œz=å®½é«˜æ¯”ï¼Œw=æ­£äº¤æ‘„å½±æœºæ—¶ä¸º1.0ï¼Œé€è§†æ—¶ä¸º0.0ã€‚
+		// vec4 ScreenParams; // x=ç›¸æœºç›®æ ‡çº¹ç†çš„å®½åº¦ï¼Œy=ç›¸æœºç›®æ ‡çº¹ç†çš„é«˜åº¦ï¼Œz=1.0/widthï¼Œw=1.0/heightã€‚
 		static unique_ptr<UniformBufferObject> CameraData;
-		// ¹âÕÕÊı¾İ
-		// vec4 LightColor; // 4N	0 // ¹âÕÕÑÕÉ«
-		// vec4 WorldSpaceLightPos; // 4N	4N // Æ½ĞĞ¹â£º£¨ÊÀ½ç¿Õ¼ä·½Ïò, 0£©¡£ÆäËû¹â£º£¨ÊÀ½ç¿Õ¼äÎ»ÖÃ, 1£©¡£
-		// mat4 LightMatrix; // 16N	8N // ÊÀ½çµ½¹âµÄ¾ØÕó¡£ÓÃÓÚ²ÉÑùCookieºÍË¥¼õÎÆÀí¡£
-		// float ShadowStrength; // N	24N // ÒõÓ°Ç¿¶È¡£
-		// vec4[4] PointLight4Pos; // 16N	28N // µã¹âÔ´Î»ÖÃ
-		// vec4[4] PointLight4Color; // 16N	44N // µã¹âÔ´ÑÕÉ«
-		// vec4[POINT_LIGHTS_COUNT] PointLight4Info; // 16N 60N// µã¹âÔ´Ë¥¼õ C=1.0, L=x, Q=y Ë¥¼õÇ¿¶È = 1.0 / (C + L * d + Q * d^2) £¬µã¹âÔ´½ü²ÃÃæz£¬µã¹âÔ´Ô¶²ÃÃæw
+		// å…‰ç…§æ•°æ®
+		// vec4 LightColor; // 4N	0 // å…‰ç…§é¢œè‰²
+		// vec4 WorldSpaceLightPos; // 4N	4N // å¹³è¡Œå…‰ï¼šï¼ˆä¸–ç•Œç©ºé—´æ–¹å‘, 0ï¼‰ã€‚å…¶ä»–å…‰ï¼šï¼ˆä¸–ç•Œç©ºé—´ä½ç½®, 1ï¼‰ã€‚
+		// mat4 LightMatrix; // 16N	8N // ä¸–ç•Œåˆ°å…‰çš„çŸ©é˜µã€‚ç”¨äºé‡‡æ ·Cookieå’Œè¡°å‡çº¹ç†ã€‚
+		// float ShadowStrength; // N	24N // é˜´å½±å¼ºåº¦ã€‚
+		// vec4[4] PointLight4Pos; // 16N	28N // ç‚¹å…‰æºä½ç½®
+		// vec4[4] PointLight4Color; // 16N	44N // ç‚¹å…‰æºé¢œè‰²
+		// vec4[POINT_LIGHTS_COUNT] PointLight4Info; // 16N 60N// ç‚¹å…‰æºè¡°å‡ C=1.0, L=x, Q=y è¡°å‡å¼ºåº¦ = 1.0 / (C + L * d + Q * d^2) ï¼Œç‚¹å…‰æºè¿‘è£é¢zï¼Œç‚¹å…‰æºè¿œè£é¢w
 		static unique_ptr<UniformBufferObject> LightingData;
-		// Ê±¼ä
+		// æ—¶é—´
 		//vec4 Time; // (RunTime, SinTime, CosTime, DeltaTime);
 		static unique_ptr<UniformBufferObject> Time;
 
 		static void UniformBlockBinding(Shader* shader);
 
-		// ³õÊ¼»¯ Uniform»º³å¶ÔÏó¹ÜÀíÆ÷
+		// åˆå§‹åŒ– Uniformç¼“å†²å¯¹è±¡ç®¡ç†å™¨
 		static void Initialize();
 
 	private:

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Behaviour.h"
 
@@ -20,18 +20,18 @@ namespace OpenGL_Learn
     };
 
 
-    // µÆ¹â
+    // ç¯å…‰
     class Light : public Behaviour
     {
     public:
-        // ÈçºÎÍ¶ÉäÒõÓ°
+        // å¦‚ä½•æŠ•å°„é˜´å½±
         LightShadows Shadows;
-        // ¹âÕÕÇ¿¶È
+        // å…‰ç…§å¼ºåº¦
         float Intensity;
-        // ¹âÕÕÑÕÉ«
+        // å…‰ç…§é¢œè‰²
         Color LightColor;
 
-        // ÒõÓ°Ç¿¶È
+        // é˜´å½±å¼ºåº¦
         float ShadowStrength;
         float Bias;
         float NormalBias;
@@ -59,7 +59,7 @@ namespace OpenGL_Learn
 
         RenderTexture* ShadowMap;
 
-        // »ñÈ¡¹âÕÕ¿Õ¼ä¾ØÕó
+        // è·å–å…‰ç…§ç©ºé—´çŸ©é˜µ
         Matrix4x4 GetLightSpaceMatrix(Camera* camera) const;
         void GenerateShadowMap(UINT width = 2048, UINT height = 2048);
         void RenderShadowMap(List<unique_ptr<RenderItem>>* backgrounds, List<unique_ptr<RenderItem>>* geometrys, List<unique_ptr<RenderItem>>* alphaTests, List<unique_ptr<RenderItem>>* transparents, List<unique_ptr<RenderItem>>* overlays);
@@ -72,12 +72,12 @@ namespace OpenGL_Learn
     public:
         static Material* PointLightShadowmapMaterial;
 
-        // Ë¥¼õ C=1.0, L=x, Q=y   Ë¥¼õÇ¿¶È = 1.0 / (C + L * d + Q * d^2)
+        // è¡°å‡ C=1.0, L=x, Q=y   è¡°å‡å¼ºåº¦ = 1.0 / (C + L * d + Q * d^2)
         Vector2 Attenuation;
 
         RenderTexture* CubeShadowMap;
 
-        // »ñÈ¡¹âÕÕ¿Õ¼ä¾ØÕó
+        // è·å–å…‰ç…§ç©ºé—´çŸ©é˜µ
         unique_ptr<List<Matrix4x4>> GetLightSpaceMatrix() const;
         void RenderShadowMap(UINT index, List<unique_ptr<RenderItem>>* backgrounds, List<unique_ptr<RenderItem>>* geometrys, List<unique_ptr<RenderItem>>* alphaTests, List<unique_ptr<RenderItem>>* transparents, List<unique_ptr<RenderItem>>* overlays);
         inline Vector4 GetPointLightInfo() { return Vector4(Attenuation, ShadowStrength, ShadowDistance); }
@@ -86,9 +86,9 @@ namespace OpenGL_Learn
 
     private:
 
-        //// ½ü²ÃÃæ
+        //// è¿‘è£é¢
         //float _nearClipPlane;
-        //// Ô¶²ÃÃæ
+        //// è¿œè£é¢
         //float _farClipPlane;
     };
 }

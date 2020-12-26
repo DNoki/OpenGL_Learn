@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "ScriptBehaviour.h"
 #include "ConsoleBar.h"
@@ -76,7 +76,7 @@ namespace OpenGL_Learn
                 {
                     DownSample = downSample;
                     ResourceObject::Destroy(*EffectRenderTexture);
-                    cout << "EffectRenderTexture�ͷ�" << endl;
+                    cout << "EffectRenderTexture释放" << endl;
                     EffectRenderTexture = SceneManager::GetActiveScene().AddResourceObject(RenderTexture::CreateRenderTexture("GaussianBlur Render Texture",
                         GameSystem::ScreenWidth >> DownSample, GameSystem::ScreenHeight >> DownSample));
                     EffectRenderTexture->AttachmentTexture2D(GL_RGBA16F, FormatType::RGBA);

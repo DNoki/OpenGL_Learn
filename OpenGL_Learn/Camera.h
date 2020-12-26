@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include <memory>
@@ -19,35 +19,35 @@ namespace OpenGL_Learn
     //class MultisampleRenderTexture;
     class Skybox;
 
-    // Í¶Ó°Ä£Ê½
+    // æŠ•å½±æ¨¡å¼
     enum class ProjectionMode
     {
-        // Í¸ÊÓ
+        // é€è§†
         PERSPECTIVE = 0,
-        // Õı½»
+        // æ­£äº¤
         ORTHOGRAPHIC = 1,
     };
-    // Çå³ı±³¾°Ñ¡Ïî
+    // æ¸…é™¤èƒŒæ™¯é€‰é¡¹
     enum class CameraClearFlags
     {
-        // ÒÔÌì¿ÕºĞÌî³ä
+        // ä»¥å¤©ç©ºç›’å¡«å……
         SKYBOX,
-        // ÒÔÑÕÉ«Ìî³ä
+        // ä»¥é¢œè‰²å¡«å……
         SOLID_COLOR,
-        // ½öÇå³ıÉî¶È
+        // ä»…æ¸…é™¤æ·±åº¦
         DEPTH,
-        // ²»Çå³ı
+        // ä¸æ¸…é™¤
         NOTHING,
     };
 
     struct RenderState
     {
     public:
-        // Ìî³ä±³¾°É«
+        // å¡«å……èƒŒæ™¯è‰²
         Color BackgroundColor;
-        // Ìî³äÉî¶È
+        // å¡«å……æ·±åº¦
         float ClearDepth;
-        // Ìî³äÄ£°å
+        // å¡«å……æ¨¡æ¿
         int ClearStencil;
 
         RenderState() :BackgroundColor(Color(0.937f, 0.521f, 0.608f)), ClearDepth(1.0f), ClearStencil(0) {}
@@ -57,7 +57,7 @@ namespace OpenGL_Learn
     class Camera final : public Behaviour
     {
     public:
-        // äÖÈ¾ÌùÍ¼ËùÊ¹ÓÃµÄÆ½Ãæ
+        // æ¸²æŸ“è´´å›¾æ‰€ä½¿ç”¨çš„å¹³é¢
         static Mesh* DefaultTargetTextureMesh;
         static Shader* DefaultTargetTextureShader;
         static Material* DefaultTargetTextureMaterial;
@@ -71,51 +71,51 @@ namespace OpenGL_Learn
         static void DebugRenderTexture(RenderTexture& tex, const float& startX, const float& startY, const float& widthScale, const float& heightScale, Shader* shader = nullptr);
 
         RenderState State;
-        // Ïà»úÈçºÎÇå³ı±³¾°¡£
+        // ç›¸æœºå¦‚ä½•æ¸…é™¤èƒŒæ™¯ã€‚
         CameraClearFlags ClearFlags;
-        // Í¶Ó°Ä£Ê½
+        // æŠ•å½±æ¨¡å¼
         ProjectionMode ProjectionMode;
-        // Í¸ÊÓÄ£Ê½µÄÊÓ½Ç ½Ç¶ÈÖÆ
+        // é€è§†æ¨¡å¼çš„è§†è§’ è§’åº¦åˆ¶
         float FieldOfView;
-        // Õı½»Ä£Ê½ÏÂÏà»úµÄ°ë³ß´ç
+        // æ­£äº¤æ¨¡å¼ä¸‹ç›¸æœºçš„åŠå°ºå¯¸
         float OrthographicSize;
-        // Ä¿±êäÖÈ¾ÎÆÀí
+        // ç›®æ ‡æ¸²æŸ“çº¹ç†
         RenderTexture* TargetTexture;
-        // ÉãÏñ»úÔÚ»æÖÆË³ĞòÖĞµÄÎ»ÖÃ¡£Öµ½Ï´óµÄÉãÏñ»ú½«»æÖÆÔÚÖµ½ÏĞ¡µÄÉãÏñ»ú¶¥²¿¡£
+        // æ‘„åƒæœºåœ¨ç»˜åˆ¶é¡ºåºä¸­çš„ä½ç½®ã€‚å€¼è¾ƒå¤§çš„æ‘„åƒæœºå°†ç»˜åˆ¶åœ¨å€¼è¾ƒå°çš„æ‘„åƒæœºé¡¶éƒ¨ã€‚
         int Depth;
-        // ÊÇ·ñ¿ªÆô¶à²ÉÑù¿¹¾â³İ
+        // æ˜¯å¦å¼€å¯å¤šé‡‡æ ·æŠ—é”¯é½¿
         bool IsMSAA;
 
 
-        // Ö´ĞĞäÖÈ¾
+        // æ‰§è¡Œæ¸²æŸ“
         void ExcuteRender(List<unique_ptr<RenderItem>>* backgrounds, List<unique_ptr<RenderItem>>* geometrys, List<unique_ptr<RenderItem>>* alphaTests, List<unique_ptr<RenderItem>>* transparents, List<unique_ptr<RenderItem>>* overlays);
-        // °´Ö¸¶¨Ä£Ê½Çå³ı±³¾°£¨Á¢¼´£©
+        // æŒ‰æŒ‡å®šæ¨¡å¼æ¸…é™¤èƒŒæ™¯ï¼ˆç«‹å³ï¼‰
         void Clear();
-        // ³¡¾°»æÖÆÍê³ÉºóäÖÈ¾Ìì¿ÕºĞ
+        // åœºæ™¯ç»˜åˆ¶å®Œæˆåæ¸²æŸ“å¤©ç©ºç›’
         void DrawSkybox();
-        // °ó¶¨äÖÈ¾Ä¿±ê
+        // ç»‘å®šæ¸²æŸ“ç›®æ ‡
         void BindTarget() const;
-        // äÖÈ¾µ½Ä¿±êÌùÍ¼
+        // æ¸²æŸ“åˆ°ç›®æ ‡è´´å›¾
         void RenderToTargetTexture(RenderTexture* targetTex = nullptr);
 
-        // »ñÈ¡¹Û²ì¾ØÕó
+        // è·å–è§‚å¯ŸçŸ©é˜µ
         Matrix4x4 GetViewMatrix() const;
-        // »ñÈ¡Í¶Ó°¾ØÕó
+        // è·å–æŠ•å½±çŸ©é˜µ
         Matrix4x4 GetProjectionMatrix() const;
 
-        // ÉèÖÃÊÓ½Ç
+        // è®¾ç½®è§†è§’
         inline void SetFieldOfView(float angle) { this->FieldOfView = Math::Clamp(angle, 0.001f, 179.0f); }
-        // ÉèÖÃÕı½»ÊÓÍ¼´óĞ¡
+        // è®¾ç½®æ­£äº¤è§†å›¾å¤§å°
         inline void SetOrthographicSize(float size) { this->OrthographicSize = size; }
-        // ÉèÖÃ²ÃÇĞÃæ
+        // è®¾ç½®è£åˆ‡é¢
         inline void SetClipPlane(float nearPlane, float farPlane)
         {
             this->_nearClipPlane = glm::max(nearPlane, 0.001f);
             this->_farClipPlane = glm::max(farPlane, this->_nearClipPlane + 0.001f);
         }
-        // ÉèÖÃÌì¿ÕºĞ×Ó
+        // è®¾ç½®å¤©ç©ºç›’å­
         inline void SetSkybox(Skybox* skybox) { this->_skybox = skybox; }
-        // xÊÇÕı½»ÉãÓ°»úµÄ¿í¶È£¬yÊÇÕı½»ÉãÓ°»úµÄ¸ß¶È£¬zÎª¿í¸ß±È£¬wµ±Õı½»ÉãÓ°»úÊ±Îª1.0£¬Í¸ÊÓÊ±Îª0.0¡£
+        // xæ˜¯æ­£äº¤æ‘„å½±æœºçš„å®½åº¦ï¼Œyæ˜¯æ­£äº¤æ‘„å½±æœºçš„é«˜åº¦ï¼Œzä¸ºå®½é«˜æ¯”ï¼Œwå½“æ­£äº¤æ‘„å½±æœºæ—¶ä¸º1.0ï¼Œé€è§†æ—¶ä¸º0.0ã€‚
         Vector4 GetOrthoParams();
 
         Camera(GameObject& obj);
@@ -123,12 +123,12 @@ namespace OpenGL_Learn
     private:
         static unique_ptr<RenderState> realRenderState;
 
-        // ½ü²ÃÃæ
+        // è¿‘è£é¢
         float _nearClipPlane;
-        // Ô¶²ÃÃæ
+        // è¿œè£é¢
         float _farClipPlane;
 
-        // Ìì¿ÕºĞ×Ó
+        // å¤©ç©ºç›’å­
         Skybox* _skybox;
     };
 

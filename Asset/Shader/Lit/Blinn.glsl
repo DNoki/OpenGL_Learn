@@ -1,4 +1,4 @@
-{_!Property_Start
+ï»¿{_!Property_Start
 {
     "RenderQueue": 2000,
     "_MainColor": [1, 1, 1, 1],
@@ -35,14 +35,14 @@ layout (std140) uniform TRANSFORM
 #define POINT_LIGHTS_COUNT 4
 layout (std140) uniform LIGHTING_DATA
 {
-    vec4 LightColor; // ¹âÕÕÑÕÉ«
-    vec4 WorldSpaceLightPos; // Æ½ĞĞ¹â£º£¨ÊÀ½ç¿Õ¼ä·½Ïò, 0£©¡£ÆäËû¹â£º£¨ÊÀ½ç¿Õ¼äÎ»ÖÃ, 1£©¡£
-    mat4 LightMatrix; // ÊÀ½çµ½¹âµÄ¾ØÕó¡£ÓÃÓÚ²ÉÑùCookieºÍË¥¼õÎÆÀí¡£
-    float ShadowStrength; // ÒõÓ°Ç¿¶È¡£
-    // Ç°ÏòäÖÈ¾Ê¹ÓÃ4¸öµã¹âÔ´
-    vec4[POINT_LIGHTS_COUNT] PointLight4Pos; // µã¹âÔ´Î»ÖÃ
-    vec4[POINT_LIGHTS_COUNT] PointLight4Color; // µã¹âÔ´ÑÕÉ«
-    vec4[POINT_LIGHTS_COUNT] PointLight4Info; // µã¹âÔ´Ë¥¼õ C=1.0, L=x, Q=y Ë¥¼õÇ¿¶È = 1.0 / (C + L * d + Q * d^2) £¬µã¹âÔ´½ü²ÃÃæz£¬µã¹âÔ´Ô¶²ÃÃæw
+    vec4 LightColor; // å…‰ç…§é¢œè‰²
+    vec4 WorldSpaceLightPos; // å¹³è¡Œå…‰ï¼šï¼ˆä¸–ç•Œç©ºé—´æ–¹å‘, 0ï¼‰ã€‚å…¶ä»–å…‰ï¼šï¼ˆä¸–ç•Œç©ºé—´ä½ç½®, 1ï¼‰ã€‚
+    mat4 LightMatrix; // ä¸–ç•Œåˆ°å…‰çš„çŸ©é˜µã€‚ç”¨äºé‡‡æ ·Cookieå’Œè¡°å‡çº¹ç†ã€‚
+    float ShadowStrength; // é˜´å½±å¼ºåº¦ã€‚
+    // å‰å‘æ¸²æŸ“ä½¿ç”¨4ä¸ªç‚¹å…‰æº
+    vec4[POINT_LIGHTS_COUNT] PointLight4Pos; // ç‚¹å…‰æºä½ç½®
+    vec4[POINT_LIGHTS_COUNT] PointLight4Color; // ç‚¹å…‰æºé¢œè‰²
+    vec4[POINT_LIGHTS_COUNT] PointLight4Info; // ç‚¹å…‰æºè¡°å‡ C=1.0, L=x, Q=y è¡°å‡å¼ºåº¦ = 1.0 / (C + L * d + Q * d^2) ï¼Œç‚¹å…‰æºè¿‘è£é¢zï¼Œç‚¹å…‰æºè¿œè£é¢w
 };
 
 void main()
@@ -78,23 +78,23 @@ layout (std140) uniform TRANSFORM
 
 layout (std140) uniform CAMERA_DATA
 {
-    // ÊÀ½ç¿Õ¼äÏà»úÎ»ÖÃ
+    // ä¸–ç•Œç©ºé—´ç›¸æœºä½ç½®
     vec4 WorldSpaceCameraPos;
-    // xÊÇÕı½»ÉãÓ°»úµÄ¿í¶È£¬yÊÇÕı½»ÉãÓ°»úµÄ¸ß¶È£¬zÎª¿í¸ß±È£¬wµ±Õı½»ÉãÓ°»úÊ±Îª1.0£¬Í¸ÊÓÊ±Îª0.0¡£
+    // xæ˜¯æ­£äº¤æ‘„å½±æœºçš„å®½åº¦ï¼Œyæ˜¯æ­£äº¤æ‘„å½±æœºçš„é«˜åº¦ï¼Œzä¸ºå®½é«˜æ¯”ï¼Œwå½“æ­£äº¤æ‘„å½±æœºæ—¶ä¸º1.0ï¼Œé€è§†æ—¶ä¸º0.0ã€‚
     vec4 OrthoParams;
 };
 
 #define POINT_LIGHTS_COUNT 4
 layout (std140) uniform LIGHTING_DATA
 {
-    vec4 LightColor; // ¹âÕÕÑÕÉ«
-    vec4 WorldSpaceLightPos; // Æ½ĞĞ¹â£º£¨ÊÀ½ç¿Õ¼ä·½Ïò, 0£©¡£ÆäËû¹â£º£¨ÊÀ½ç¿Õ¼äÎ»ÖÃ, 1£©¡£
-    mat4 LightMatrix; // ÊÀ½çµ½¹âµÄ¾ØÕó¡£ÓÃÓÚ²ÉÑùCookieºÍË¥¼õÎÆÀí¡£
-    float ShadowStrength; // ÒõÓ°Ç¿¶È¡£
-    // Ç°ÏòäÖÈ¾Ê¹ÓÃ4¸öµã¹âÔ´
-    vec4[POINT_LIGHTS_COUNT] PointLight4Pos; // µã¹âÔ´Î»ÖÃ
-    vec4[POINT_LIGHTS_COUNT] PointLight4Color; // µã¹âÔ´ÑÕÉ«
-    vec4[POINT_LIGHTS_COUNT] PointLight4Info; // µã¹âÔ´Ë¥¼õ C=1.0, L=x, Q=y Ë¥¼õÇ¿¶È = 1.0 / (C + L * d + Q * d^2) £¬µã¹âÔ´½ü²ÃÃæz£¬µã¹âÔ´Ô¶²ÃÃæw
+    vec4 LightColor; // å…‰ç…§é¢œè‰²
+    vec4 WorldSpaceLightPos; // å¹³è¡Œå…‰ï¼šï¼ˆä¸–ç•Œç©ºé—´æ–¹å‘, 0ï¼‰ã€‚å…¶ä»–å…‰ï¼šï¼ˆä¸–ç•Œç©ºé—´ä½ç½®, 1ï¼‰ã€‚
+    mat4 LightMatrix; // ä¸–ç•Œåˆ°å…‰çš„çŸ©é˜µã€‚ç”¨äºé‡‡æ ·Cookieå’Œè¡°å‡çº¹ç†ã€‚
+    float ShadowStrength; // é˜´å½±å¼ºåº¦ã€‚
+    // å‰å‘æ¸²æŸ“ä½¿ç”¨4ä¸ªç‚¹å…‰æº
+    vec4[POINT_LIGHTS_COUNT] PointLight4Pos; // ç‚¹å…‰æºä½ç½®
+    vec4[POINT_LIGHTS_COUNT] PointLight4Color; // ç‚¹å…‰æºé¢œè‰²
+    vec4[POINT_LIGHTS_COUNT] PointLight4Info; // ç‚¹å…‰æºè¡°å‡ C=1.0, L=x, Q=y è¡°å‡å¼ºåº¦ = 1.0 / (C + L * d + Q * d^2) ï¼Œç‚¹å…‰æºè¿‘è£é¢zï¼Œç‚¹å…‰æºè¿œè£é¢w
 };
 
 layout (std140) uniform TIME
@@ -113,12 +113,12 @@ uniform sampler2D _ShadowMap;
 
 float ShadowCalculation(vec4 lightSpacePosition)
 {
-    vec3 projCoords = lightSpacePosition.xyz / lightSpacePosition.w; // Ö´ĞĞÍ¸ÊÓ³ı·¨
+    vec3 projCoords = lightSpacePosition.xyz / lightSpacePosition.w; // æ‰§è¡Œé€è§†é™¤æ³•
     if(projCoords.z > 1.0f) return 0.0f;
     projCoords = projCoords * 0.5f + 0.5f;
     //float closestDepth = texture(_ShadowMap, projCoords.xy).r;
     float currentDepth = projCoords.z;
-    //return currentDepth > closestDepth ? 1.0f : 0.0f; // Éî¶È£º¸ÃÏñËØÔÚÒõÓ°´¦·µ»Ø1
+    //return currentDepth > closestDepth ? 1.0f : 0.0f; // æ·±åº¦ï¼šè¯¥åƒç´ åœ¨é˜´å½±å¤„è¿”å›1
     
     float shadow = 0.0;
     vec2 texelSize = 1.0 / textureSize(_ShadowMap, 0);

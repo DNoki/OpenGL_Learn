@@ -1,4 +1,4 @@
-{_!Property_Start
+ï»¿{_!Property_Start
 {
     "_Exposure": 1,
     "_Gamma": 2.2
@@ -49,20 +49,20 @@ uniform sampler2D _MainTexture;
 //uniform samplerCube _CubeTexture;
 //uniform sampler2D _ShadowMap;
 
-uniform float _Exposure; // ÆØ¹â¶È
-uniform float _Gamma; // Ù¤ÂíÖµ
+uniform float _Exposure; // æ›å…‰åº¦
+uniform float _Gamma; // ä¼½é©¬å€¼
 
 void main()
 {
     vec4 texColor = texture(_MainTexture, f.uv);
     
-    // ReinhardÉ«µ÷Ó³Éä
+    // Reinhardè‰²è°ƒæ˜ å°„
     //texColor.rgb = texColor.rgb / (texColor.rgb + vec3(1.0f));
     
-    // ExposureÆØ¹â¶ÈÉ«µ÷Ó³Éä
+    // Exposureæ›å…‰åº¦è‰²è°ƒæ˜ å°„
     texColor.rgb = vec3(1.0f) - exp(-texColor.rgb * _Exposure);
     
-    // GammaĞ£Õı
+    // Gammaæ ¡æ­£
     texColor.rgb = pow(texColor.rgb, vec3(1.0f / _Gamma));
     FragColor = texColor;
     //FragColor = vec4(color, 1.0f);

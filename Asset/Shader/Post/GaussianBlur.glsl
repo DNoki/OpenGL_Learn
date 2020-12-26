@@ -1,4 +1,4 @@
-{_!Property_Start
+ï»¿{_!Property_Start
 {
     "_KernelRadius": 1,
     "_Variance": 1,
@@ -57,7 +57,7 @@ float GaussianFunction(vec2 pos)
     return exp(-(pos.x * pos.x + pos.y * pos.y) / _Variance);
 }
 
-// ¸ßË¹Ä£ºý
+// é«˜æ–¯æ¨¡ç³Š
 vec4 GaussianBlur()
 {
     vec2 offset = 1.0 / textureSize(_MainTexture, 0) * _KernelRadius * _Offset.xy;

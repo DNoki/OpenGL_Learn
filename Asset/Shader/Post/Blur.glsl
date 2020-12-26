@@ -1,4 +1,4 @@
-{_!Property_Start
+ï»¿{_!Property_Start
 {
     "_KernelRadius": 1
 }
@@ -48,14 +48,14 @@ uniform sampler2D _MainTexture;
 //uniform sampler2D _ShadowMap;
 uniform float _KernelRadius;
 
-// Ä£ºý
+// æ¨¡ç³Š
 vec4 Blur()
 {
     vec2 offset = 1.0 / textureSize(_MainTexture, 0) * _KernelRadius;
     vec2 offsets[9] = vec2[](
-        vec2(-offset.x, offset.y), vec2( 0.0f, offset.y), vec2( offset.x, offset.y), // ÉÏ
-        vec2(-offset.x, 0.0f), vec2( 0.0f, 0.0f), vec2( offset.x, 0.0f),   // ÖÐ
-        vec2(-offset.x, -offset.y), vec2( 0.0f, -offset.y), vec2( offset.x, -offset.y)  // ÏÂ
+        vec2(-offset.x, offset.y), vec2( 0.0f, offset.y), vec2( offset.x, offset.y), // ä¸Š
+        vec2(-offset.x, 0.0f), vec2( 0.0f, 0.0f), vec2( offset.x, 0.0f),   // ä¸­
+        vec2(-offset.x, -offset.y), vec2( 0.0f, -offset.y), vec2( offset.x, -offset.y)  // ä¸‹
     );
     float kernel[9] = float[](
         1.0, 1.0, 1.0,

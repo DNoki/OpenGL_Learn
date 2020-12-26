@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <glm/glm.hpp>
 //#include <glm/gtx/vector_angle.hpp>
@@ -8,7 +8,7 @@
 
 namespace OpenGL_Learn
 {
-    // ¼ì²é£ºÊÇ·ñ³£Á¿²ÎÊı ÊÇ·ñÒıÓÃ²ÎÊı ÊÇ·ñ³£Á¿º¯Êı
+    // æ£€æŸ¥ï¼šæ˜¯å¦å¸¸é‡å‚æ•° æ˜¯å¦å¼•ç”¨å‚æ•° æ˜¯å¦å¸¸é‡å‡½æ•°
 
     struct Vector2;
     struct Vector3;
@@ -188,7 +188,7 @@ namespace OpenGL_Learn
             return glm::ortho(left, right, bottom, top, zNear, zFar);
         }
         static Matrix4x4 Frustum(const float& left, const float& right, const float& bottom, const float& top, const float& zNear, const float& zFar);
-        // ¸ø¶¨ÁË½Ç¶È
+        // ç»™å®šäº†è§’åº¦
         static Matrix4x4 Perspective(const float& fovy, const float& aspect, const float& zNear, const float& zFar)
         {
             return glm::perspective(Math::Deg2Rad * fovy, aspect, zNear, zFar);

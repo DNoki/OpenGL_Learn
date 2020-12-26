@@ -1,4 +1,4 @@
-#version 330 core
+﻿#version 330 core
 
 // 接收的输入是经过插值计算的
 in v2f

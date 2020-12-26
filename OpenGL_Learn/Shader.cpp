@@ -1,4 +1,4 @@
-#include "Shader.h"
+ï»¿#include "Shader.h"
 
 #include <iostream>
 #include <stdlib.h>
@@ -22,23 +22,23 @@ namespace OpenGL_Learn
     {
         string text;
         ifstream vShaderFile;
-        // ±£Ö¤ifstream¶ÔÏó¿ÉÒÔÅ×³öÒì³££º
+        // ä¿è¯ifstreamå¯¹è±¡å¯ä»¥æŠ›å‡ºå¼‚å¸¸ï¼š
         vShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
         try
         {
-            vShaderFile.open(path);// ´ò¿ªÎÄ¼ş
+            vShaderFile.open(path);// æ‰“å¼€æ–‡ä»¶
             stringstream vShaderStream;
-            vShaderStream << vShaderFile.rdbuf();// ¶ÁÈ¡ÎÄ¼şµÄ»º³åÄÚÈİµ½Êı¾İÁ÷ÖĞ
-            vShaderFile.close();// ¹Ø±ÕÎÄ¼ş´¦ÀíÆ÷
-            text = vShaderStream.str();// ×ª»»Êı¾İÁ÷µ½string
+            vShaderStream << vShaderFile.rdbuf();// è¯»å–æ–‡ä»¶çš„ç¼“å†²å†…å®¹åˆ°æ•°æ®æµä¸­
+            vShaderFile.close();// å…³é—­æ–‡ä»¶å¤„ç†å™¨
+            text = vShaderStream.str();// è½¬æ¢æ•°æ®æµåˆ°string
         }
         catch (ifstream::failure e)
         {
-            cout << "ERROR::¶ÁÈ¡ÎÄ¼şÊ§°Ü¡£" << path << endl;
+            cout << "ERROR::è¯»å–æ–‡ä»¶å¤±è´¥ã€‚" << path << endl;
             throw;
         }
 
-        cout << "LOG:: ×ÅÉ«Æ÷:: " << "ÒÑ¶ÁÈ¡ÎÄ¼ş" << path << endl;
+        cout << "LOG:: ç€è‰²å™¨:: " << "å·²è¯»å–æ–‡ä»¶" << path << endl;
         return text;
     }
 
@@ -55,10 +55,10 @@ namespace OpenGL_Learn
     map<int, map<int, Vector4>> Shader::StaticVector4Uniforms = map<int, map<int, Vector4>>();
     map<int, map<int, Matrix4x4>> Shader::StaticMatrix4x4Uniforms = map<int, map<int, Matrix4x4>>();
 
-    // Ê¹ÓÃÖ¸¶¨äÖÈ¾×´Ì¬
+    // ä½¿ç”¨æŒ‡å®šæ¸²æŸ“çŠ¶æ€
     void Shader::UseState(const ShaderState& state)
     {
-        // Éî¶È²âÊÔ
+        // æ·±åº¦æµ‹è¯•
         if (realShaderState->DepthTest != state.DepthTest)
         {
             realShaderState->DepthTest = state.DepthTest;
@@ -80,7 +80,7 @@ namespace OpenGL_Learn
                 glDepthMask(realShaderState->DepthMask);
             }
         }
-        // Ä£°å²âÊÔ
+        // æ¨¡æ¿æµ‹è¯•
         if (realShaderState->Stencil != state.Stencil)
         {
             realShaderState->Stencil = state.Stencil;
@@ -89,8 +89,8 @@ namespace OpenGL_Learn
             realShaderState->StencilFail = state.StencilFail; realShaderState->StencilZfail = state.StencilZfail; realShaderState->StencilZpass = state.StencilZpass;
 
             ShaderState::SetState(GL_STENCIL_TEST, realShaderState->Stencil);
-            glStencilMask(realShaderState->StencilMask); // Ğ´ÈëÄ£°å»º³åÇøµÄÊıÖµ£¬Ê¹ÓÃÎ»ÑÚÂëµÄ·½Ê½¾ö¶¨ÊÇ·ñ¿ÉÒÔĞ´ÈëÄ£°å»º³åÇø
-            glStencilFunc((GLenum)realShaderState->StencilTestMode, realShaderState->StencilRef, realShaderState->StencilRefMask); // ÓÃÓÚÖ¸¶¨Ä£°å²âÊÔµÄº¯Êı£¬ÕâÀïÖ¸¶¨ÊÇÊ²Ã´Çé¿öÏÂÍ¨¹ıÄ£°å²âÊÔ¡£
+            glStencilMask(realShaderState->StencilMask); // å†™å…¥æ¨¡æ¿ç¼“å†²åŒºçš„æ•°å€¼ï¼Œä½¿ç”¨ä½æ©ç çš„æ–¹å¼å†³å®šæ˜¯å¦å¯ä»¥å†™å…¥æ¨¡æ¿ç¼“å†²åŒº
+            glStencilFunc((GLenum)realShaderState->StencilTestMode, realShaderState->StencilRef, realShaderState->StencilRefMask); // ç”¨äºæŒ‡å®šæ¨¡æ¿æµ‹è¯•çš„å‡½æ•°ï¼Œè¿™é‡ŒæŒ‡å®šæ˜¯ä»€ä¹ˆæƒ…å†µä¸‹é€šè¿‡æ¨¡æ¿æµ‹è¯•ã€‚
             glStencilOp((GLenum)realShaderState->StencilFail, (GLenum)realShaderState->StencilZfail, (GLenum)realShaderState->StencilZpass);
         }
         else
@@ -108,7 +108,7 @@ namespace OpenGL_Learn
                 glStencilOp((GLenum)realShaderState->StencilFail, (GLenum)realShaderState->StencilZfail, (GLenum)realShaderState->StencilZpass);
             }
         }
-        // »ìºÏ
+        // æ··åˆ
         if (realShaderState->Blend != state.Blend)
         {
             realShaderState->Blend = state.Blend;
@@ -130,7 +130,7 @@ namespace OpenGL_Learn
                     (GLenum)realShaderState->BlendSfactorAlpha, (GLenum)realShaderState->BlendDfactorAlpha);
             }
         }
-        // ÃæÌŞ³ı
+        // é¢å‰”é™¤
         if (realShaderState->CullFace != state.CullFace)
         {
             realShaderState->CullFace = state.CullFace;
@@ -146,7 +146,7 @@ namespace OpenGL_Learn
                 glCullFace((GLenum)realShaderState->CullFaceMode);
             }
         }
-        // ÕıÏòÃæ
+        // æ­£å‘é¢
         if (realShaderState->FrontFace != state.FrontFace)
         {
             realShaderState->FrontFace = state.FrontFace;
@@ -164,7 +164,7 @@ namespace OpenGL_Learn
 
     void Shader::BindTexture(Texture& texture, const string& name, unsigned int unit)
     {
-        if (!SetInt(name, unit)) // Ö¸¶¨ÎÆÀíµ¥Ôª
+        if (!SetInt(name, unit)) // æŒ‡å®šçº¹ç†å•å…ƒ
             return;
         if (_textures.count(unit) == 0)
             _textures.insert(make_pair(unit, &texture));
@@ -178,9 +178,9 @@ namespace OpenGL_Learn
         {
             UseState(this->State);
 
-            GameSystem::PrintError("´«ËÍUniformÇ°£º");
+            GameSystem::PrintError("ä¼ é€Uniformå‰ï¼š");
             for (auto uniform : _intUniforms)
-                // ±È½ÏÕæÖµºÍ±¾µØÖµÊÇ·ñÏàµÈ
+                // æ¯”è¾ƒçœŸå€¼å’Œæœ¬åœ°å€¼æ˜¯å¦ç›¸ç­‰
                 if (StaticIntUniforms[this->ID][uniform.first] != uniform.second)
                 {
                     StaticIntUniforms[this->ID][uniform.first] = uniform.second;
@@ -205,16 +205,16 @@ namespace OpenGL_Learn
                     StaticMatrix4x4Uniforms[this->ID][uniform.first] = uniform.second;
                     glUniformMatrix4fv(uniform.first, 1, false, StaticMatrix4x4Uniforms[this->ID][uniform.first].GetPtr());
                 }
-            GameSystem::PrintError("´«ËÍUniformºó£º");
+            GameSystem::PrintError("ä¼ é€Uniformåï¼š");
 
-            GameSystem::PrintError("°ó¶¨ÌùÍ¼Ç°£º");
-            // ¼¤»î°ó¶¨µÄÌùÍ¼ 
+            GameSystem::PrintError("ç»‘å®šè´´å›¾å‰ï¼š");
+            // æ¿€æ´»ç»‘å®šçš„è´´å›¾ 
             for (auto tex : _textures)
             {
-                glActiveTexture(GL_TEXTURE0 + tex.first);// ¼¤»îÎÆÀíµ¥Ôª
-                tex.second->BindTexture(); // °ó¶¨¶ÔÓ¦ÌùÍ¼
+                glActiveTexture(GL_TEXTURE0 + tex.first);// æ¿€æ´»çº¹ç†å•å…ƒ
+                tex.second->BindTexture(); // ç»‘å®šå¯¹åº”è´´å›¾
             }
-            GameSystem::PrintError("°ó¶¨ÌùÍ¼ºó£º");
+            GameSystem::PrintError("ç»‘å®šè´´å›¾åï¼š");
             //for (unsigned int i = 0; i < _textures.size(); i++)
             //    this->_textures[i].UseTexture();
         }
@@ -322,27 +322,27 @@ namespace OpenGL_Learn
         {
             realShaderState = make_unique<ShaderState>();
 
-            // Éî¶È²âÊÔ
+            // æ·±åº¦æµ‹è¯•
             ShaderState::SetState(GL_DEPTH_TEST, realShaderState->DepthTest);
             glDepthFunc((GLenum)realShaderState->DepthTestMode);
             glDepthMask(realShaderState->DepthMask);
 
-            // Ä£°å²âÊÔ
+            // æ¨¡æ¿æµ‹è¯•
             ShaderState::SetState(GL_STENCIL_TEST, realShaderState->Stencil);
             glStencilMask(realShaderState->StencilMask);
             glStencilFunc((GLenum)realShaderState->StencilTestMode, realShaderState->StencilRef, realShaderState->StencilRefMask);
             glStencilOp((GLenum)realShaderState->StencilFail, (GLenum)realShaderState->StencilZfail, (GLenum)realShaderState->StencilZpass);
 
-            // »ìºÏ
+            // æ··åˆ
             ShaderState::SetState(GL_BLEND, realShaderState->Blend);
             glBlendFuncSeparate((GLenum)realShaderState->BlendSfactor, (GLenum)realShaderState->BlendDfactor,
-                (GLenum)realShaderState->BlendSfactorAlpha, (GLenum)realShaderState->BlendDfactorAlpha);// ·Ö±ğÖ¸¶¨RGBºÍalpha·ÖÁ¿µÄÏñËØËãÊõ
+                (GLenum)realShaderState->BlendSfactorAlpha, (GLenum)realShaderState->BlendDfactorAlpha);// åˆ†åˆ«æŒ‡å®šRGBå’Œalphaåˆ†é‡çš„åƒç´ ç®—æœ¯
 
-            // ÃæÌŞ³ı
+            // é¢å‰”é™¤
             ShaderState::SetState(GL_CULL_FACE, realShaderState->CullFace);
             glCullFace((GLenum)realShaderState->CullFaceMode);
 
-            // ÕıÏòÃæ
+            // æ­£å‘é¢
             glFrontFace(realShaderState->FrontFace);
         }
     }
@@ -465,7 +465,7 @@ namespace OpenGL_Learn
         {
             auto id = this->ID;
             glDeleteProgram(this->ID);
-            cout << "LOG:: ×ÅÉ«Æ÷:: " << "ÒÑÊÍ·ÅID£º" << id << endl << endl;
+            cout << "LOG:: ç€è‰²å™¨:: " << "å·²é‡Šæ”¾IDï¼š" << id << endl << endl;
         }
         else
         {
@@ -473,7 +473,7 @@ namespace OpenGL_Learn
             {
                 auto id = this->ID;
                 glDeleteProgram(this->ID);
-                cout << "LOG:: ×ÅÉ«Æ÷:: " << "ÒÑÊÍ·ÅID£º" << id << endl << endl;
+                cout << "LOG:: ç€è‰²å™¨:: " << "å·²é‡Šæ”¾IDï¼š" << id << endl << endl;
             }
             else
                 Counter[this->ID]--;
@@ -497,41 +497,41 @@ namespace OpenGL_Learn
     {
         GLuint vert, geo, frag, id;
 
-        // ±àÒë¶¥µã×ÅÉ«Æ÷
+        // ç¼–è¯‘é¡¶ç‚¹ç€è‰²å™¨
         {
             vert = glCreateShader(GL_VERTEX_SHADER);
             glShaderSource(vert, 1, &vertexCode, nullptr);
             glCompileShader(vert);
-            CheckShaderCompile(vert, "¶¥µã");
+            CheckShaderCompile(vert, "é¡¶ç‚¹");
         }
 
-        // ±àÒëÆ¬¶Î×ÅÉ«Æ÷
+        // ç¼–è¯‘ç‰‡æ®µç€è‰²å™¨
         {
             frag = glCreateShader(GL_FRAGMENT_SHADER);
             glShaderSource(frag, 1, &fragmentCode, nullptr);
             glCompileShader(frag);
-            CheckShaderCompile(frag, "Æ¬¶Î");
+            CheckShaderCompile(frag, "ç‰‡æ®µ");
         }
 
         if (geometryCode != nullptr)
         {
-            // ±àÒë¼¸ºÎ×ÅÉ«Æ÷
+            // ç¼–è¯‘å‡ ä½•ç€è‰²å™¨
             {
                 geo = glCreateShader(GL_GEOMETRY_SHADER);
                 glShaderSource(geo, 1, &geometryCode, nullptr);
                 glCompileShader(geo);
-                CheckShaderCompile(geo, "¼¸ºÎ");
+                CheckShaderCompile(geo, "å‡ ä½•");
             }
         }
 
-        // ×ÅÉ«Æ÷³ÌĞò
+        // ç€è‰²å™¨ç¨‹åº
         {
             id = glCreateProgram();
             glAttachShader(id, vert);
             glAttachShader(id, frag);
             if (geometryCode != nullptr) glAttachShader(id, geo);
             glLinkProgram(id);
-            // ¼ì²â±àÒëÊÇ·ñ³É¹¦
+            // æ£€æµ‹ç¼–è¯‘æ˜¯å¦æˆåŠŸ
             GLint success;
             glGetProgramiv(id, GL_LINK_STATUS, &success);
             if (!success)
@@ -540,21 +540,21 @@ namespace OpenGL_Learn
                 glGetProgramInfoLog(id, sizeof(infoLog), nullptr, infoLog);
                 cout << "ERROR::PROGRAM::COMPILATION_FAILED" << endl
                     << infoLog << endl;
-                throw exception("Î´³É¹¦±àÒë×ÅÉ«Æ÷¡£");
+                throw exception("æœªæˆåŠŸç¼–è¯‘ç€è‰²å™¨ã€‚");
             }
         }
 
-        // ÊÍ·Å¶¥µãÆ¬¶Î¶ÔÏó
+        // é‡Šæ”¾é¡¶ç‚¹ç‰‡æ®µå¯¹è±¡
         glDeleteShader(vert);
         glDeleteShader(frag);
 
-        cout << "LOG:: ×ÅÉ«Æ÷:: " << "ÒÑ°ó¶¨×ÅÉ«Æ÷³ÌĞòID£º" << id << endl << endl;
+        cout << "LOG:: ç€è‰²å™¨:: " << "å·²ç»‘å®šç€è‰²å™¨ç¨‹åºIDï¼š" << id << endl << endl;
 
         this->ID = id;
-        // °ó¶¨Uniform¿é
+        // ç»‘å®šUniformå—
         UniformManager::UniformBlockBinding(this);
 
-        // °ó¶¨Ä¬ÈÏShadowMap
+        // ç»‘å®šé»˜è®¤ShadowMap
         auto defaultWhiteTexture = SceneManager::GetActiveScene().FindResourceObject<Texture2D>("Default White Texture");
         auto defaultWhiteTextureCube = SceneManager::GetActiveScene().FindResourceObject<TextureCube>("Default White TextureCube");
         this->BindTexture(*defaultWhiteTexture, "_ShadowMap", 10);

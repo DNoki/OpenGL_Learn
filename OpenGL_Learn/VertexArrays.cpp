@@ -1,4 +1,4 @@
-#include "VertexArrays.h"
+ï»¿#include "VertexArrays.h"
 
 #include <iostream>
 
@@ -17,13 +17,13 @@ namespace OpenGL_Learn
         glGenVertexArrays(1, &id);
         this->ID = id;
 
-        //cout << "LOG:: " << "¶¥µãÊý×é:: " << "ID=" << id << "ÒÑÉú³É" << endl;
+        //cout << "LOG:: " << "é¡¶ç‚¹æ•°ç»„:: " << "ID=" << id << "å·²ç”Ÿæˆ" << endl;
     }
 
     VertexArrays::~VertexArrays()
     {
         //auto id = this->ID;
         glDeleteVertexArrays(1, &this->ID);
-        //cout << "LOG:: " << "¶¥µãÊý×é:: " << "ID=" << id << "ÒÑÊÍ·Å" << endl;
+        //cout << "LOG:: " << "é¡¶ç‚¹æ•°ç»„:: " << "ID=" << id << "å·²é‡Šæ”¾" << endl;
     }
 }

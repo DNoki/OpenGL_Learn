@@ -1,4 +1,4 @@
-#include "Mesh.h"
+ï»¿#include "Mesh.h"
 
 #include <iostream>
 
@@ -29,7 +29,7 @@ namespace OpenGL_Learn
     {
         unique_ptr<Mesh> mesh;
 
-        if (name == PresetMesh::TRIANGLE)// ±ß³¤Îª1µÄÈı½ÇĞÎ
+        if (name == PresetMesh::TRIANGLE)// è¾¹é•¿ä¸º1çš„ä¸‰è§’å½¢
         {
             mesh = make_unique<Mesh>("Triangle");
             mesh->vertices.push_back(Vector3(-0.5f, 0.0f, -0.288675f));
@@ -48,7 +48,7 @@ namespace OpenGL_Learn
             mesh->tangents.push_back(Vector3::Right);
             mesh->tangents.push_back(Vector3::Right);
         }
-        else if (name == PresetMesh::SQUARE)// ±ß³¤Îª1µÄÕı·½ĞÎ
+        else if (name == PresetMesh::SQUARE)// è¾¹é•¿ä¸º1çš„æ­£æ–¹å½¢
         {
             mesh = make_unique<Mesh>("Square");
             mesh->vertices.push_back(Vector3(-0.5f, 0.0f, -0.5f));
@@ -76,7 +76,7 @@ namespace OpenGL_Learn
 
 
         }
-        else if (name == PresetMesh::BOX)// ±ß³¤Îª1µÄÕı·½Ìå
+        else if (name == PresetMesh::BOX)// è¾¹é•¿ä¸º1çš„æ­£æ–¹ä½“
         {
             mesh = make_unique<Mesh>("Box");
 
@@ -173,14 +173,14 @@ namespace OpenGL_Learn
     {
         if (!mat.UseShaderPass(index)) return;
 
-        GameSystem::PrintError("»æÖÆÄ£ĞÍÇ°£º");
+        GameSystem::PrintError("ç»˜åˆ¶æ¨¡å‹å‰ï¼š");
         VAO.BindVertexArray();
         if (GetMode() == MeshMode::ARRAYS)
             glDrawArrays(GL_TRIANGLES, 0, GetVertexCount());
         else if (GetMode() == MeshMode::ELEMENTS)
             glDrawElements(GL_TRIANGLES, GetIndiceCount(), GL_UNSIGNED_INT, 0);
         VAO.UnBindVertexArray();
-        GameSystem::PrintError("»æÖÆÄ£ĞÍºó£º");
+        GameSystem::PrintError("ç»˜åˆ¶æ¨¡å‹åï¼š");
         GameSystem::DrawCallCounter++;
     }
 
@@ -195,7 +195,7 @@ namespace OpenGL_Learn
 
         if (vertexCount < 3)
         {
-            cout << "LOG:: " << "MESH :: ÊäµÄµÄ¶¥µãÊıÁ¿µÍÓÚ3¸ö¡£" << endl;
+            cout << "LOG:: " << "MESH :: è¾“çš„çš„é¡¶ç‚¹æ•°é‡ä½äº3ä¸ªã€‚" << endl;
         }
 
         if (normalCount != vertexCount)
@@ -221,8 +221,8 @@ namespace OpenGL_Learn
 
         size = vertexCount * sizeof(Vector3) + normalCount * sizeof(Vector3) + tangentCount * sizeof(Vector3) + colorCount * sizeof(Vector4) + uvCount * sizeof(Vector2);
 
-        VAO.BindVertexArray(); // °ó¶¨¶¥µãÊı×é
-        VBO.BufferData(size, NULL);// ÏÈ´´Ôìsize´óĞ¡µÄ¿Õ¼ä£¬ºóÊäÈëÊı¾İ
+        VAO.BindVertexArray(); // ç»‘å®šé¡¶ç‚¹æ•°ç»„
+        VBO.BufferData(size, NULL);// å…ˆåˆ›é€ sizeå¤§å°çš„ç©ºé—´ï¼Œåè¾“å…¥æ•°æ®
 
         GLintptr offset = 0;
 
@@ -270,7 +270,7 @@ namespace OpenGL_Learn
         vertices(), normals(), tangents(), colors(), uv(), indices(),
         VAO(), VBO(GL_ARRAY_BUFFER), EBO(GL_ELEMENT_ARRAY_BUFFER)
     {
-        cout << "LOG:: " << "Íø¸ñ:: Name£º" << this->Name << " ÒÑÉú³É"
+        cout << "LOG:: " << "ç½‘æ ¼:: Nameï¼š" << this->Name << " å·²ç”Ÿæˆ"
             << " VAO_ID=" << VAO.ID
             << " VBO_ID=" << VBO.ID
             << " EBO_ID=" << EBO.ID
@@ -279,7 +279,7 @@ namespace OpenGL_Learn
 
     Mesh::~Mesh()
     {
-        cout << "LOG:: " << "Íø¸ñ:: Name£º" << this->Name << " ÒÑÊÍ·Å"
+        cout << "LOG:: " << "ç½‘æ ¼:: Nameï¼š" << this->Name << " å·²é‡Šæ”¾"
             << " VAO_ID=" << VAO.ID
             << " VBO_ID=" << VBO.ID
             << " EBO_ID=" << EBO.ID
@@ -288,22 +288,22 @@ namespace OpenGL_Learn
 
     //void Mesh::setupMesh()
     //{
-    //    // Ë÷Òı»æÖÆÄ£Ê½»ù±¾Á÷³Ì
+    //    // ç´¢å¼•ç»˜åˆ¶æ¨¡å¼åŸºæœ¬æµç¨‹
     //
-    //    //glGenVertexArrays(1, &VAO);// ¶¥µãÊı×é¶ÔÏó
-    //    //glGenBuffers(1, &VBO.ID);// ¶¥µã»º³å¶ÔÏó
-    //    //glGenBuffers(1, &EBO.ID);// Ë÷Òı»º³å¶ÔÏó
+    //    //glGenVertexArrays(1, &VAO);// é¡¶ç‚¹æ•°ç»„å¯¹è±¡
+    //    //glGenBuffers(1, &VBO.ID);// é¡¶ç‚¹ç¼“å†²å¯¹è±¡
+    //    //glGenBuffers(1, &EBO.ID);// ç´¢å¼•ç¼“å†²å¯¹è±¡
     //
-    //    //glBindVertexArray(VAO);// °ó¶¨VAO
+    //    //glBindVertexArray(VAO);// ç»‘å®šVAO
     //
-    //    // ¸´ÖÆ¶¥µãÊı×éµ½»º³åÖĞ¹©OpenGLÊ¹ÓÃ    
+    //    // å¤åˆ¶é¡¶ç‚¹æ•°ç»„åˆ°ç¼“å†²ä¸­ä¾›OpenGLä½¿ç”¨    
     //    //glBindBuffer(GL_ARRAY_BUFFER, VBO);
     //    //glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-    //    // ¸´ÖÆË÷ÒıÊı×éµ½»º³åÖĞ
+    //    // å¤åˆ¶ç´¢å¼•æ•°ç»„åˆ°ç¼“å†²ä¸­
     //    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     //    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
     //
-    //    // Á´½Ó¶¥µãÊôĞÔ
+    //    // é“¾æ¥é¡¶ç‚¹å±æ€§
     //    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
     //    //glEnableVertexAttribArray(0);
     //    //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
@@ -315,7 +315,7 @@ namespace OpenGL_Learn
     //    //glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoord));
     //    //glEnableVertexAttribArray(4);
     //
-    //    //glBindVertexArray(0);// ½â°óVAO
+    //    //glBindVertexArray(0);// è§£ç»‘VAO
     //}
 
 

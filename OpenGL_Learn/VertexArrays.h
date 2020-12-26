@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <glad/glad.h>
 
@@ -7,24 +7,24 @@ namespace OpenGL_Learn
 {
     using namespace std;
 
-    // ¶¥µãÊı×é
+    // é¡¶ç‚¹æ•°ç»„
     struct VertexArrays
     {
     public:
         GLuint ID;
 
-        // °ó¶¨¶¥µãÊı×é
+        // ç»‘å®šé¡¶ç‚¹æ•°ç»„
         inline void BindVertexArray() { glBindVertexArray(ID); }
-        // ½â°ó¶¥µãÊı×é
+        // è§£ç»‘é¡¶ç‚¹æ•°ç»„
         inline void UnBindVertexArray() { glBindVertexArray(0); }
 
-        // Á´½Ó¶¥µãÊôĞÔ
-        // @index ¶¥µãÊôĞÔµÄÎ»ÖÃÖµ
-        // @size ¶¥µãÊôĞÔµÄ´óĞ¡
-        // @stride ²½³¤
-        // @pointer Î»ÖÃÊı¾İÔÚ»º³åÖĞÆğÊ¼Î»ÖÃµÄÆ«ÒÆÁ¿
-        // @type Êı¾İµÄÀàĞÍ
-        // @normalized ÊÇ·ñÏ£ÍûÊı¾İ±»±ê×¼»¯
+        // é“¾æ¥é¡¶ç‚¹å±æ€§
+        // @index é¡¶ç‚¹å±æ€§çš„ä½ç½®å€¼
+        // @size é¡¶ç‚¹å±æ€§çš„å¤§å°
+        // @stride æ­¥é•¿
+        // @pointer ä½ç½®æ•°æ®åœ¨ç¼“å†²ä¸­èµ·å§‹ä½ç½®çš„åç§»é‡
+        // @type æ•°æ®çš„ç±»å‹
+        // @normalized æ˜¯å¦å¸Œæœ›æ•°æ®è¢«æ ‡å‡†åŒ–
         void VertexAttribPointer(GLuint index, GLint size, GLsizei stride, const void* pointer, GLenum type = GL_FLOAT, GLboolean normalized = GL_FALSE);
 
         VertexArrays();

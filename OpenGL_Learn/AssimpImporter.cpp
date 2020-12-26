@@ -1,4 +1,4 @@
-#include "AssimpImporter.h"
+ï»¿#include "AssimpImporter.h"
 
 #include <iostream>
 
@@ -15,13 +15,13 @@ namespace OpenGL_Learn
     {
         //Assimp::Importer i;
         Assimp::Importer importer;
-        // ¸ü¶àÃ¶¾ÙÀàĞÍ http://sir-kimmi.de/assimp/lib_html/postprocess_8h.html#a64795260b95f5a4b3f3dc1be4f52e410a8857a0e30688127a82c7b8939958c6dc
+        // æ›´å¤šæšä¸¾ç±»å‹ http://sir-kimmi.de/assimp/lib_html/postprocess_8h.html#a64795260b95f5a4b3f3dc1be4f52e410a8857a0e30688127a82c7b8939958c6dc
         const aiScene* scene = importer.ReadFile(path.c_str(), postProcessSetps
-            //aiProcess_Triangulate | // ¶ÔËùÓĞÍø¸ñµÄËùÓĞÃæ½øĞĞÈı½ÇÆÊ·Ö¡£
-            //aiProcess_FlipUVs | // ÑØyÖá·­×ªËùÓĞUV×ø±ê£¬²¢ÏàÓ¦µØµ÷Õû²ÄÖÊÉèÖÃºÍË«ÇĞÏß¡£
-            //aiProcess_CalcTangentSpace | // ¼ÆËãµ¼ÈëµÄÍø¸ñµÄÇĞÏßºÍÇĞÏß¡£
-            //aiProcess_MakeLeftHanded | // µ¼ÈëÎª×óÊÖ×ø±êÏµ
-            //aiProcess_FlipWindingOrder // ·­×ªÈÆÏßË³Ğò£¨·­×ª·¨Ïß£©
+            //aiProcess_Triangulate | // å¯¹æ‰€æœ‰ç½‘æ ¼çš„æ‰€æœ‰é¢è¿›è¡Œä¸‰è§’å‰–åˆ†ã€‚
+            //aiProcess_FlipUVs | // æ²¿yè½´ç¿»è½¬æ‰€æœ‰UVåæ ‡ï¼Œå¹¶ç›¸åº”åœ°è°ƒæ•´æè´¨è®¾ç½®å’ŒåŒåˆ‡çº¿ã€‚
+            //aiProcess_CalcTangentSpace | // è®¡ç®—å¯¼å…¥çš„ç½‘æ ¼çš„åˆ‡çº¿å’Œåˆ‡çº¿ã€‚
+            //aiProcess_MakeLeftHanded | // å¯¼å…¥ä¸ºå·¦æ‰‹åæ ‡ç³»
+            //aiProcess_FlipWindingOrder // ç¿»è½¬ç»•çº¿é¡ºåºï¼ˆç¿»è½¬æ³•çº¿ï¼‰
         );
 
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
@@ -89,7 +89,7 @@ namespace OpenGL_Learn
         }
         obj->GetTransform().SetTransformMatrix(matrix);
 
-        // ´¦Àí½ÚµãËùÓĞµÄÍø¸ñ£¨Èç¹ûÓĞµÄ»°£©
+        // å¤„ç†èŠ‚ç‚¹æ‰€æœ‰çš„ç½‘æ ¼ï¼ˆå¦‚æœæœ‰çš„è¯ï¼‰
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
         {
             auto meshRenderer = &obj->AddComponent<MeshRenderer>();
@@ -102,7 +102,7 @@ namespace OpenGL_Learn
         //{
         //    meshRenderer = &obj->AddComponent<MeshRenderer>();
 
-        //    // ´¦Àí½ÚµãËùÓĞµÄÍø¸ñ£¨Èç¹ûÓĞµÄ»°£©
+        //    // å¤„ç†èŠ‚ç‚¹æ‰€æœ‰çš„ç½‘æ ¼ï¼ˆå¦‚æœæœ‰çš„è¯ï¼‰
         //    for (unsigned int i = 0; i < node->mNumMeshes; i++)
         //    {
         //        meshRenderer->SetData(
@@ -111,7 +111,7 @@ namespace OpenGL_Learn
         //    }
         //}
 
-        // ½ÓÏÂÀ´¶ÔËüµÄ×Ó½ÚµãÖØ¸´ÕâÒ»¹ı³Ì
+        // æ¥ä¸‹æ¥å¯¹å®ƒçš„å­èŠ‚ç‚¹é‡å¤è¿™ä¸€è¿‡ç¨‹
         for (unsigned int i = 0; i < node->mNumChildren; i++)
         {
             ProcessNode(node->mChildren[i], scene, &obj->GetTransform());
@@ -130,9 +130,9 @@ namespace OpenGL_Learn
                 meshResult->normals.push_back(Vector3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
             if (mesh->HasTangentsAndBitangents())
                 meshResult->tangents.push_back(Vector3(mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z));
-            if (mesh->HasVertexColors(0)) // ÊÇ·ñÓĞµÚ0Ì×VertexColor¼¯
+            if (mesh->HasVertexColors(0)) // æ˜¯å¦æœ‰ç¬¬0å¥—VertexColoré›†
                 meshResult->colors.push_back(Vector4(mesh->mColors[0][i].r, mesh->mColors[0][i].g, mesh->mColors[0][i].b, mesh->mColors[0][i].a));
-            if (mesh->HasTextureCoords(0)) // ÊÇ·ñÓĞµÚ0Ì×UV¼¯
+            if (mesh->HasTextureCoords(0)) // æ˜¯å¦æœ‰ç¬¬0å¥—UVé›†
                 meshResult->uv.push_back(Vector2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
         }
         for (unsigned int i = 0; i < mesh->mNumFaces; i++)
@@ -162,7 +162,7 @@ namespace OpenGL_Learn
     //    auto findMesh = ResourceManager::FindMesh(mesh->mName.C_Str(), mesh->mNumVertices);
     //    if (findMesh)
     //    {
-    //        cout << "ÕÒµ½ÖØ¸´Íø¸ñ" << endl;
+    //        cout << "æ‰¾åˆ°é‡å¤ç½‘æ ¼" << endl;
     //        return Tuple_Mesh_Material(findMesh, Material(const_cast<Shader&>(shader)));
     //    }
 
@@ -186,7 +186,7 @@ namespace OpenGL_Learn
     //        }
     //    }
 
-    //    // Ë÷Òı
+    //    // ç´¢å¼•
     //    for (unsigned int i = 0; i < mesh->mNumFaces; i++)
     //    {
     //        auto face = mesh->mFaces[i];
@@ -200,7 +200,7 @@ namespace OpenGL_Learn
     //        //}
 
     //    }
-    //    // ²ÄÖÊ
+    //    // æè´¨
     //    if (mesh->mMaterialIndex >= 0)
     //    {
     //        auto material = scene->mMaterials[mesh->mMaterialIndex];

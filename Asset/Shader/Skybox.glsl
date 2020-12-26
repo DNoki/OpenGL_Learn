@@ -1,4 +1,4 @@
-{_!Property_Start
+ï»¿{_!Property_Start
 {
     "RenderQueue": 2333
 }
@@ -31,9 +31,9 @@ layout (std140) uniform TRANSFORM
 
 layout (std140) uniform CAMERA_DATA
 {
-    // ÊÀ½ç¿Õ¼äÏà»úÎ»ÖÃ
+    // ä¸–ç•Œç©ºé—´ç›¸æœºä½ç½®
     vec4 WorldSpaceCameraPos;
-    // xÊÇÕı½»ÉãÓ°»úµÄ¿í¶È£¬yÊÇÕı½»ÉãÓ°»úµÄ¸ß¶È£¬zÎª¿í¸ß±È£¬wµ±Õı½»ÉãÓ°»úÊ±Îª1.0£¬Í¸ÊÓÊ±Îª0.0¡£
+    // xæ˜¯æ­£äº¤æ‘„å½±æœºçš„å®½åº¦ï¼Œyæ˜¯æ­£äº¤æ‘„å½±æœºçš„é«˜åº¦ï¼Œzä¸ºå®½é«˜æ¯”ï¼Œwå½“æ­£äº¤æ‘„å½±æœºæ—¶ä¸º1.0ï¼Œé€è§†æ—¶ä¸º0.0ã€‚
     vec4 OrthoParams;
 };
 
@@ -44,7 +44,7 @@ void main()
         orthoSize = max(orthoSize, max(OrthoParams.x, OrthoParams.y));
 
     f.WorldSpacePosition = vec4(position, 1.0f);
-    gl_Position = (Matrix_P * mat4(mat3(Matrix_V)/*È¥³ıÏà»úÎ»ÖÃ±ä»»*/) * f.WorldSpacePosition).xyww;
+    gl_Position = (Matrix_P * mat4(mat3(Matrix_V)/*å»é™¤ç›¸æœºä½ç½®å˜æ¢*/) * f.WorldSpacePosition).xyww;
 }
 _!GLSL_VertexProgram_End
 }

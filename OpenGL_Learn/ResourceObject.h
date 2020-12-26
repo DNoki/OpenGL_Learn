@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 
@@ -15,11 +15,11 @@ namespace OpenGL_Learn
         STATIC = 1,
     };
 
-    // ×ÊÔ´¶ÔÏóµÄ»ùÀà
+    // èµ„æºå¯¹è±¡çš„åŸºç±»
     class ResourceObject
     {
     public:
-        // ¶ÔÏóµÄÃû³Æ¡£
+        // å¯¹è±¡çš„åç§°ã€‚
         string Name;
         HideFlagType HideFlag;
 

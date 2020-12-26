@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Behaviour.h"
 
@@ -11,35 +11,35 @@ namespace OpenGL_Learn
     class Mesh;
     class Renderer;
 
-    // äÖÈ¾Ïî
+    // æ¸²æŸ“é¡¹
     struct RenderItem
     {
     public:
-        // Ê¹ÓÃµÄäÖÈ¾Æ÷
+        // ä½¿ç”¨çš„æ¸²æŸ“å™¨
         Renderer* renderer;
-        // Ê¹ÓÃµÄ²ÄÖÊ
+        // ä½¿ç”¨çš„æè´¨
         Material* material;
-        // µ½Ïà»ú¾àÀë£¨äÖÈ¾Í¸Ã÷Ä£ĞÍÊ±Ê¹ÓÃ£©
+        // åˆ°ç›¸æœºè·ç¦»ï¼ˆæ¸²æŸ“é€æ˜æ¨¡å‹æ—¶ä½¿ç”¨ï¼‰
         float depth;
-        // Ê¹ÓÃ×ÅÉ«Æ÷Ë÷Òı
+        // ä½¿ç”¨ç€è‰²å™¨ç´¢å¼•
         unsigned int index;
-        // äÖÈ¾¶ÓÁĞ
+        // æ¸²æŸ“é˜Ÿåˆ—
         unsigned int sequence;
 
         RenderItem(Renderer* r, Material* m, unsigned int i, unsigned int s) :renderer(r), material(m), depth(), index(i), sequence(s) {}
     };
 
-    // äÖÈ¾Æ÷£¨ĞéÀà£¬°üº¬ÁËÒ»¸ö²ÄÖÊ£©
+    // æ¸²æŸ“å™¨ï¼ˆè™šç±»ï¼ŒåŒ…å«äº†ä¸€ä¸ªæè´¨ï¼‰
     class Renderer : public Behaviour
     {
     public:
-        // »ñÈ¡²ÄÖÊ
+        // è·å–æè´¨
         inline Material* GetMaterial() { return _material; }
         unique_ptr<List<unique_ptr<RenderItem>>> GetRenderItems();
-        // »æÖÆ
-        // @index »æÖÆÖ¸¶¨×ÅÉ«Æ÷
+        // ç»˜åˆ¶
+        // @index ç»˜åˆ¶æŒ‡å®šç€è‰²å™¨
         virtual void Draw(unsigned int index) = 0;
-        // Ê¹ÓÃÖ¸¶¨²ÄÖÊµÄÖ¸¶¨×ÅÉ«Æ÷»æÖÆ
+        // ä½¿ç”¨æŒ‡å®šæè´¨çš„æŒ‡å®šç€è‰²å™¨ç»˜åˆ¶
         virtual void Draw(Material* material, unsigned int index) = 0;
 
     protected:
@@ -50,15 +50,15 @@ namespace OpenGL_Learn
     private:
     };
 
-    // Íø¸ñäÖÈ¾Æ÷£¨°üº¬ÁËÒ»¶Ô²ÄÖÊºÍÄ£ĞÍ£©
+    // ç½‘æ ¼æ¸²æŸ“å™¨ï¼ˆåŒ…å«äº†ä¸€å¯¹æè´¨å’Œæ¨¡å‹ï¼‰
     class MeshRenderer final : public Renderer
     {
     public:
-        // ÉèÖÃÒ»¶ÔÄ£ĞÍÓë²ÄÖÊ
+        // è®¾ç½®ä¸€å¯¹æ¨¡å‹ä¸æè´¨
         void SetData(Mesh& mesh, Material& material);
         inline Mesh* GetMesh() { return _mesh; }
 
-        // »æÖÆÄ£ĞÍ
+        // ç»˜åˆ¶æ¨¡å‹
         void Draw(unsigned int index) override;
         void Draw(Material* material, unsigned int index) override;
 

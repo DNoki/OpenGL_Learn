@@ -1,7 +1,7 @@
-#include "Texture.h"
+ï»¿#include "Texture.h"
 
 #include <iostream>
-#define STB_IMAGE_IMPLEMENTATION //Í¨¹ı¶¨ÒåSTB_IMAGE_IMPLEMENTATION£¬Ô¤´¦ÀíÆ÷»áĞŞ¸ÄÍ·ÎÄ¼ş£¬ÈÃÆäÖ»°üº¬Ïà¹ØµÄº¯Êı¶¨ÒåÔ´Âë£¬µÈÓÚÊÇ½«Õâ¸öÍ·ÎÄ¼ş±äÎªÒ»¸ö .cpp ÎÄ¼şÁË¡£
+#define STB_IMAGE_IMPLEMENTATION //é€šè¿‡å®šä¹‰STB_IMAGE_IMPLEMENTATIONï¼Œé¢„å¤„ç†å™¨ä¼šä¿®æ”¹å¤´æ–‡ä»¶ï¼Œè®©å…¶åªåŒ…å«ç›¸å…³çš„å‡½æ•°å®šä¹‰æºç ï¼Œç­‰äºæ˜¯å°†è¿™ä¸ªå¤´æ–‡ä»¶å˜ä¸ºä¸€ä¸ª .cpp æ–‡ä»¶äº†ã€‚
 #include <stb_image.h>
 
 
@@ -11,16 +11,16 @@ namespace OpenGL_Learn
     {
         auto id = this->ID;
         glDeleteTextures(1, &this->ID);
-        cout << "LOG:: ÎÆÀí:: " << "ID=" << id << " ÎÆÀí×ÊÔ´ÒÑÊÍ·Å¡£ Name£º" << this->Name << endl << endl;
+        cout << "LOG:: çº¹ç†:: " << "ID=" << id << " çº¹ç†èµ„æºå·²é‡Šæ”¾ã€‚ Nameï¼š" << this->Name << endl << endl;
     }
 
     unique_ptr<Texture2D> Texture2D::CreateTexture2D(const string& name, const string& path, bool isSRGB, WrapType wrapMode, ScaleFilterType scaleFilterMode, bool flipY)
     {
         unique_ptr<Texture2D> tex = nullptr;
 
-        // ¼ÓÔØ²¢Éú³ÉÎÆÀí
+        // åŠ è½½å¹¶ç”Ÿæˆçº¹ç†
         int texWidth, texHeight, nrChannels;
-        stbi_set_flip_vertically_on_load(flipY);// ·­×ªÎÆÀí
+        stbi_set_flip_vertically_on_load(flipY);// ç¿»è½¬çº¹ç†
         unsigned char* data = stbi_load(path.c_str(), &texWidth, &texHeight, &nrChannels, 0);
         if (data)
         {
@@ -45,8 +45,8 @@ namespace OpenGL_Learn
             }
 
             tex = Texture2D::CreateTexture2D(name, texWidth, texHeight, internalformat, format, TextureType::UNSIGNED_BYTE, data, wrapMode, scaleFilterMode);
-            stbi_image_free(data);// ÊÍ·ÅÍ¼ÏñµÄÄÚ´æ
-            cout << "LOG:: " << "ÎÆÀí:: ID=" << tex->ID << " ÒÑ¼ÓÔØ2DÌùÍ¼£º" << path << endl << endl;
+            stbi_image_free(data);// é‡Šæ”¾å›¾åƒçš„å†…å­˜
+            cout << "LOG:: " << "çº¹ç†:: ID=" << tex->ID << " å·²åŠ è½½2Dè´´å›¾ï¼š" << path << endl << endl;
         }
         else
         {
@@ -90,7 +90,7 @@ namespace OpenGL_Learn
 
         for (unsigned int i = 0; i < 6; i++)
         {
-            stbi_set_flip_vertically_on_load(flipY);// ·­×ªÎÆÀí
+            stbi_set_flip_vertically_on_load(flipY);// ç¿»è½¬çº¹ç†
             auto data = stbi_load(paths[i].c_str(), &width, &height, &nrChannels, 0);
 
             GLenum internalformat;
@@ -119,7 +119,7 @@ namespace OpenGL_Learn
                     0, internalformat, width, height, 0, static_cast<int>(format), static_cast<int>(TextureType::UNSIGNED_BYTE), data);
 
                 //GenTexture2D(i, width, height, internalformat, format, TextureType::UNSIGNED_BYTE, data);
-                cout << "LOG:: " << "CubeÎÆÀí:: ID=" << id << " ÒÑ¼ÓÔØ2DÌùÍ¼£º" << paths[i] << endl;
+                cout << "LOG:: " << "Cubeçº¹ç†:: ID=" << id << " å·²åŠ è½½2Dè´´å›¾ï¼š" << paths[i] << endl;
             }
             else
             {
@@ -180,7 +180,7 @@ namespace OpenGL_Learn
     {
         GLuint id;
 
-        // Éú³ÉÎÆÀí
+        // ç”Ÿæˆçº¹ç†
         glGenTextures(1, &id);
         glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, id);
         glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, internalformat, width, height, GL_TRUE);
