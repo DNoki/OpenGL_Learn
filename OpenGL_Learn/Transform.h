@@ -1,57 +1,82 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/quaternion.hpp>
+#include "Math.h"
 
-//#include "Mathf.h"
-#define V3_RIGHT glm::vec3(1.0f, 0.0f, 0.0f)
-#define V3_UP glm::vec3(0.0f, 1.0f, 0.0f)
-#define V3_FORWARD glm::vec3(0.0f, 0.0f, 1.0f)
-#define V3_ZERO glm::vec3(0.0f, 0.0f, 0.0f)
-#define V3_ONE glm::vec3(1.0f, 1.0f, 1.0f)
+#include "Component.h"
 
-#define QUAT_IDENTITY glm::quat(1.0f, 0.0f, 0.0f, 0.0f)
-#define MATRIX4_IDENTITY glm::mat4(1.0f)
-
-class Transform
+namespace OpenGL_Learn
 {
-public:
-	glm::vec3 position;
-	glm::quat rotation;
-	glm::vec3 scale;
-	//inline glm::vec3 GetPosition() const { return this->position; }
-	//inline glm::quat GetRotation() const { return this->rotation; }
-	inline glm::vec3 GetEulerAngles() const { return degrees(eulerAngles(this->rotation)); }
-	//inline glm::vec3 GetScale() const { return this->scale; }
-	//inline void SetPosition(glm::vec3 v) { this->position = v; }
-	//inline void SetRotation(glm::quat q) { this->rotation = q; }
-	inline void SetEulerAngles(glm::vec3 e) { this->rotation = glm::quat(radians(e)); }
-	//inline void SetScale(glm::vec3 s) { this->scale = s; }
+    // 变换
+    class Transform final : public Component
+    {
+    public:
+        // 本地坐标位置
+        Vector3 LocalPosition;
+        // 本地坐标旋转
+        Vector3 LocalEulerAngles;
+        // 本地坐标缩放
+        Vector3 LocalScale;
 
-	glm::mat4 GetTransformMatrix() const;
-	glm::mat4 GetPositionMatrix() const;
-	glm::mat4 GetRotationMatrix() const;
-	glm::mat4 GetScaleMatrix() const;
+        // 获取世界坐标位置
+        Vector3 GetPosition(bool isWorld = true) const;
+        // 设置位置
+        void SetPosition(const Vector3& pos, bool isWorld = true);
+        // 获取世界坐标旋转
+        Quaternion GetRotation(bool isWorld = true) const;
+        // 设置旋转
+        void SetRotation(const Quaternion& rot, bool isWorld = true);
+        // 获取世界坐标欧拉角
+        Vector3 GetEulerAngles(bool isWorld = true) const;
+        // 设置欧拉角
+        void SetEulerAngles(const Vector3& e, bool isWorld = true);
+        // 获取全局比例
+        Vector3 GetLossyScale() const;
 
-	glm::vec3 GetForward() const;
-	glm::vec3 GetUp() const;
-	glm::vec3 GetRight() const;
+        // 获取变换矩阵
+        Matrix4x4 GetTransformMatrix() const;
+        // 获取平移矩阵
+        Matrix4x4 GetPositionMatrix() const;
+        // 获取旋转矩阵
+        Matrix4x4 GetRotationMatrix() const;
+        // 尝试设置变换矩阵
+        void SetTransformMatrix(Matrix4x4 matrix, bool isWorld = false);
 
-	void Translate(glm::vec3 value, bool isWorld = false);
-	void Rotate(glm::vec3 axis, float angle, bool isWorld = false);
-	void LookAt(glm::vec3 target, glm::vec3 up = V3_UP);
+        // 获取前方向
+        Vector3 GetForward() const;
+        // 获取上方向
+        Vector3 GetUp() const;
+        // 获取右方向
+        Vector3 GetRight() const;
 
-	Transform();
-	Transform(glm::vec3 p, glm::quat r, glm::vec3 s);
+        // 获取根变换
+        Transform* GetRootTransfom();
+        // 设置父对象
+        // @父对象
+        // @保持世界空间位置
+        void SetParent(Transform* parent, bool worldPositionStays = true);
+        inline Transform* GetParent() { return this->_parent; }
+        inline List<Transform*>& GetChilds() { return _childs; }
 
-private:	
-};
+        // 平移
+        void Translate(Vector3 value, bool isWorld = false);
+        // 绕指定轴向旋转
+        void Rotate(Vector3 axis, float angle, bool isWorld = false);
+        void RotateAround(Vector3 point, Vector3 axis, float angle);
 
-/*
-.hpp的相关的使用规则
+        // 取得注视方向
+        void LookAt(Vector3 target, Vector3 up = Vector3::Up);
 
-a)不可包含全局对象和全局函数
-b)类之间不可循环调用
-c)不可使用静态成员
-*/
+        Transform(GameObject& obj);
+        Transform(GameObject& obj, Vector3 p, Quaternion r, Vector3 s);
+
+    private:
+        // 父对象变换
+        Transform* _parent;
+        List<Transform*> _childs;
+
+        void SetLossyScale(const Vector3& s);
+
+        Matrix4x4 GetScaleMatrix() const;
+    };
+
+}

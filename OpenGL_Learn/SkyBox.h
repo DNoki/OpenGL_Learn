@@ -2,34 +2,33 @@
 
 #include <string>
 #include <memory>
+
 #include <glad/glad.h>
 
-class Shader;
-class Material;
-class TextureCube;
+#include "ResourceObject.h"
 
-class SkyBox
+namespace OpenGL_Learn
 {
-public:	
-	inline Material& GetMaterial() { return *material; }
-	void DrawSkyBox();
+    using namespace std;
 
-	SkyBox(const std::string& shader);
-	SkyBox(const std::string& shader, TextureCube* texture, const std::string& samplerName, GLuint unit);
+    class Material;
+    class Mesh;
 
-private:
-	GLuint VAO, VBO;
-	std::unique_ptr<Material> material;
-};
+    // 天空盒
+    class Skybox : public ResourceObject
+    {
+    public:
+        // 绘制天空盒
+        // DepthTest = GL_TRUE;
+        // DepthTestMode = GL_LEQUAL;
+        void DrawSkyBox();
 
-//unsigned int skyboxVAO, skyboxVBO;
-//glGenVertexArrays(1, &skyboxVAO);
-//glGenBuffers(1, &skyboxVBO);
-//glBindVertexArray(skyboxVAO);
-//glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
-//glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
-//glEnableVertexAttribArray(0);
-//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+        Skybox(const string& name, Material* material);
 
-//auto skyBoxMaterial = Material("SkyBox");
-//skyBoxMaterial.BindTexture(&skyCubeTexture, "skybox", 0);
+    private:
+        // 天空盒绘制所需网格
+        static Mesh* skyboxMesh;
+
+        Material* _material;
+    };
+}

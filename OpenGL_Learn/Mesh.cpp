@@ -1,214 +1,323 @@
 #include "Mesh.h"
 
 #include <iostream>
-#include <glad/glad.h>
 
-using namespace std;
-using namespace glm;
 
-extern void AddMesh(std::unique_ptr<Mesh> mesh);
-extern Mesh* FindMesh(const std::string& name, size_t vertexSize = 0);
+#include "GameSystem.h"
+#include "Material.h"
 
-float sqrLength(vec3 v)
+namespace OpenGL_Learn
 {
-	return pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2);
+    Vector3 CalcTangent(Vector3 pos1, Vector3 pos2, Vector3 pos3, Vector2 uv1, Vector2 uv2, Vector2 uv3)
+    {
+        auto edge1 = pos2 - pos1;
+        auto edge2 = pos3 - pos1;
+        auto deltaUV1 = uv2 - uv1;
+        auto deltaUV2 = uv3 - uv1;
+
+        GLfloat f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+
+        auto result = Vector3::Right;
+        result.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
+        result.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
+        result.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
+        return result.GetNormalized();
+    }
+
+
+    unique_ptr<Mesh> Mesh::CreatePresetMesh(PresetMesh name)
+    {
+        unique_ptr<Mesh> mesh;
+
+        if (name == PresetMesh::TRIANGLE)// 边长为1的三角形
+        {
+            mesh = make_unique<Mesh>("Triangle");
+            mesh->vertices.push_back(Vector3(-0.5f, 0.0f, -0.288675f));
+            mesh->vertices.push_back(Vector3(0.5f, 0.0f, -0.288675f));
+            mesh->vertices.push_back(Vector3(0.0f, 0.0f, 0.57735f));
+
+            mesh->uv.push_back(Vector2(0.0f, 0.0f));
+            mesh->uv.push_back(Vector2(1.0f, 0.0f));
+            mesh->uv.push_back(Vector2(0.5f, 1.0f));
+
+            mesh->normals.push_back(Vector3(0.0f, 1.0f, 0.0f));
+            mesh->normals.push_back(Vector3(0.0f, 1.0f, 0.0f));
+            mesh->normals.push_back(Vector3(0.0f, 1.0f, 0.0f));
+
+            mesh->tangents.push_back(Vector3::Right);
+            mesh->tangents.push_back(Vector3::Right);
+            mesh->tangents.push_back(Vector3::Right);
+        }
+        else if (name == PresetMesh::SQUARE)// 边长为1的正方形
+        {
+            mesh = make_unique<Mesh>("Square");
+            mesh->vertices.push_back(Vector3(-0.5f, 0.0f, -0.5f));
+            mesh->vertices.push_back(Vector3(-0.5f, 0.0f, 0.5f));
+            mesh->vertices.push_back(Vector3(0.5f, 0.0f, -0.5f));
+            mesh->vertices.push_back(Vector3(0.5f, 0.0f, 0.5f));
+
+            mesh->uv.push_back(Vector2(0.0f, 0.0f));
+            mesh->uv.push_back(Vector2(0.0f, 1.0f));
+            mesh->uv.push_back(Vector2(1.0f, 0.0f));
+            mesh->uv.push_back(Vector2(1.0f, 1.0f));
+
+            mesh->normals.push_back(Vector3(0.0f, 1.0f, 0.0f));
+            mesh->normals.push_back(Vector3(0.0f, 1.0f, 0.0f));
+            mesh->normals.push_back(Vector3(0.0f, 1.0f, 0.0f));
+            mesh->normals.push_back(Vector3(0.0f, 1.0f, 0.0f));
+
+            mesh->tangents.push_back(Vector3::Right);
+            mesh->tangents.push_back(Vector3::Right);
+            mesh->tangents.push_back(Vector3::Right);
+            mesh->tangents.push_back(Vector3::Right);
+
+            mesh->indices.push_back(0); mesh->indices.push_back(2); mesh->indices.push_back(1);
+            mesh->indices.push_back(2); mesh->indices.push_back(3); mesh->indices.push_back(1);
+
+
+        }
+        else if (name == PresetMesh::BOX)// 边长为1的正方体
+        {
+            mesh = make_unique<Mesh>("Box");
+
+            mesh->vertices.push_back(Vector3(-0.5f, -0.5f, -0.5f));  // 0
+            mesh->vertices.push_back(Vector3(0.5f, -0.5f, -0.5f));  // 1
+            mesh->vertices.push_back(Vector3(-0.5f, 0.5f, -0.5f));  // 2
+            mesh->vertices.push_back(Vector3(-0.5f, 0.5f, -0.5f));  // 2
+            mesh->vertices.push_back(Vector3(0.5f, -0.5f, -0.5f));  // 1
+            mesh->vertices.push_back(Vector3(0.5f, 0.5f, -0.5f));  // 3
+
+            mesh->vertices.push_back(Vector3(0.5f, -0.5f, -0.5f));  // 1
+            mesh->vertices.push_back(Vector3(0.5f, -0.5f, 0.5f));  // 5
+            mesh->vertices.push_back(Vector3(0.5f, 0.5f, -0.5f));  // 3
+            mesh->vertices.push_back(Vector3(0.5f, 0.5f, -0.5f));  // 3
+            mesh->vertices.push_back(Vector3(0.5f, -0.5f, 0.5f));  // 5
+            mesh->vertices.push_back(Vector3(0.5f, 0.5f, 0.5f));  // 7
+
+            mesh->vertices.push_back(Vector3(-0.5f, -0.5f, 0.5f));  // 4
+            mesh->vertices.push_back(Vector3(0.5f, -0.5f, 0.5f));  // 5
+            mesh->vertices.push_back(Vector3(-0.5f, -0.5f, -0.5f));  // 0
+            mesh->vertices.push_back(Vector3(-0.5f, -0.5f, -0.5f));  // 0
+            mesh->vertices.push_back(Vector3(0.5f, -0.5f, 0.5f));  // 5
+            mesh->vertices.push_back(Vector3(0.5f, -0.5f, -0.5f));  // 1
+
+            mesh->vertices.push_back(Vector3(-0.5f, -0.5f, 0.5f));  // 4
+            mesh->vertices.push_back(Vector3(-0.5f, -0.5f, -0.5f));  // 0
+            mesh->vertices.push_back(Vector3(-0.5f, 0.5f, 0.5f));  // 6
+            mesh->vertices.push_back(Vector3(-0.5f, 0.5f, 0.5f));  // 6
+            mesh->vertices.push_back(Vector3(-0.5f, -0.5f, -0.5f));  // 0
+            mesh->vertices.push_back(Vector3(-0.5f, 0.5f, -0.5f));  // 2
+
+            mesh->vertices.push_back(Vector3(0.5f, -0.5f, 0.5f));  // 5
+            mesh->vertices.push_back(Vector3(-0.5f, -0.5f, 0.5f));  // 4
+            mesh->vertices.push_back(Vector3(0.5f, 0.5f, 0.5f));  // 7
+            mesh->vertices.push_back(Vector3(0.5f, 0.5f, 0.5f));  // 7
+            mesh->vertices.push_back(Vector3(-0.5f, -0.5f, 0.5f));  // 4
+            mesh->vertices.push_back(Vector3(-0.5f, 0.5f, 0.5f));  // 6
+
+            mesh->vertices.push_back(Vector3(-0.5f, 0.5f, -0.5f));  // 2
+            mesh->vertices.push_back(Vector3(0.5f, 0.5f, -0.5f));  // 3
+            mesh->vertices.push_back(Vector3(-0.5f, 0.5f, 0.5f));  // 6
+            mesh->vertices.push_back(Vector3(-0.5f, 0.5f, 0.5f));  // 6
+            mesh->vertices.push_back(Vector3(0.5f, 0.5f, -0.5f));  // 3
+            mesh->vertices.push_back(Vector3(0.5f, 0.5f, 0.5f));  // 7
+
+
+            mesh->tangents.push_back(Vector3(-1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(-1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(-1.0f, 0.0f, 0.0f));
+            mesh->tangents.push_back(Vector3(-1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(-1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(-1.0f, 0.0f, 0.0f));
+            mesh->tangents.push_back(Vector3(0.0f, 0.0f, -1.0f)); mesh->tangents.push_back(Vector3(0.0f, 0.0f, -1.0f)); mesh->tangents.push_back(Vector3(0.0f, 0.0f, -1.0f));
+            mesh->tangents.push_back(Vector3(0.0f, 0.0f, -1.0f)); mesh->tangents.push_back(Vector3(0.0f, 0.0f, -1.0f)); mesh->tangents.push_back(Vector3(0.0f, 0.0f, -1.0f));
+            mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f));
+            mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f));
+            mesh->tangents.push_back(Vector3(0.0f, 0.0f, 1.0f)); mesh->tangents.push_back(Vector3(0.0f, 0.0f, 1.0f)); mesh->tangents.push_back(Vector3(0.0f, 0.0f, 1.0f));
+            mesh->tangents.push_back(Vector3(0.0f, 0.0f, 1.0f)); mesh->tangents.push_back(Vector3(0.0f, 0.0f, 1.0f)); mesh->tangents.push_back(Vector3(0.0f, 0.0f, 1.0f));
+            mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f));
+            mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f));
+            mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f));
+            mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(1.0f, 0.0f, 0.0f));
+
+
+            mesh->normals.push_back(Vector3(0.0f, 0.0f, -1.0f)); mesh->normals.push_back(Vector3(0.0f, 0.0f, -1.0f)); mesh->normals.push_back(Vector3(0.0f, 0.0f, -1.0f));
+            mesh->normals.push_back(Vector3(0.0f, 0.0f, -1.0f)); mesh->normals.push_back(Vector3(0.0f, 0.0f, -1.0f)); mesh->normals.push_back(Vector3(0.0f, 0.0f, -1.0f));
+            mesh->normals.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->normals.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->normals.push_back(Vector3(1.0f, 0.0f, 0.0f));
+            mesh->normals.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->normals.push_back(Vector3(1.0f, 0.0f, 0.0f)); mesh->normals.push_back(Vector3(1.0f, 0.0f, 0.0f));
+            mesh->normals.push_back(Vector3(0.0f, -1.0f, 0.0f)); mesh->normals.push_back(Vector3(0.0f, -1.0f, 0.0f)); mesh->normals.push_back(Vector3(0.0f, -1.0f, 0.0f));
+            mesh->normals.push_back(Vector3(0.0f, -1.0f, 0.0f)); mesh->normals.push_back(Vector3(0.0f, -1.0f, 0.0f)); mesh->normals.push_back(Vector3(0.0f, -1.0f, 0.0f));
+            mesh->normals.push_back(Vector3(-1.0f, 0.0f, 0.0f)); mesh->normals.push_back(Vector3(-1.0f, 0.0f, 0.0f)); mesh->normals.push_back(Vector3(-1.0f, 0.0f, 0.0f));
+            mesh->normals.push_back(Vector3(-1.0f, 0.0f, 0.0f)); mesh->normals.push_back(Vector3(-1.0f, 0.0f, 0.0f)); mesh->normals.push_back(Vector3(-1.0f, 0.0f, 0.0f));
+            mesh->normals.push_back(Vector3(0.0f, 0.0f, 1.0f)); mesh->normals.push_back(Vector3(0.0f, 0.0f, 1.0f)); mesh->normals.push_back(Vector3(0.0f, 0.0f, 1.0f));
+            mesh->normals.push_back(Vector3(0.0f, 0.0f, 1.0f)); mesh->normals.push_back(Vector3(0.0f, 0.0f, 1.0f)); mesh->normals.push_back(Vector3(0.0f, 0.0f, 1.0f));
+            mesh->normals.push_back(Vector3(0.0f, 1.0f, 0.0f)); mesh->normals.push_back(Vector3(0.0f, 1.0f, 0.0f)); mesh->normals.push_back(Vector3(0.0f, 1.0f, 0.0f));
+            mesh->normals.push_back(Vector3(0.0f, 1.0f, 0.0f)); mesh->normals.push_back(Vector3(0.0f, 1.0f, 0.0f)); mesh->normals.push_back(Vector3(0.0f, 1.0f, 0.0f));
+
+
+            mesh->uv.push_back(Vector2(0.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(0.0f, 1.0f));
+            mesh->uv.push_back(Vector2(0.0f, 1.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 1.0f));
+            mesh->uv.push_back(Vector2(0.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(0.0f, 1.0f));
+            mesh->uv.push_back(Vector2(0.0f, 1.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 1.0f));
+            mesh->uv.push_back(Vector2(0.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(0.0f, 1.0f));
+            mesh->uv.push_back(Vector2(0.0f, 1.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 1.0f));
+            mesh->uv.push_back(Vector2(0.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(0.0f, 1.0f));
+            mesh->uv.push_back(Vector2(0.0f, 1.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 1.0f));
+            mesh->uv.push_back(Vector2(0.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(0.0f, 1.0f));
+            mesh->uv.push_back(Vector2(0.0f, 1.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 1.0f));
+            mesh->uv.push_back(Vector2(0.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(0.0f, 1.0f));
+            mesh->uv.push_back(Vector2(0.0f, 1.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 1.0f));
+        }
+
+        mesh->Complete();
+        return move(mesh);
+    }
+
+    void Mesh::DrawMesh(Material& mat, unsigned int index)
+    {
+        if (!mat.UseShaderPass(index)) return;
+
+        GameSystem::PrintError("绘制模型前：");
+        VAO.BindVertexArray();
+        if (GetMode() == MeshMode::ARRAYS)
+            glDrawArrays(GL_TRIANGLES, 0, GetVertexCount());
+        else if (GetMode() == MeshMode::ELEMENTS)
+            glDrawElements(GL_TRIANGLES, GetIndiceCount(), GL_UNSIGNED_INT, 0);
+        VAO.UnBindVertexArray();
+        GameSystem::PrintError("绘制模型后：");
+        GameSystem::DrawCallCounter++;
+    }
+
+    void Mesh::Complete()
+    {
+        GLsizeiptr size;
+        auto vertexCount = vertices.size();
+        auto normalCount = normals.size();
+        auto tangentCount = tangents.size();
+        auto uvCount = uv.size();
+        auto colorCount = colors.size();
+
+        if (vertexCount < 3)
+        {
+            cout << "LOG:: " << "MESH :: 输的的顶点数量低于3个。" << endl;
+        }
+
+        if (normalCount != vertexCount)
+        {
+            normalCount = 0;
+            normals.clear();
+        }
+        if (tangentCount != vertexCount)
+        {
+            tangentCount = 0;
+            tangents.clear();
+        }
+        if (colorCount != vertexCount)
+        {
+            colorCount = 0;
+            colors.clear();
+        }
+        if (uvCount != vertexCount)
+        {
+            uvCount = 0;
+            uv.clear();
+        }
+
+        size = vertexCount * sizeof(Vector3) + normalCount * sizeof(Vector3) + tangentCount * sizeof(Vector3) + colorCount * sizeof(Vector4) + uvCount * sizeof(Vector2);
+
+        VAO.BindVertexArray(); // 绑定顶点数组
+        VBO.BufferData(size, NULL);// 先创造size大小的空间，后输入数据
+
+        GLintptr offset = 0;
+
+        {
+            VBO.BufferSubData(offset, vertexCount * sizeof(Vector3), &(vertices[0]));
+            VAO.VertexAttribPointer(0, 3, sizeof(Vector3), (void*)(offset));
+            offset += vertexCount * sizeof(Vector3);
+        }
+
+        if (normalCount != 0)
+        {
+            VBO.BufferSubData(offset, normalCount * sizeof(Vector3), &(normals[0]));
+            VAO.VertexAttribPointer(1, 3, sizeof(Vector3), (void*)(offset));
+            offset += normalCount * sizeof(Vector3);
+        }
+        if (tangentCount != 0)
+        {
+            VBO.BufferSubData(offset, tangentCount * sizeof(Vector3), &(tangents[0]));
+            VAO.VertexAttribPointer(2, 3, sizeof(Vector3), (void*)(offset));
+            offset += tangentCount * sizeof(Vector3);
+        }
+        if (colorCount != 0)
+        {
+            VBO.BufferSubData(offset, colorCount * sizeof(Vector4), &(colors[0]));
+            VAO.VertexAttribPointer(3, 4, sizeof(Vector4), (void*)(offset));
+            offset += colorCount * sizeof(Vector4);
+        }
+        if (uvCount != 0)
+        {
+            VBO.BufferSubData(offset, uvCount * sizeof(Vector2), &(uv[0]));
+            VAO.VertexAttribPointer(4, 2, sizeof(Vector2), (void*)(offset));
+            offset += uvCount * sizeof(Vector2);
+        }
+
+        if (indices.size() > 0)
+        {
+            EBO.BufferData(indices.size() * sizeof(unsigned int), &(indices[0]));
+            mode = MeshMode::ELEMENTS;
+        }
+
+        Completed = true;
+    }
+
+    Mesh::Mesh(const string& name) :ResourceObject(name), Completed(false), mode(MeshMode::ARRAYS),
+        vertices(), normals(), tangents(), colors(), uv(), indices(),
+        VAO(), VBO(GL_ARRAY_BUFFER), EBO(GL_ELEMENT_ARRAY_BUFFER)
+    {
+        cout << "LOG:: " << "网格:: Name：" << this->Name << " 已生成"
+            << " VAO_ID=" << VAO.ID
+            << " VBO_ID=" << VBO.ID
+            << " EBO_ID=" << EBO.ID
+            << endl << endl;
+    }
+
+    Mesh::~Mesh()
+    {
+        cout << "LOG:: " << "网格:: Name：" << this->Name << " 已释放"
+            << " VAO_ID=" << VAO.ID
+            << " VBO_ID=" << VBO.ID
+            << " EBO_ID=" << EBO.ID
+            << endl << endl;
+    }
+
+    //void Mesh::setupMesh()
+    //{
+    //    // 索引绘制模式基本流程
+    //
+    //    //glGenVertexArrays(1, &VAO);// 顶点数组对象
+    //    //glGenBuffers(1, &VBO.ID);// 顶点缓冲对象
+    //    //glGenBuffers(1, &EBO.ID);// 索引缓冲对象
+    //
+    //    //glBindVertexArray(VAO);// 绑定VAO
+    //
+    //    // 复制顶点数组到缓冲中供OpenGL使用    
+    //    //glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    //    //glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
+    //    // 复制索引数组到缓冲中
+    //    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    //    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+    //
+    //    // 链接顶点属性
+    //    //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
+    //    //glEnableVertexAttribArray(0);
+    //    //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
+    //    //glEnableVertexAttribArray(1);
+    //    //glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
+    //    //glEnableVertexAttribArray(2);
+    //    //glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Color));
+    //    //glEnableVertexAttribArray(3);
+    //    //glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoord));
+    //    //glEnableVertexAttribArray(4);
+    //
+    //    //glBindVertexArray(0);// 解绑VAO
+    //}
+
+
+
 }
-void CalculateTangent(Vertex& v1, Vertex& v2, Vertex& v3)
-{
-	vec3 edge1 = v2.Position - v1.Position;
-	vec3 edge2 = v3.Position - v1.Position;
-	vec2 deltaUV1 = v2.TexCoord - v1.TexCoord;
-	vec2 deltaUV2 = v3.TexCoord - v1.TexCoord;
-
-	GLfloat f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
-	vec3 tangent;
-	tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
-	tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
-	tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
-	//if (sqrLength(v1.Tangent) < 0.1f) v1.Tangent = normalize(tangent);
-	//else v1.Tangent = mix(normalize(tangent), v1.Tangent, 0.5f);
-	//if (sqrLength(v2.Tangent) < 0.1f) v2.Tangent = v1.Tangent;
-	//else v2.Tangent = mix(v1.Tangent, v2.Tangent, 0.5f);
-	//if (sqrLength(v3.Tangent) < 0.1f) v3.Tangent = v1.Tangent;
-	//else v3.Tangent = mix(v1.Tangent, v3.Tangent, 0.5f);
-	v1.Tangent = normalize(tangent);
-	v2.Tangent = v1.Tangent;
-	v3.Tangent = v1.Tangent;
-
-	//auto formula = [](Vertex& _v1, Vertex& _v2, Vertex& _v3)
-	//{
-	//	vec3 edge1 = _v2.Position - _v1.Position;
-	//	vec3 edge2 = _v3.Position - _v1.Position;
-	//	vec2 deltaUV1 = _v2.TexCoord - _v1.TexCoord;
-	//	vec2 deltaUV2 = _v3.TexCoord - _v1.TexCoord;
-
-	//	GLfloat f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
-	//	vec3 tangent;
-	//	tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
-	//	tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
-	//	tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
-	//	_v1.Tangent = normalize(tangent);
-	//	//if (sqrLength(_v1.Tangent) < 0.1f)
-	//	//{
-	//	//	_v1.Tangent = normalize(tangent);
-	//	//}
-	//	//else
-	//	//{
-	//	//	_v1.Tangent = normalize(mix(_v1.Tangent, normalize(tangent), 0.5f));
-	//	//}
-	//	//auto ttt = _v1.Tangent;
-	//	//cout << ttt.x << " " << ttt.y << " " << ttt.z << endl;
-	//};
-	//formula(v1, v2, v3);
-	//formula(v2, v1, v3);
-	//formula(v3, v1, v2);
-}
-
-Vertex::Vertex() {}
-
-Vertex::Vertex(float Px, float Py, float Pz,
-	float Nx, float Ny, float Nz,
-	float Tx, float Ty, float Tz,
-	float Cr, float Cg, float Cb, float Ca,
-	float u, float v)
-{
-	this->Position.x = Px;
-	this->Position.y = Py;
-	this->Position.z = Pz;
-
-	this->Normal.x = Nx;
-	this->Normal.y = Ny;
-	this->Normal.z = Nz;
-
-	this->Tangent.x = Tx;
-	this->Tangent.y = Ty;
-	this->Tangent.z = Tz;
-
-	this->Color.r = Cr;
-	this->Color.g = Cg;
-	this->Color.b = Cb;
-	this->Color.a = Ca;
-
-	this->TexCoord.x = u;
-	this->TexCoord.y = v;
-}
-
-
-Mesh* Mesh::CreatePresetMesh(const string &name)
-{
-	vector<Vertex> vertices;
-	vector<unsigned int> indices;
-
-	if (name == "Triangle")// 边长为1的三角形
-	{
-		auto findMesh = FindMesh(name, 3);
-		if (findMesh) { return findMesh; }
-		vertices.push_back(Vertex(
-			-0.5f, -0.288675f, 0.0f,
-			0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f));
-		vertices.push_back(Vertex(
-			0.0f, 0.57735f, 0.0f,
-			0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 0.0f,
-			0.5f, 1.0f));
-		vertices.push_back(Vertex(
-			0.5f, -0.288675f, 0.0f,
-			0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 0.0f,
-			1.0f, 0.0f));
-		indices.push_back(0); indices.push_back(2); indices.push_back(1);
-	}
-	else if (name == "Square")// 边长为1的正方形
-	{
-		auto findMesh = FindMesh(name, 4);
-		if (findMesh) { return findMesh; }
-		vertices.push_back(Vertex(
-			-0.5f, -0.5f, 0.0f,
-			0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f));
-		vertices.push_back(Vertex(
-			-0.5f, 0.5f, 0.0f,
-			0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, 1.0f));
-		vertices.push_back(Vertex(
-			0.5f, -0.5f, 0.0f,
-			0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 0.0f,
-			1.0f, 0.0f));
-		vertices.push_back(Vertex(
-			0.5f, 0.5f, 0.0f,
-			0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 0.0f,
-			1.0f, 1.0f));
-		indices.push_back(0); indices.push_back(2); indices.push_back(1);
-		indices.push_back(2); indices.push_back(3); indices.push_back(1);
-	}
-	else if (name == "Box")
-	{
-
-	}
-	else
-	{
-		cout << "指定名称的网格不存在。" << endl;
-		return nullptr;
-	}
-	auto m = make_unique<Mesh>(name, vertices, indices);
-	auto result = m.get();
-	AddMesh(move(m));
-	return result;
-}
-
-void Mesh::DrawMesh()
-{
-	glBindVertexArray(this->VAO);
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
-}
-
-Mesh::Mesh(const std::string& name, const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices)
-	:name(name), vertices(vertices), indices(indices)
-{
-	setupMesh();
-}
-
-void Mesh::setupMesh()
-{
-	glGenVertexArrays(1, &VAO);// 顶点数组对象
-	glGenBuffers(1, &VBO);// 顶点缓冲对象
-	glGenBuffers(1, &EBO);// 索引缓冲对象
-
-	glBindVertexArray(VAO);// 绑定VAO
-
-	// 复制顶点数组到缓冲中供OpenGL使用
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-	// 复制索引数组到缓冲中
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
-
-	// 链接顶点属性
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Color));
-	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(4, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoord));
-	glEnableVertexAttribArray(4);
-
-	glBindVertexArray(0);// 解绑VAO
-}
-

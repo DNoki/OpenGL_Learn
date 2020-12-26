@@ -13,114 +13,291 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="头文件\GLFunction">
-      <UniqueIdentifier>{3ff972ae-db61-43cf-9144-5587cd371f13}</UniqueIdentifier>
+    <Filter Include="源文件\Library">
+      <UniqueIdentifier>{f0778c09-2ddd-40ec-b268-4be9612c0a5d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\GLFunction">
-      <UniqueIdentifier>{a8149414-f4e6-4964-a225-894586c843e1}</UniqueIdentifier>
+    <Filter Include="头文件\Calculate">
+      <UniqueIdentifier>{7a5bc6c3-d7cc-463c-ac49-cbe81d429b44}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\GameCore">
-      <UniqueIdentifier>{05d86157-f730-427b-a372-510d88b24dcb}</UniqueIdentifier>
+    <Filter Include="源文件\Calculate">
+      <UniqueIdentifier>{fd8cd09b-56fb-4a7f-91d8-ce96869e847a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\GameCore">
-      <UniqueIdentifier>{1eaf71b9-a071-4e91-acaa-1660aa6bff5c}</UniqueIdentifier>
+    <Filter Include="头文件\GameSystem">
+      <UniqueIdentifier>{44816311-b03e-4b37-8993-6aa613a73be8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GameSystem">
+      <UniqueIdentifier>{12e76e9b-868f-4656-aecf-bb3cfb52601f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ResourceObjects">
+      <UniqueIdentifier>{028da494-3710-4119-8d0b-fd2f5d712750}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ResourceObjects">
+      <UniqueIdentifier>{dc732e80-8d9a-4245-8979-d8086e64d78d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ResourceObjects\GL_BufferStruct">
+      <UniqueIdentifier>{61eb2406-4b43-4cad-a773-7a20306c4c86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ResourceObjects\GL_BufferStruct">
+      <UniqueIdentifier>{7ae56c1e-2292-4358-aadf-36f61c6dc12b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GameSystem\Component">
+      <UniqueIdentifier>{da38a76c-7577-4e2c-badd-cd3a98fb18b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GameSystem\Component">
+      <UniqueIdentifier>{a350601d-5302-4246-b845-fc2debd4b34d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Manager">
+      <UniqueIdentifier>{b1ab3973-2a5b-40ea-822f-46ff6987bc6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Manager">
+      <UniqueIdentifier>{6c790ed7-1e9f-42e0-83c1-7a8078c96f9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Scripts">
+      <UniqueIdentifier>{4e2ecc2c-0854-49ac-ab8b-605d6dcd3909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Scripts">
+      <UniqueIdentifier>{21be80ad-3fea-41cd-af2c-51c7b8f7c5a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Library">
+      <UniqueIdentifier>{7d1697a0-d639-4815-841c-ae9363b4b16a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Library\Imgui">
+      <UniqueIdentifier>{ba8971ea-0826-482f-a7c0-39bcf74b1d54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Library\Imgui">
+      <UniqueIdentifier>{b8c0beca-f610-4e66-b16a-ae1b92b9eb0e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Mathf.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameBuffer.cpp">
-      <Filter>源文件\GLFunction</Filter>
-    </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>源文件\GLFunction</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>源文件\GLFunction</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>源文件\GLFunction</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>源文件\GLFunction</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>源文件\GLFunction</Filter>
+      <Filter>源文件\ResourceObjects</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>源文件\GLFunction</Filter>
+      <Filter>源文件\ResourceObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>源文件\GameCore</Filter>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>源文件\GameSystem</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>源文件\GameCore</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>源文件\GameCore</Filter>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>源文件\ResourceObjects</Filter>
     </ClCompile>
     <ClCompile Include="Time.cpp">
-      <Filter>源文件\GameCore</Filter>
+      <Filter>源文件\GameSystem</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>源文件\GameCore</Filter>
+    <ClCompile Include="GameSystem.cpp">
+      <Filter>源文件\GameSystem</Filter>
     </ClCompile>
-    <ClCompile Include="SkyBox.cpp">
-      <Filter>源文件\GameCore</Filter>
+    <ClCompile Include="BufferObject.cpp">
+      <Filter>源文件\ResourceObjects\GL_BufferStruct</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexArrays.cpp">
+      <Filter>源文件\ResourceObjects\GL_BufferStruct</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTexture.cpp">
+      <Filter>源文件\ResourceObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>源文件\ResourceObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>源文件\GameSystem\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>源文件\GameSystem\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>源文件\GameSystem\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>源文件\GameSystem\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="UniformManager.cpp">
+      <Filter>源文件\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>源文件\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleScene.cpp">
+      <Filter>源文件\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>源文件\GameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceObject.cpp">
+      <Filter>源文件\ResourceObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>源文件\Calculate</Filter>
+    </ClCompile>
+    <ClCompile Include="AssimpImporter.cpp">
+      <Filter>源文件\Library</Filter>
     </ClCompile>
     <ClCompile Include="glad.c">
-      <Filter>源文件</Filter>
+      <Filter>源文件\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui.cpp">
+      <Filter>源文件\Library\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_impl_glfw.cpp">
+      <Filter>源文件\Library\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_impl_opengl3.cpp">
+      <Filter>源文件\Library\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_draw.cpp">
+      <Filter>源文件\Library\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_widgets.cpp">
+      <Filter>源文件\Library\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_demo.cpp">
+      <Filter>源文件\Library\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="List.cpp">
+      <Filter>源文件\Calculate</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Mathf.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Definition.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameBuffer.h">
-      <Filter>头文件\GLFunction</Filter>
-    </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>头文件\GLFunction</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>头文件\GLFunction</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>头文件\GLFunction</Filter>
+    <ClInclude Include="Texture.h">
+      <Filter>头文件\ResourceObjects</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
-      <Filter>头文件\GLFunction</Filter>
+      <Filter>头文件\ResourceObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>头文件\GLFunction</Filter>
+    <ClInclude Include="Material.h">
+      <Filter>头文件\ResourceObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>头文件\GLFunction</Filter>
+    <ClInclude Include="Color.hpp">
+      <Filter>头文件\Calculate</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>头文件\GameCore</Filter>
+      <Filter>头文件\GameSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>头文件\GameCore</Filter>
+    <ClInclude Include="InputSystem.h">
+      <Filter>头文件\GameSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>头文件\GameCore</Filter>
+    <ClInclude Include="Mesh.h">
+      <Filter>头文件\ResourceObjects</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
-      <Filter>头文件\GameCore</Filter>
+      <Filter>头文件\GameSystem</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>头文件\GameCore</Filter>
+    <ClInclude Include="UniformBufferObject.h">
+      <Filter>头文件\ResourceObjects</Filter>
     </ClInclude>
-    <ClInclude Include="SkyBox.h">
-      <Filter>头文件\GLFunction</Filter>
+    <ClInclude Include="GameSystem.h">
+      <Filter>头文件\GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferObject.h">
+      <Filter>头文件\ResourceObjects\GL_BufferStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexArrays.h">
+      <Filter>头文件\ResourceObjects\GL_BufferStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTexture.h">
+      <Filter>头文件\ResourceObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>头文件\ResourceObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>头文件\GameSystem\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>头文件\GameSystem\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>头文件\GameSystem\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>头文件\GameSystem\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformManager.h">
+      <Filter>头文件\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>头文件\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleScene.h">
+      <Filter>头文件\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>头文件\GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceObject.h">
+      <Filter>头文件\ResourceObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="FatherGameObject.h">
+      <Filter>头文件\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviour.h">
+      <Filter>头文件\GameSystem\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptBehaviour.h">
+      <Filter>头文件\GameSystem\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ChildGameObject.h">
+      <Filter>头文件\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraController.h">
+      <Filter>头文件\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="PostProcess.h">
+      <Filter>头文件\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>头文件\Calculate</Filter>
+    </ClInclude>
+    <ClInclude Include="AssimpImporter.h">
+      <Filter>头文件\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui.h">
+      <Filter>头文件\Library\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui_impl_glfw.h">
+      <Filter>头文件\Library\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui_impl_opengl3.h">
+      <Filter>头文件\Library\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imconfig.h">
+      <Filter>头文件\Library\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui_internal.h">
+      <Filter>头文件\Library\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imstb_textedit.h">
+      <Filter>头文件\Library\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imstb_rectpack.h">
+      <Filter>头文件\Library\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imstb_truetype.h">
+      <Filter>头文件\Library\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="List.h">
+      <Filter>头文件\Calculate</Filter>
+    </ClInclude>
+    <ClInclude Include="Tuple.h">
+      <Filter>头文件\Calculate</Filter>
+    </ClInclude>
+    <ClInclude Include="json.hpp">
+      <Filter>头文件\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="GaussianBlur.h">
+      <Filter>头文件\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleBar.h">
+      <Filter>头文件\Scripts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

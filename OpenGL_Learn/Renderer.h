@@ -1,46 +1,71 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#include <memory>
-#include <tuple>
-#include <glad/glad.h>
+#include "Behaviour.h"
 
-// assimp
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
-#include "Mesh.h"
 #include "Material.h"
 
-class Transform;
-
-typedef std::tuple<Mesh*, Material> Tuple_Mesh_Material;
-
-// 模型类包含一组网格和材质一一对应的绑定 是一系列网格和材质的封装
-// 其中网格数据保存在场景中（可重复使用） 材质则由每个模型保存
-class MeshRenderer
+namespace OpenGL_Learn
 {
-public:
-	static std::unique_ptr<MeshRenderer> AssimpLoad(const std::string & path, const std::string& shaderName);
-	static std::unique_ptr<MeshRenderer> Create(const std::string & meshName, const std::string& shaderName);
+    using namespace std;
 
-	bool Enabled;
+    class Mesh;
+    class Renderer;
 
-	void Draw();
-	void AddBaseModel(Mesh& mesh, Material& material);
-	inline std::vector<Tuple_Mesh_Material>& GetDatas() { return datas; }
-	inline size_t GetMeshsCount() const { return datas.size(); }
-	inline Material& GetMainMaterial() { return std::get<1>(this->datas[0]); }
-	inline Material& GetMaterial(int i) { return std::get<1>(this->datas[i]); }
+    // 渲染项
+    struct RenderItem
+    {
+    public:
+        // 使用的渲染器
+        Renderer* renderer;
+        // 使用的材质
+        Material* material;
+        // 到相机距离（渲染透明模型时使用）
+        float depth;
+        // 使用着色器索引
+        unsigned int index;
+        // 渲染队列
+        unsigned int sequence;
 
-	MeshRenderer();
-	MeshRenderer(Mesh& mesh, Material&& material);
+        RenderItem(Renderer* r, Material* m, unsigned int i, unsigned int s) :renderer(r), material(m), depth(), index(i), sequence(s) {}
+    };
 
-private:
-	std::vector<Tuple_Mesh_Material> datas;
+    // 渲染器（虚类，包含了一个材质）
+    class Renderer : public Behaviour
+    {
+    public:
+        // 获取材质
+        inline Material* GetMaterial() { return _material; }
+        unique_ptr<List<unique_ptr<RenderItem>>> GetRenderItems();
+        // 绘制
+        // @index 绘制指定着色器
+        virtual void Draw(unsigned int index) = 0;
+        // 使用指定材质的指定着色器绘制
+        virtual void Draw(Material* material, unsigned int index) = 0;
 
-	void processNode(aiNode *node, aiScene *scene, const Shader& shader);
-	Tuple_Mesh_Material processMesh(aiMesh * mesh, const aiScene * scene, const Shader & shader);
-};
+    protected:
+        Material* _material;
+
+        Renderer(GameObject& obj) :Behaviour(obj), _material() {}
+
+    private:
+    };
+
+    // 网格渲染器（包含了一对材质和模型）
+    class MeshRenderer final : public Renderer
+    {
+    public:
+        // 设置一对模型与材质
+        void SetData(Mesh& mesh, Material& material);
+        inline Mesh* GetMesh() { return _mesh; }
+
+        // 绘制模型
+        void Draw(unsigned int index) override;
+        void Draw(Material* material, unsigned int index) override;
+
+        MeshRenderer(GameObject& obj) :Renderer(obj), _mesh() {}
+
+    private:
+        Mesh* _mesh;
+    };
+}
+

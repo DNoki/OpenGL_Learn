@@ -1,47 +1,79 @@
 #pragma once
 
 #include <string>
-#include <memory>
-#include <vector>
+#include <initializer_list>
 #include <glad/glad.h>
 
-#include "Texture.h"
+#include "ResourceObject.h"
 #include "Shader.h"
 
-struct BindedTexture
+namespace OpenGL_Learn
 {
-public:
-	// 绑定的纹理单元
-	unsigned int Unit;
-	// 读取的贴图
-	Texture* Tex;
+    using namespace std;
 
-	void UseTexture();
+    //class Texture;
+    class Material;
 
-	BindedTexture(unsigned int unit, Texture* texture);
-};
 
-class Material
-{
-public:
-	//@brief 绑定2D贴图
-	//@param texture 要绑定的贴图
-	//@param name 在Shader中声明的采样器名称
-	//@param unit 绑定的纹理单元
-	void BindTexture(Texture* texture, const std::string &name, unsigned int unit);
+    // 材质（包含多个着色器Pass）
+    class Material final : public ResourceObject
+    {
+    public:
+        // 材质使用的Shader
+        List<Shader*> Shaders;
 
-	void UseMaterial();
+        inline unsigned int GetPassCount() { return (unsigned int)Shaders.size(); }
+        inline Shader* GetMainShader() { return GetPassCount() > 0 ? Shaders[0] : nullptr; }
+        // 添加着色器通道
+        inline void AddShaderPass(Shader* shader) { if (shader) Shaders.push_back(shader); }
+        bool UseShaderPass(unsigned int index)
+        {
+            if (index < GetPassCount())
+            {
+                Shaders[index]->UseShader(true);
+                return true;
+            }
+            else return false;
+        }
+        //// 设置整形
+        //inline void SetInt(const unsigned int& index, const string& name, const int& value)
+        //{
+        //    if (index < GetPassCount())
+        //        this->Shaders[index]->SetInt(name, value);
+        //}
+        //// 设置Float
+        //inline void SetFloat(const unsigned int& index, const string& name, const float& value)
+        //{
+        //    if (index < GetPassCount())
+        //        this->Shaders[index]->SetFloat(name, value);
+        //}
+        //// 设置Vector4
+        //inline void SetVector4(const unsigned int& index, const string& name, const Vector4& value)
+        //{
+        //    if (index < GetPassCount())
+        //        this->Shaders[index]->SetVector4(name, value);
+        //}
+        //// 设置Matrix4x4
+        //inline void SetMatrix4x4(const unsigned int& index, const string& name, const Matrix4x4& value)// const成员函数：防止成员函数修改类对象的内容
+        //{
+        //    if (index < GetPassCount())
+        //        this->Shaders[index]->SetMatrix4x4(name, value);
+        //}
 
-	inline Shader* GetShader() { return _shader; }
+        Material(const string& name, Shader* shader) :Material(name, { shader }) {}
+        Material(const string& name, initializer_list<Shader*> shaders) : ResourceObject(name), Shaders()
+        {
+            for (auto shader : shaders)
+                AddShaderPass(shader);
+        }
 
-	Material(Shader& shader);
-	Material(const std::string & shaderName);
+        Shader* operator[](unsigned int i) { return Shaders[i]; }
 
-private:
-	// 材质使用的Shader
-	Shader* _shader;
-	// 绑定的贴图
-	std::vector<BindedTexture> textures;
-};
+    private:
 
+    };
+
+
+
+}
 

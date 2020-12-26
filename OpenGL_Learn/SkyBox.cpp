@@ -1,55 +1,56 @@
-#include "SkyBox.h"
+#include "Skybox.h"
 
+#include "SceneManager.h"
+
+#include "Mesh.h"
 #include "Material.h"
 
-using namespace std;
-
-static const float SkyboxVertices[] = {
-	// positions          
-	-1.0f,  1.0f, -1.0f,	-1.0f, -1.0f, -1.0f,	 1.0f, -1.0f, -1.0f,
-	 1.0f, -1.0f, -1.0f,	 1.0f,  1.0f, -1.0f,	-1.0f,  1.0f, -1.0f,
-
-	-1.0f, -1.0f,  1.0f,	-1.0f, -1.0f, -1.0f,	-1.0f,  1.0f, -1.0f,
-	-1.0f,  1.0f, -1.0f,	-1.0f,  1.0f,  1.0f,	-1.0f, -1.0f,  1.0f,
-
-	 1.0f, -1.0f, -1.0f,	 1.0f, -1.0f,  1.0f,	 1.0f,  1.0f,  1.0f,
-	 1.0f,  1.0f,  1.0f,	 1.0f,  1.0f, -1.0f,	 1.0f, -1.0f, -1.0f,
-
-	-1.0f, -1.0f,  1.0f,	-1.0f,  1.0f,  1.0f,	 1.0f,  1.0f,  1.0f,
-	 1.0f,  1.0f,  1.0f,	 1.0f, -1.0f,  1.0f,	-1.0f, -1.0f,  1.0f,
-
-	-1.0f,  1.0f, -1.0f,	 1.0f,  1.0f, -1.0f,	 1.0f,  1.0f,  1.0f,
-	 1.0f,  1.0f,  1.0f,	-1.0f,  1.0f,  1.0f,	-1.0f,  1.0f, -1.0f,
-
-	-1.0f, -1.0f, -1.0f,	-1.0f, -1.0f,  1.0f,	 1.0f, -1.0f, -1.0f,
-	 1.0f, -1.0f, -1.0f,	-1.0f, -1.0f,  1.0f,	 1.0f, -1.0f,  1.0f
-};
-
-void SkyBox::DrawSkyBox()
+namespace OpenGL_Learn
 {
-	material->UseMaterial();
-	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-	glBindVertexArray(0);
-}
+    Mesh* Skybox::skyboxMesh;
 
-SkyBox::SkyBox(const std::string& shader)
-{
-	GLuint vao, vbo;
-	glGenVertexArrays(1, &vao);
-	glGenBuffers(1, &vbo);
-	glBindVertexArray(vao);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(SkyboxVertices), &SkyboxVertices, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
-	this->VAO = vao;
-	this->VBO = vbo;
-	this->material = make_unique<Material>(shader);
-}
+    void Skybox::DrawSkyBox()
+    {
+        for (unsigned int i = 0; i < _material->GetPassCount(); i++)
+            skyboxMesh->DrawMesh(*_material, i);
+    }
 
-SkyBox::SkyBox(const std::string & shader, TextureCube * texture, const std::string & samplerName, GLuint unit) :SkyBox(shader)
-{
-	this->material->BindTexture(texture, samplerName, unit);
+    Skybox::Skybox(const string& name, Material* material) :ResourceObject(name), _material(material)
+    {
+        // 初始化天空盒模型
+        if (!skyboxMesh)
+        {
+            skyboxMesh = SceneManager::GetActiveScene().AddResourceObject(make_unique<Mesh>("SkyboxMesh"));
+            skyboxMesh->HideFlag = HideFlagType::STATIC;
+            float skyboxVertices[] = {
+                // positions          
+                -1.0f,  1.0f, -1.0f,	-1.0f, -1.0f, -1.0f,	 1.0f, -1.0f, -1.0f,
+                 1.0f, -1.0f, -1.0f,	 1.0f,  1.0f, -1.0f,	-1.0f,  1.0f, -1.0f,
+
+                -1.0f, -1.0f,  1.0f,	-1.0f, -1.0f, -1.0f,	-1.0f,  1.0f, -1.0f,
+                -1.0f,  1.0f, -1.0f,	-1.0f,  1.0f,  1.0f,	-1.0f, -1.0f,  1.0f,
+
+                 1.0f, -1.0f, -1.0f,	 1.0f, -1.0f,  1.0f,	 1.0f,  1.0f,  1.0f,
+                 1.0f,  1.0f,  1.0f,	 1.0f,  1.0f, -1.0f,	 1.0f, -1.0f, -1.0f,
+
+                -1.0f, -1.0f,  1.0f,	-1.0f,  1.0f,  1.0f,	 1.0f,  1.0f,  1.0f,
+                 1.0f,  1.0f,  1.0f,	 1.0f, -1.0f,  1.0f,	-1.0f, -1.0f,  1.0f,
+
+                -1.0f,  1.0f, -1.0f,	 1.0f,  1.0f, -1.0f,	 1.0f,  1.0f,  1.0f,
+                 1.0f,  1.0f,  1.0f,	-1.0f,  1.0f,  1.0f,	-1.0f,  1.0f, -1.0f,
+
+                -1.0f, -1.0f, -1.0f,	-1.0f, -1.0f,  1.0f,	 1.0f, -1.0f, -1.0f,
+                 1.0f, -1.0f, -1.0f,	-1.0f, -1.0f,  1.0f,	 1.0f, -1.0f,  1.0f
+            };
+
+            for (unsigned int i = 0; i < 36; i++)
+            {
+                auto v = Vector3(skyboxVertices[i * 3], skyboxVertices[i * 3 + 1], skyboxVertices[i * 3 + 2]);
+                skyboxMesh->vertices.push_back(v);
+            }
+            skyboxMesh->Complete();
+        }
+    }
+
 }

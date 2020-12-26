@@ -1,20 +1,36 @@
 #include "Time.h"
 
-double Time::_time = 0.0f;
-double Time::_lastTime = 0.0f;
-double Time::_deltaTime = 0.0f;
-size_t Time::_frameCount = 0;
-
-float Time::DeltaTime() { return (float)_deltaTime; }
-
-float Time::RunTime() { return (float)_time; }
-
-size_t Time::FrameCount(){	return _frameCount;}
-
-void Time::Update(double runTime)
+namespace OpenGL_Learn
 {
-	_lastTime = _time;
-	_time = runTime;
-	_deltaTime = _time - _lastTime;
-	_frameCount++;
+    double Time::TimeScale = 1.0;
+
+    double Time::_realtimeSinceStartup = 0.0;
+    double Time::_time = 0.0;
+    double Time::_deltaTime = 0.0;
+    unsigned int Time::_frameCount = 0;
+    float Time::_fps = 0.0;
+
+    void Time::Update(double runTime)
+    {
+        // 上一帧的游戏运行时长（用于计算）
+        static double _lastTime = 0.0f;
+
+        _lastTime = _realtimeSinceStartup;
+        _realtimeSinceStartup = runTime;
+        _deltaTime = (_realtimeSinceStartup - _lastTime) * TimeScale;
+        _time += _deltaTime;
+        _frameCount++;
+
+        // 计算FPS
+        static int counter = 0;
+        static float totalFPS = 0.0f;
+        counter++;
+        totalFPS += 1.0f / Time::DeltaTime();
+        if (counter >= 10)
+        {
+            _fps = totalFPS / counter;
+            counter = 0;
+            totalFPS = 0.0f;
+        }
+    }
 }
