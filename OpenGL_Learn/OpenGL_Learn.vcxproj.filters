@@ -162,6 +162,15 @@
     <ClCompile Include="List.cpp">
       <Filter>源文件\Calculate</Filter>
     </ClCompile>
+    <ClCompile Include="CameraController.cpp">
+      <Filter>源文件\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLightScene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>源文件\GameSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Texture.h">
@@ -298,6 +307,9 @@
     </ClInclude>
     <ClInclude Include="ConsoleBar.h">
       <Filter>头文件\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLightScene.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

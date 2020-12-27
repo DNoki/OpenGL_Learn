@@ -2,6 +2,7 @@
 
 #include "Texture.h"
 #include "SampleScene.h"
+#include "PointLightScene.h"
 
 
 
@@ -13,6 +14,7 @@ namespace OpenGL_Learn
     void SceneManager::Initialize()
     {
         _scenes.push_back(unique_ptr<Scene>(new SampleScene("Test Scene")));
+        //_scenes.push_back(unique_ptr<Scene>(new PointLightScene("Test Scene")));
 
         _activeScene = _scenes[0].get(); // 第一个要加载的场景
 

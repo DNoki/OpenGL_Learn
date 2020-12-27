@@ -37,14 +37,6 @@ namespace OpenGL_Learn
 
         // 取得所有脚本对象
         auto scripts = FindComponents<ScriptBehaviour>(true);
-        // Awake 场景运行时添加的脚本唤醒
-        for (auto script : scripts)
-            if (!script->GetAwaked())
-            {
-                script->SetAwaked();
-                script->Awake();
-            }
-
 
         // 取得所有已对象的已开启脚本组件
         auto activeObjScript = FindComponents<ScriptBehaviour>();

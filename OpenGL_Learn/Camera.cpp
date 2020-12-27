@@ -209,7 +209,8 @@ namespace OpenGL_Learn
         */
         auto T = Matrix4x4::Translate(-this->GetTransform().GetPosition());
         auto R = this->GetTransform().GetRotationMatrix().Transpose();
-        return Matrix4x4::ZInverse * (R * T);
+        return (R * T);
+        //return Matrix4x4::ZInverse * (R * T);
         //return Matrix4x4::ZInverse * (this->GetTransform().GetPositionMatrix() * this->GetTransform().GetRotationMatrix()).Inverse();
     }
 
@@ -253,18 +254,25 @@ namespace OpenGL_Learn
 
             // 初始化特效要使用的平面
             DefaultTargetTextureMesh->vertices.push_back(Vector3(-1.0f, -1.0f, 0.0f));
-            DefaultTargetTextureMesh->vertices.push_back(Vector3(1.0f, -1.0f, 0.0f));
-            DefaultTargetTextureMesh->vertices.push_back(Vector3(-1.0f, 1.0f, 0.0f));
             DefaultTargetTextureMesh->vertices.push_back(Vector3(-1.0f, 1.0f, 0.0f));
             DefaultTargetTextureMesh->vertices.push_back(Vector3(1.0f, -1.0f, 0.0f));
+            DefaultTargetTextureMesh->vertices.push_back(Vector3(-1.0f, 1.0f, 0.0f));
             DefaultTargetTextureMesh->vertices.push_back(Vector3(1.0f, 1.0f, 0.0f));
+            DefaultTargetTextureMesh->vertices.push_back(Vector3(1.0f, -1.0f, 0.0f));
 
             DefaultTargetTextureMesh->uv.push_back(Vector2(0.0f, 0.0f));
-            DefaultTargetTextureMesh->uv.push_back(Vector2(1.0f, 0.0f));
-            DefaultTargetTextureMesh->uv.push_back(Vector2(0.0f, 1.0f));
             DefaultTargetTextureMesh->uv.push_back(Vector2(0.0f, 1.0f));
             DefaultTargetTextureMesh->uv.push_back(Vector2(1.0f, 0.0f));
+            DefaultTargetTextureMesh->uv.push_back(Vector2(0.0f, 1.0f));
             DefaultTargetTextureMesh->uv.push_back(Vector2(1.0f, 1.0f));
+            DefaultTargetTextureMesh->uv.push_back(Vector2(1.0f, 0.0f));
+
+            DefaultTargetTextureMesh->indices.push_back(0);
+            DefaultTargetTextureMesh->indices.push_back(1);
+            DefaultTargetTextureMesh->indices.push_back(2);
+            DefaultTargetTextureMesh->indices.push_back(3);
+            DefaultTargetTextureMesh->indices.push_back(4);
+            DefaultTargetTextureMesh->indices.push_back(5);
 
             DefaultTargetTextureMesh->Complete();
         }

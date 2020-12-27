@@ -48,6 +48,13 @@ namespace OpenGL_Learn
         else glDisable(name);
     }
 
+    ShaderState::ShaderState() :
+        DepthTest(true), DepthMask(true), DepthTestMode(TestModeType::LESS),
+        Stencil(false), StencilMask(0xFF), StencilTestMode(TestModeType::ALWAYS), StencilRef(0), StencilRefMask(0xFF), StencilFail(StencilOpType::KEEP), StencilZfail(StencilOpType::KEEP), StencilZpass(StencilOpType::REPLACE),
+        Blend(false), BlendSfactor(BlendFactorType::SRC_ALPHA), BlendDfactor(BlendFactorType::ONE_MINUS_SRC_ALPHA), BlendSfactorAlpha(BlendFactorType::ONE), BlendDfactorAlpha(BlendFactorType::ZERO),
+        CullFace(true), CullFaceMode(CullFaceModeType::BACK),
+        FrontFace(GL_CW) {}
+
     map<int, unsigned int> Shader::Counter = map<int, unsigned int>();
     unique_ptr<ShaderState> Shader::realShaderState = nullptr;
     map<int, map<int, int>> Shader::StaticIntUniforms = map<int, map<int, int>>();

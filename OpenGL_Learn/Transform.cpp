@@ -173,7 +173,7 @@ namespace OpenGL_Learn
     }
     void Transform::LookAt(Vector3 target, Vector3 up)
     {
-        auto forward = (GetPosition() - target).GetNormalized();
+        auto forward = (target - GetPosition()).GetNormalized();
         SetRotation(Quaternion::LookRotation(forward, up));
     }
 

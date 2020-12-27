@@ -46,7 +46,7 @@ namespace OpenGL_Learn
 
             for (unsigned int i = 0; i < 36; i++)
             {
-                auto v = Vector3(skyboxVertices[i * 3], skyboxVertices[i * 3 + 1], skyboxVertices[i * 3 + 2]);
+                auto v = Vector3(skyboxVertices[i * 3], skyboxVertices[i * 3 + 2], skyboxVertices[i * 3 + 1]);
                 skyboxMesh->vertices.push_back(v);
             }
             skyboxMesh->Complete();

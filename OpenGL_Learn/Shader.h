@@ -120,12 +120,7 @@ namespace OpenGL_Learn
         // GL_CW  顺时针
         GLenum FrontFace;
 
-        ShaderState() :
-            DepthTest(true), DepthMask(true), DepthTestMode(TestModeType::LESS),
-            Stencil(false), StencilMask(0xFF), StencilTestMode(TestModeType::ALWAYS), StencilRef(0), StencilRefMask(0xFF), StencilFail(StencilOpType::KEEP), StencilZfail(StencilOpType::KEEP), StencilZpass(StencilOpType::REPLACE),
-            Blend(false), BlendSfactor(BlendFactorType::SRC_ALPHA), BlendDfactor(BlendFactorType::ONE_MINUS_SRC_ALPHA), BlendSfactorAlpha(BlendFactorType::ONE), BlendDfactorAlpha(BlendFactorType::ZERO),
-            CullFace(true), CullFaceMode(CullFaceModeType::BACK),
-            FrontFace(GL_CCW) {}
+        ShaderState();
     };
 
     // 着色器

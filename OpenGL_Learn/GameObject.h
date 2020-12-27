@@ -53,8 +53,11 @@ namespace OpenGL_Learn
 
             auto result = component.get();
             _components.push_back(move(component));
+
+            OnAddComponent(result);
             return *result;
         }
+        void OnAddComponent(Component* component);
         // 返回找到的第一个组件
         template <typename T = Component>
         T* GetComponent() const

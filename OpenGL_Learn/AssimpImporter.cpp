@@ -19,9 +19,11 @@ namespace OpenGL_Learn
         const aiScene* scene = importer.ReadFile(path.c_str(), postProcessSetps
             //aiProcess_Triangulate | // 对所有网格的所有面进行三角剖分。
             //aiProcess_FlipUVs | // 沿y轴翻转所有UV坐标，并相应地调整材质设置和双切线。
-            //aiProcess_CalcTangentSpace | // 计算导入的网格的切线和切线。
-            //aiProcess_MakeLeftHanded | // 导入为左手坐标系
-            //aiProcess_FlipWindingOrder // 翻转绕线顺序（翻转法线）
+            //aiProcess_CalcTangentSpace  // 计算导入的网格的切线和切线。
+#ifdef GLM_FORCE_LEFT_HANDED
+            | aiProcess_MakeLeftHanded // 导入为左手坐标系
+            | aiProcess_FlipWindingOrder // 翻转绕线顺序（翻转法线）
+#endif // GLM_FORCE_LEFT_HANDED
         );
 
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)

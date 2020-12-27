@@ -20,7 +20,8 @@ namespace OpenGL_Learn
             + camera->GetTransform().GetForward() * ShadowDistance * 0.5f
             + -this->GetTransform().GetForward() * ShadowDistance * 0.5f
         );
-        Matrix4x4 lightView = Matrix4x4::ZInverse * (lightPosition * lightRotate).Inverse();
+        Matrix4x4 lightView = (lightPosition * lightRotate).Inverse();
+        //Matrix4x4 lightView = Matrix4x4::ZInverse * (lightPosition * lightRotate).Inverse();
 
         // 投影矩阵
         auto size = ShadowDistance * 0.5f;
@@ -103,7 +104,14 @@ namespace OpenGL_Learn
         auto shadowProj = Matrix4x4::Perspective(90.0f, aspect, ShadowNearPlaneOffset, ShadowDistance);
 
         for (auto& transform : *shadowTransforms)
-            transform = shadowProj * transform;
+        {
+            //transform = shadowProj * transform;
+            transform = shadowProj 
+#ifdef GLM_FORCE_LEFT_HANDED
+                * Matrix4x4::XInverse
+#endif // GLM_FORCE_LEFT_HANDED
+                * transform;
+        }
 
         return shadowTransforms;
     }

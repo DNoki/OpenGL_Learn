@@ -221,7 +221,7 @@ void main()
     color += CalcPointLight(3, normal, viewDir, diffTexColor.rgb, specTexColor.rgb);
     
     FragColor = vec4(color, diffTexColor.a);
-    //FragColor = vec4(f.worldPosition.xyz, diffTexColor.a);
+    //FragColor = vec4(f.worldPosition.xyz, 1.0);
     //FragColor = vec4(normal, diffTexColor.a);
     //FragColor = vec4(vec3(attenuation), diffTexColor.a);
     //FragColor = LightColor;

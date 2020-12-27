@@ -47,6 +47,8 @@ namespace OpenGL_Learn
             mesh->tangents.push_back(Vector3::Right);
             mesh->tangents.push_back(Vector3::Right);
             mesh->tangents.push_back(Vector3::Right);
+
+            mesh->indices.push_back(0); mesh->indices.push_back(2); mesh->indices.push_back(1);
         }
         else if (name == PresetMesh::SQUARE)// 边长为1的正方形
         {
@@ -71,10 +73,10 @@ namespace OpenGL_Learn
             mesh->tangents.push_back(Vector3::Right);
             mesh->tangents.push_back(Vector3::Right);
 
-            mesh->indices.push_back(0); mesh->indices.push_back(2); mesh->indices.push_back(1);
-            mesh->indices.push_back(2); mesh->indices.push_back(3); mesh->indices.push_back(1);
-
-
+            mesh->indices.push_back(0); mesh->indices.push_back(1); mesh->indices.push_back(2);
+            mesh->indices.push_back(2); mesh->indices.push_back(1); mesh->indices.push_back(3);
+            //mesh->indices.push_back(0); mesh->indices.push_back(2); mesh->indices.push_back(1);
+            //mesh->indices.push_back(2); mesh->indices.push_back(3); mesh->indices.push_back(1);
         }
         else if (name == PresetMesh::BOX)// 边长为1的正方体
         {
@@ -122,6 +124,18 @@ namespace OpenGL_Learn
             mesh->vertices.push_back(Vector3(0.5f, 0.5f, -0.5f));  // 3
             mesh->vertices.push_back(Vector3(0.5f, 0.5f, 0.5f));  // 7
 
+            mesh->indices.push_back(0); mesh->indices.push_back(2); mesh->indices.push_back(1);
+            mesh->indices.push_back(3); mesh->indices.push_back(5); mesh->indices.push_back(4);
+            mesh->indices.push_back(6); mesh->indices.push_back(8); mesh->indices.push_back(7);
+            mesh->indices.push_back(9); mesh->indices.push_back(11); mesh->indices.push_back(10);
+            mesh->indices.push_back(12); mesh->indices.push_back(14); mesh->indices.push_back(13);
+            mesh->indices.push_back(15); mesh->indices.push_back(17); mesh->indices.push_back(16);
+            mesh->indices.push_back(18); mesh->indices.push_back(20); mesh->indices.push_back(19);
+            mesh->indices.push_back(21); mesh->indices.push_back(23); mesh->indices.push_back(22);
+            mesh->indices.push_back(24); mesh->indices.push_back(26); mesh->indices.push_back(25);
+            mesh->indices.push_back(27); mesh->indices.push_back(29); mesh->indices.push_back(28);
+            mesh->indices.push_back(30); mesh->indices.push_back(32); mesh->indices.push_back(31);
+            mesh->indices.push_back(33); mesh->indices.push_back(35); mesh->indices.push_back(34);
 
             mesh->tangents.push_back(Vector3(-1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(-1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(-1.0f, 0.0f, 0.0f));
             mesh->tangents.push_back(Vector3(-1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(-1.0f, 0.0f, 0.0f)); mesh->tangents.push_back(Vector3(-1.0f, 0.0f, 0.0f));
