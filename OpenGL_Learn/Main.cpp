@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <Windows.h>
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -49,6 +50,8 @@ void TestFunction(bool (*func_ptr)(const int&))
 
 int main()
 {
+    SetConsoleOutputCP(65001);
+
     //TestFunction([](const int& a) ->bool { return true; });
 
     //system("pause");
