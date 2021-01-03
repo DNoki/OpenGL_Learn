@@ -1,4 +1,5 @@
 ﻿#pragma once
+#pragma comment(lib,"assimp-vc140-mt.lib")
 
 #include <string>
 #include <memory>
