@@ -9,7 +9,7 @@
 #include "ResourceObject.h"
 #include "Texture.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     using namespace std;
 
@@ -67,85 +67,162 @@ namespace OpenGL_Learn
     };
 
 
-    // 着色器状态
+    /// <summary>
+    /// 着色器状态
+    /// </summary>
     struct ShaderState
     {
     public:
-        // 设置状态
-        // @要设置的名称
-        // @设置开启或关闭
+        /// <summary>
+        /// 设置状态
+        /// </summary>
+        /// <param name="name">要设置的名称</param>
+        /// <param name="enable">设置开启或关闭</param>
         static void SetState(GLenum name, bool enable);
 
-        // 否是开启深度测试
+        /// <summary>
+        /// 否是开启深度测试
+        /// </summary>
         bool DepthTest;
-        bool DepthMask;// 是否写入深度缓冲
-        // 深度测试模式
-        // GL_ALWAYS    永远通过深度测试
-        // GL_NEVER     永远不通过深度测试
-        // GL_LESS      在片段深度值 <  缓冲的深度值时通过测试
-        // GL_EQUAL     在片段深度值 =  缓冲区的深度值时通过测试
-        // GL_LEQUAL	在片段深度值 <= 缓冲区的深度值时通过测试
-        // GL_GREATER	在片段深度值 >  缓冲区的深度值时通过测试
-        // GL_NOTEQUAL	在片段深度值 != 缓冲区的深度值时通过测试
-        // GL_GEQUAL	在片段深度值 >= 缓冲区的深度值时通过测试
+        /// <summary>
+        /// 是否写入深度缓冲
+        /// </summary>
+        bool DepthMask;
+
+        /// <summary>
+        /// 深度测试模式
+        /// GL_ALWAYS   永远通过深度测试
+        /// GL_NEVER    永远不通过深度测试
+        /// GL_LESS     在片段深度值 <  缓冲的深度值时通过测试
+        /// GL_EQUAL    在片段深度值 =  缓冲区的深度值时通过测试
+        /// GL_LEQUAL   在片段深度值 <= 缓冲区的深度值时通过测试
+        /// GL_GREATER	在片段深度值 >  缓冲区的深度值时通过测试
+        /// GL_NOTEQUAL	在片段深度值 != 缓冲区的深度值时通过测试
+        /// GL_GEQUAL	在片段深度值 >= 缓冲区的深度值时通过测试
+        /// </summary>
         TestModeType DepthTestMode;
 
-        // 是否开启模板测试
+        /// <summary>
+        /// 是否开启模板测试
+        /// </summary>
         bool Stencil;
-        GLuint StencilMask; // 写入模板缓冲区的遮罩 通常是0xFF写入，0x00不写入
-        TestModeType StencilTestMode; // 模板测试模式
-        GLint StencilRef; // 模板写入与比较值
-        GLuint StencilRefMask; // 模板比较值和存储值遮罩
-        StencilOpType StencilFail; // 模板测试失败时动作
-        StencilOpType StencilZfail; // 模板测试通过但深度测试失败时动作
-        StencilOpType StencilZpass; // 模板测试和深度测试都通过时动作
+        /// <summary>
+        /// 写入模板缓冲区的遮罩 通常是0xFF写入，0x00不写入
+        /// </summary>
+        GLuint StencilMask;
+        /// <summary>
+        /// 模板测试模式
+        /// </summary>
+        TestModeType StencilTestMode;
+        /// <summary>
+        /// 模板写入与比较值
+        /// </summary>
+        GLint StencilRef;
+        /// <summary>
+        /// 模板比较值和存储值遮罩
+        /// </summary>
+        GLuint StencilRefMask;
+        /// <summary>
+        /// 模板测试失败时动作
+        /// </summary>
+        StencilOpType StencilFail;
+        /// <summary>
+        /// 模板测试通过但深度测试失败时动作
+        /// </summary>
+        StencilOpType StencilZfail;
+        /// <summary>
+        /// 模板测试和深度测试都通过时动作
+        /// </summary>
+        StencilOpType StencilZpass;
 
-        // 否是开启混合
-        bool Blend; // 最终颜色=(源颜色x源因子)+(目标颜色x目标因子) https://www.khronos.org/registry/OpenGL-Refpages/es3/
-        BlendFactorType BlendSfactor; // 源颜色混合因子 // 源颜色是当前片段计算的颜色
-        BlendFactorType BlendDfactor; // 目标颜色混合因子 // 目标颜色是在缓冲区的颜色
-        BlendFactorType BlendSfactorAlpha; // 源Alpha混合因子
-        BlendFactorType BlendDfactorAlpha; // 目标Alpha混合因子
+        /// <summary>
+        /// 否是开启混合
+        /// 最终颜色=(源颜色x源因子)+(目标颜色x目标因子) https://www.khronos.org/registry/OpenGL-Refpages/es3/
+        /// </summary>
+        bool Blend;
+        /// <summary>
+        /// 源颜色混合因子
+        /// 源颜色是当前片段计算的颜色
+        /// </summary>
+        BlendFactorType BlendSfactor;
+        /// <summary>
+        /// 目标颜色混合因子
+        /// 目标颜色是在缓冲区的颜色
+        /// </summary>
+        BlendFactorType BlendDfactor;
+        /// <summary>
+        /// 混合因子
+        /// </summary>
+        BlendFactorType BlendSfactorAlpha;
+        /// <summary>
+        /// 目标Alpha混合因子
+        /// </summary>
+        BlendFactorType BlendDfactorAlpha;
 
-        // 否是开启面剔除
+        /// <summary>
+        /// 否是开启面剔除
+        /// </summary>
         bool CullFace;
-        // 面剔除模式
-        // GL_BACK：只剔除背面。
-        // GL_FRONT：只剔除正面。
-        // GL_FRONT_AND_BACK：剔除背面和正面。
+        /// <summary>
+        /// 面剔除模式
+        /// GL_BACK：只剔除背面。
+        /// GL_FRONT：只剔除正面。
+        /// GL_FRONT_AND_BACK：剔除背面和正面。
+        /// </summary>
         CullFaceModeType CullFaceMode;
 
-        // 正向面
-        // GL_CCW 逆时针
-        // GL_CW  顺时针
+        /// <summary>
+        /// 正向面
+        /// GL_CCW 逆时针
+        /// GL_CW  顺时针
+        /// </summary>
         GLenum FrontFace;
 
         ShaderState();
     };
 
-    // 着色器
+    /// <summary>
+    /// 着色器
+    /// </summary>
     class Shader final : public ResourceObject
     {
     public:
-        // 使用指定渲染状态
+        /// <summary>
+        /// 使用指定渲染状态
+        /// </summary>
+        /// <param name="state"></param>
         static void UseState(const ShaderState& state);
-        // 查询显卡支持可传递多少顶点属性，一般为16个
+        /// <summary>
+        /// 查询显卡支持可传递多少顶点属性，一般为16个
+        /// </summary>
+        /// <returns></returns>
         static int CheckMaxVertexAttribsCount();
 
-        // 着色器ID
+        /// <summary>
+        /// 着色器ID
+        /// </summary>
         GLuint ID;
-        // 着色器状态
+        /// <summary>
+        /// 着色器状态
+        /// </summary>
         ShaderState State;
-        // 渲染顺序 （越小的值将越先被渲染）
+        /// <summary>
+        /// 渲染顺序 （越小的值将越先被渲染）
+        /// </summary>
         unsigned int RenderSequence;
 
-        //@brief 绑定2D贴图
-        //@param texture 要绑定的贴图
-        //@param name 在Shader中声明的采样器名称
-        //@param unit 绑定的纹理单元（不同贴图在同一着色器中需要指定不同纹理单元）(纹理单元有上限)
+        /// <summary>
+        /// 绑定2D贴图
+        /// </summary>
+        /// <param name="texture">要绑定的贴图</param>
+        /// <param name="name">在Shader中声明的采样器名称</param>
+        /// <param name="unit">绑定的纹理单元（不同贴图在同一着色器中需要指定不同纹理单元）(纹理单元有上限)</param>
         void BindTexture(Texture& texture, const string& name, unsigned int unit);
         inline void BindTexture(Texture& texture, const string& name) { BindTexture(texture, name, *GetIntPtr(name)); }
-        // 使用着色器
+        /// <summary>
+        /// 使用着色器
+        /// </summary>
+        /// <param name="willRender"></param>
         void UseShader(bool willRender = false);
 
         inline int PropertyToID(const string& name)
@@ -154,20 +231,44 @@ namespace OpenGL_Learn
             return result;
         }
         List<Tuple2<UniformType, string>> GetAllUniforms();
-        // 设置整形
+        /// <summary>
+        /// 设置整形
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         inline bool SetInt(const string& name, const int& value) { return SetInt(PropertyToID(name), value); }
         bool SetInt(const int& location, const int& value);
-        // 设置Float
+        /// <summary>
+        /// 设置Float
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         inline bool SetFloat(const string& name, const float& value) { return SetFloat(PropertyToID(name), value); }
         bool SetFloat(const int& location, const float& value);
-        // 设置Vector4
+        /// <summary>
+        /// 设置Vector4
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         inline bool SetVector4(const string& name, const Vector4& value) { return SetVector4(PropertyToID(name), value); }
         bool SetVector4(const int& location, const Vector4& value);
-        // 设置Matrix4x4
+        /// <summary>
+        /// 设置Matrix4x4
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         inline bool SetMatrix4x4(const string& name, const Matrix4x4& value) { return SetMatrix4x4(PropertyToID(name), value); }
         bool SetMatrix4x4(const int& location, const Matrix4x4& value);
 
-        // 获取整形
+        /// <summary>
+        /// 获取整形
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         inline int GetInt(const string& name) { return GetInt(PropertyToID(name)); }
         inline int GetInt(const int& location)
         {
@@ -182,7 +283,11 @@ namespace OpenGL_Learn
                 _intUniforms.insert(make_pair(location, GetInt(location)));
             return &_intUniforms[location];
         }
-        // 获取Float
+        /// <summary>
+        /// 获取Float
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         inline float GetFloat(const string& name) { return GetFloat(PropertyToID(name)); }
         inline float GetFloat(const int& location)
         {
@@ -197,7 +302,11 @@ namespace OpenGL_Learn
                 _floatUniforms.insert(make_pair(location, GetFloat(location)));
             return &_floatUniforms[location];
         }
-        // 获取Vector4
+        /// <summary>
+        /// 获取Vector4
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         inline Vector4 GetVector4(const string& name) { return GetVector4(PropertyToID(name)); }
         inline Vector4 GetVector4(const int& location)
         {
@@ -218,9 +327,11 @@ namespace OpenGL_Learn
         inline map<int, Vector4>& GetVector4Uniforms() { return this->_vector4Uniforms; }
         inline map<int, Matrix4x4>& GetMatrix4x4Uniforms() { return this->_matrix4x4Uniforms; }
 
-        //@brief 绑定Uniform块(Uniform缓冲对象)
-        //@param name Shader中的Uniform块名称
-        //@param index 绑定的ID （不同Uniform缓冲对象在同一着色器中需要指定不同索引）
+        /// <summary>
+        /// 绑定Uniform块(Uniform缓冲对象)
+        /// </summary>
+        /// <param name="name">Shader中的Uniform块名称</param>
+        /// <param name="uniformBlockBinding">绑定的ID （不同Uniform缓冲对象在同一着色器中需要指定不同索引）</param>
         inline void SetUniformBlockBinding(const string& name, int uniformBlockBinding)
         {
             auto index = glGetUniformBlockIndex(this->ID, name.c_str());
@@ -237,33 +348,47 @@ namespace OpenGL_Learn
 
         Shader(const Shader& shader);
         Shader(const string& name, const string& vert, const string& frag, const string* geom = nullptr);
-        // Shader构造函数
-        // @Shader名称
-        // @顶点着色器文件路径
-        // @片段着色器文件路径
-        // @图元着色器文件路径
+
+        /// <summary>
+        /// Shader构造函数
+        /// </summary>
+        /// <param name="name">Shader名称</param>
+        /// <param name="vPath">顶点着色器文件路径</param>
+        /// <param name="fPath">片段着色器文件路径</param>
+        /// <param name="gPath">图元着色器文件路径</param>
         Shader(const string& name, const char* vPath, const char* fPath, const char* gPath = nullptr);
         Shader(const string& name, const char* path);
         ~Shader();
     private:
-        // 着色器拷贝计数器
+        /// <summary>
+        /// 着色器拷贝计数器
+        /// </summary>
         static map<int, unsigned int> Counter;
-        // 真实渲染状态
+        /// <summary>
+        /// 真实渲染状态
+        /// </summary>
         static unique_ptr<ShaderState> realShaderState;
 
-        // key=ID、 datakey=位置、dataValue=值
+        /// <summary>
+        /// 着色器变量缓存（比较缓冲数值和对象数值是否相等，当不相等时发送数据到显存）
+        /// key=ID、 datakey=位置、dataValue=值
+        /// </summary>
         static map<int, map<int, int>> StaticIntUniforms;
         static map<int, map<int, float>> StaticFloatUniforms;
         static map<int, map<int, Vector4>> StaticVector4Uniforms;
         static map<int, map<int, Matrix4x4>> StaticMatrix4x4Uniforms;
 
-
-        // 绑定的贴图 key=纹理单元、value=贴图
-        // shader中的sampler采样器实质上是一个int，存储了一个纹理单元
-        // 渲染时激活该shader对应的纹理单元并绑定相应的贴图 （上一个渲染激活的纹理单元若没有被修改，仍然可以在shader中读取到）
+        /// <summary>
+        /// 绑定的贴图 key=纹理单元、value=贴图
+        /// shader中的sampler采样器实质上是一个int，存储了一个纹理单元
+        /// 渲染时激活该shader对应的纹理单元并绑定相应的贴图 （上一个渲染激活的纹理单元若没有被修改，仍然可以在shader中读取到）
+        /// </summary>
         map<unsigned int, Texture*> _textures;
 
-        // key=位置、value=值
+        /// <summary>
+        /// 着色器变量
+        /// key=位置、value=值
+        /// </summary>
         map<int, int> _intUniforms;
         map<int, float> _floatUniforms;
         map<int, Vector4> _vector4Uniforms;
@@ -275,7 +400,9 @@ namespace OpenGL_Learn
         Shader(const string& name);
     };
 
-
+    /// <summary>
+    /// Uniform变量类型
+    /// </summary>
     enum class UniformType
     {
         FLOAT = GL_FLOAT,	 // 	float

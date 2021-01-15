@@ -2,10 +2,10 @@
 
 #include <string>
 
-#include "List.h"
-#include "Tuple.h"
+#include "List.hpp"
+#include "Tuple.hpp"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     using namespace std;
 
@@ -15,11 +15,15 @@ namespace OpenGL_Learn
         STATIC = 1,
     };
 
-    // 资源对象的基类
+    /// <summary>
+    /// 资源对象的基类
+    /// </summary>
     class ResourceObject
     {
     public:
-        // 对象的名称。
+        /// <summary>
+        /// 对象的名称
+        /// </summary>
         string Name;
         HideFlagType HideFlag;
 

@@ -1,6 +1,6 @@
 ﻿#include "Math.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
 	const float Math::Deg2Rad = 0.01745329251994329576923690768489f;
 	const float Math::Epsilon = glm::epsilon<float>();

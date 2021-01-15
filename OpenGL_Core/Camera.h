@@ -4,10 +4,10 @@
 #include <memory>
 
 #include "Math.h"
-#include "Color.hpp"
+#include "Color.h"
 #include "Behaviour.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     using namespace std;
 
@@ -19,51 +19,82 @@ namespace OpenGL_Learn
     //class MultisampleRenderTexture;
     class Skybox;
 
-    // 投影模式
+    /// <summary>
+    /// 投影模式
+    /// </summary>
     enum class ProjectionMode
     {
-        // 透视
+        /// <summary>
+        /// 透视
+        /// </summary>
         PERSPECTIVE = 0,
-        // 正交
+        /// <summary>
+        /// 正交
+        /// </summary>
         ORTHOGRAPHIC = 1,
     };
-    // 清除背景选项
+    /// <summary>
+    /// 清除背景选项
+    /// </summary>
     enum class CameraClearFlags
     {
-        // 以天空盒填充
+        /// <summary>
+        /// 以天空盒填充
+        /// </summary>
         SKYBOX,
-        // 以颜色填充
+        /// <summary>
+        /// 以颜色填充
+        /// </summary>
         SOLID_COLOR,
-        // 仅清除深度
+        /// <summary>
+        /// 仅清除深度
+        /// </summary>
         DEPTH,
-        // 不清除
+        /// <summary>
+        /// 不清除
+        /// </summary>
         NOTHING,
     };
 
+    /// <summary>
+    /// 渲染状态
+    /// </summary>
     struct RenderState
     {
     public:
-        // 填充背景色
+        /// <summary>
+        /// 填充背景色
+        /// </summary>
         Color BackgroundColor;
-        // 填充深度
+        /// <summary>
+        /// 填充深度
+        /// </summary>
         float ClearDepth;
-        // 填充模板
+        /// <summary>
+        /// 填充模板
+        /// </summary>
         int ClearStencil;
 
         RenderState() :BackgroundColor(Color(0.937f, 0.521f, 0.608f)), ClearDepth(1.0f), ClearStencil(0) {}
 
     };
 
+    /// <summary>
+    /// 相机组件
+    /// </summary>
     class Camera final : public Behaviour
     {
     public:
-        // 渲染贴图所使用的平面
+        /// <summary>
+        /// 渲染贴图所使用的平面
+        /// </summary>
         static Mesh* DefaultTargetTextureMesh;
         static Shader* DefaultTargetTextureShader;
         static Material* DefaultTargetTextureMaterial;
         static RenderTexture* DefaultTargetTexture;
         static RenderTexture* DefaultTargetMultisampleTexture;
-        static Camera* Main;
+
+        static Camera* GetMain();
 
         static void UseRenderState(const RenderState& state);
         static void RenderToWindow();
@@ -71,51 +102,103 @@ namespace OpenGL_Learn
         static void DebugRenderTexture(RenderTexture& tex, const float& startX, const float& startY, const float& widthScale, const float& heightScale, Shader* shader = nullptr);
 
         RenderState State;
-        // 相机如何清除背景。
+        /// <summary>
+        /// 相机如何清除背景。
+        /// </summary>
         CameraClearFlags ClearFlags;
-        // 投影模式
+        /// <summary>
+        /// 投影模式
+        /// </summary>
         ProjectionMode ProjectionMode;
-        // 透视模式的视角 角度制
+        /// <summary>
+        /// 透视模式的视角 角度制
+        /// </summary>
         float FieldOfView;
-        // 正交模式下相机的半尺寸
+        /// <summary>
+        /// 正交模式下相机的半尺寸
+        /// </summary>
         float OrthographicSize;
-        // 目标渲染纹理
+        /// <summary>
+        /// 目标渲染纹理
+        /// </summary>
         RenderTexture* TargetTexture;
-        // 摄像机在绘制顺序中的位置。值较大的摄像机将绘制在值较小的摄像机顶部。
+        /// <summary>
+        /// 摄像机在绘制顺序中的位置。值较大的摄像机将绘制在值较小的摄像机顶部。
+        /// </summary>
         int Depth;
-        // 是否开启多采样抗锯齿
+        /// <summary>
+        /// 是否开启多采样抗锯齿
+        /// </summary>
         bool IsMSAA;
 
 
-        // 执行渲染
+        /// <summary>
+        /// 执行渲染
+        /// </summary>
+        /// <param name="backgrounds"></param>
+        /// <param name="geometrys"></param>
+        /// <param name="alphaTests"></param>
+        /// <param name="transparents"></param>
+        /// <param name="overlays"></param>
         void ExcuteRender(List<unique_ptr<RenderItem>>* backgrounds, List<unique_ptr<RenderItem>>* geometrys, List<unique_ptr<RenderItem>>* alphaTests, List<unique_ptr<RenderItem>>* transparents, List<unique_ptr<RenderItem>>* overlays);
-        // 按指定模式清除背景（立即）
+        /// <summary>
+        /// 按指定模式清除背景（立即）
+        /// </summary>
         void Clear();
-        // 场景绘制完成后渲染天空盒
+        /// <summary>
+        /// 场景绘制完成后渲染天空盒
+        /// </summary>
         void DrawSkybox();
-        // 绑定渲染目标
+        /// <summary>
+        /// 绑定渲染目标
+        /// </summary>
         void BindTarget() const;
-        // 渲染到目标贴图
+        /// <summary>
+        /// 渲染到目标贴图
+        /// </summary>
+        /// <param name="targetTex"></param>
         void RenderToTargetTexture(RenderTexture* targetTex = nullptr);
 
-        // 获取观察矩阵
+        /// <summary>
+        /// 获取观察矩阵
+        /// </summary>
+        /// <returns></returns>
         Matrix4x4 GetViewMatrix() const;
-        // 获取投影矩阵
+        /// <summary>
+        /// 获取投影矩阵
+        /// </summary>
+        /// <returns></returns>
         Matrix4x4 GetProjectionMatrix() const;
 
-        // 设置视角
+        /// <summary>
+        /// 设置视角
+        /// </summary>
+        /// <param name="angle"></param>
         inline void SetFieldOfView(float angle) { this->FieldOfView = Math::Clamp(angle, 0.001f, 179.0f); }
-        // 设置正交视图大小
+        /// <summary>
+        /// 设置正交视图大小
+        /// </summary>
+        /// <param name="size"></param>
         inline void SetOrthographicSize(float size) { this->OrthographicSize = size; }
-        // 设置裁切面
+        /// <summary>
+        /// 设置裁切面
+        /// </summary>
+        /// <param name="nearPlane"></param>
+        /// <param name="farPlane"></param>
         inline void SetClipPlane(float nearPlane, float farPlane)
         {
             this->_nearClipPlane = glm::max(nearPlane, 0.001f);
             this->_farClipPlane = glm::max(farPlane, this->_nearClipPlane + 0.001f);
         }
-        // 设置天空盒子
+        /// <summary>
+        /// 设置天空盒子
+        /// </summary>
+        /// <param name="skybox"></param>
         inline void SetSkybox(Skybox* skybox) { this->_skybox = skybox; }
-        // x是正交摄影机的宽度，y是正交摄影机的高度，z为宽高比，w当正交摄影机时为1.0，透视时为0.0。
+        /// <summary>
+        /// x是正交摄影机的宽度，y是正交摄影机的高度，z为宽高比，w当正交摄影机时为1.0，透视时为0.0。
+        /// </summary>
+        /// <returns></returns>
         Vector4 GetOrthoParams();
 
         Camera(GameObject& obj);
@@ -123,12 +206,18 @@ namespace OpenGL_Learn
     private:
         static unique_ptr<RenderState> realRenderState;
 
-        // 近裁面
+        /// <summary>
+        /// 近裁面
+        /// </summary>
         float _nearClipPlane;
-        // 远裁面
+        /// <summary>
+        /// 远裁面
+        /// </summary>
         float _farClipPlane;
 
-        // 天空盒子
+        /// <summary>
+        /// 天空盒子
+        /// </summary>
         Skybox* _skybox;
     };
 

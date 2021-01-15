@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
 
     using namespace std;

@@ -3,7 +3,7 @@
 #include "Math.h"
 #include "Shader.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
 	unique_ptr<UniformBufferObject> UniformManager::Transform = nullptr;
 	unique_ptr<UniformBufferObject> UniformManager::CameraData = nullptr;

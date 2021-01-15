@@ -2,23 +2,28 @@
 
 #include <string>
 
-#include "List.h"
-#include "Tuple.h"
-
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     using namespace std;
 
     class GameObject;
     class Transform;
 
-    // 组件
+    /// <summary>
+    /// 组件
+    /// </summary>
     class Component
     {
     public:
-        // 获取游戏对象
+        /// <summary>
+        /// 获取游戏对象
+        /// </summary>
+        /// <returns></returns>
         inline GameObject& GetGameObject() const { return this->_gameObject; }
-        // 获取变换
+        /// <summary>
+        /// 获取变换
+        /// </summary>
+        /// <returns></returns>
         inline Transform& GetTransform() const { return this->_transform; }
 
         virtual ~Component() {}
@@ -34,5 +39,4 @@ namespace OpenGL_Learn
         Transform& _transform;
 
     };
-
 }

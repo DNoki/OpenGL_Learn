@@ -4,7 +4,7 @@
 
 #include "Texture.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     enum class AttachmentType
     {
@@ -17,7 +17,9 @@ namespace OpenGL_Learn
     class RenderTexture : public ResourceObject
     {
     public:
-        // 使用默认窗口缓冲
+        /// <summary>
+        /// 使用默认窗口缓冲
+        /// </summary>
         static inline void UnBindFramebuffer() { glBindFramebuffer(GL_FRAMEBUFFER, 0); }
         //@brief 创建渲染贴图
         //@param name 名称
@@ -38,15 +40,16 @@ namespace OpenGL_Learn
         //    AttachmentType attachment = AttachmentType::COLOR_ATTACHMENT0,
         //    bool isDepthAndStencilOn = true,
         //    GLenum rboFormat = GL_DEPTH24_STENCIL8);
-        static unique_ptr<RenderTexture> CreateRenderTexture(const string& name, GLsizei width, GLsizei height, int samples = 0)
-        {
-            auto rt = unique_ptr<RenderTexture>(new RenderTexture(name, width, height));
-            rt->_samples = samples;
-            // 生成帧缓冲
-            glGenFramebuffers(1, &rt->_framebufferID);
 
-            return rt;
-        }
+        /// <summary>
+        /// 创建渲染贴图
+        /// </summary>
+        /// <param name="name">名称</param>
+        /// <param name="width">宽度</param>
+        /// <param name="height">高度</param>
+        /// <param name="samples">采样数</param>
+        /// <returns></returns>
+        static unique_ptr<RenderTexture> CreateRenderTexture(const string& name, GLsizei width, GLsizei height, int samples = 0);
 
         Texture2D* AttachmentTexture2D(GLenum internalformat, FormatType format,
             TextureType type = TextureType::UNSIGNED_BYTE,
@@ -65,12 +68,16 @@ namespace OpenGL_Learn
         bool CheckFramebufferSuccess();
 
         //inline virtual GLenum GetTextureType() const override { return GL_TEXTURE_2D; }
-        // 激活绑定的帧缓冲
+        /// <summary>
+        /// 激活绑定的帧缓冲
+        /// </summary>
         inline void BindFramebuffer() const { glBindFramebuffer(GL_FRAMEBUFFER, this->_framebufferID); }
-        // 位块传送 拷贝到指定帧缓冲
-        // @renderTexture 帧缓冲（默认拷贝到窗口）
-        // @mask 指定要读取的缓冲区 // GL_COLOR_BUFFER_BIT 颜色缓冲区 // GL_DEPTH_BUFFER_BIT 深度缓冲区 // GL_STENCIL_BUFFER_BIT 模板缓冲区
-        // @filter 伸缩变形时的插值方法 GL_NEAREST  GL_LINEAR
+        /// <summary>
+        /// 位块传送 拷贝到指定帧缓冲
+        /// </summary>
+        /// <param name="renderTexture">帧缓冲（默认拷贝到窗口）</param>
+        /// <param name="mask">指定要读取的缓冲区 // GL_COLOR_BUFFER_BIT 颜色缓冲区 // GL_DEPTH_BUFFER_BIT 深度缓冲区 // GL_STENCIL_BUFFER_BIT 模板缓冲区</param>
+        /// <param name="filter">伸缩变形时的插值方法 GL_NEAREST  GL_LINEAR</param>
         void Blit(RenderTexture& renderTexture, GLbitfield mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT, ScaleFilterType filter = ScaleFilterType::NEAREST);
         inline Texture* GetTexture(UINT index)
         {

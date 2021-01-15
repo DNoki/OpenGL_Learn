@@ -1,9 +1,11 @@
 ﻿#pragma once
 
-#include "ScriptBehaviour.h"
+#include "../OpenGL_Core/ScriptBehaviour.h"
+
 
 namespace OpenGL_Learn
 {
+    using namespace OpenGL_Core;
 
     class CameraController final : public ScriptBehaviour
     {

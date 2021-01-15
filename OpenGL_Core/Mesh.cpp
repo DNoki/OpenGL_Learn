@@ -6,7 +6,7 @@
 #include "GameSystem.h"
 #include "Material.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     Vector3 CalcTangent(Vector3 pos1, Vector3 pos2, Vector3 pos3, Vector2 uv1, Vector2 uv2, Vector2 uv3)
     {

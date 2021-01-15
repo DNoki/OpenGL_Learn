@@ -5,6 +5,7 @@
 #include <glad/glad.h>
 
 #include "GameSystem.h"
+#include "SceneManager.h"
 #include "UniformManager.h"
 
 #include "Skybox.h"
@@ -13,20 +14,22 @@
 #include "RenderTexture.h"
 
 #include "Renderer.h"
-#include "ScriptBehaviour.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     Mesh* Camera::DefaultTargetTextureMesh = nullptr;
     Shader* Camera::DefaultTargetTextureShader = nullptr;
     Material* Camera::DefaultTargetTextureMaterial = nullptr;
     RenderTexture* Camera::DefaultTargetTexture = nullptr;
     RenderTexture* Camera::DefaultTargetMultisampleTexture = nullptr;
-    Camera* Camera::Main = nullptr;
 
     unique_ptr<RenderState> Camera::realRenderState = nullptr;
 
 
+    Camera* Camera::GetMain()
+    {
+        return SceneManager::GetActiveScene().FindComponent<Camera>();
+    }
 
     void Camera::UseRenderState(const RenderState& state)
     {

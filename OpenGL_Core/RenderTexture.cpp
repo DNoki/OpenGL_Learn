@@ -4,8 +4,18 @@
 
 #include "GameSystem.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
+    unique_ptr<RenderTexture> RenderTexture::CreateRenderTexture(const string& name, GLsizei width, GLsizei height, int samples)
+    {
+        auto rt = unique_ptr<RenderTexture>(new RenderTexture(name, width, height));
+        rt->_samples = samples;
+        // 生成帧缓冲
+        glGenFramebuffers(1, &rt->_framebufferID);
+
+        return rt;
+    }
+
     Texture2D* RenderTexture::AttachmentTexture2D(GLenum internalformat, FormatType format, TextureType type, WrapType wrapMode, ScaleFilterType scaleFilterMode, AttachmentType attachment)
     {
         this->BindFramebuffer();

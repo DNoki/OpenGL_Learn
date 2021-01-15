@@ -5,7 +5,7 @@
 #include "Mesh.h"
 #include "Material.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     Mesh* Skybox::skyboxMesh;
 

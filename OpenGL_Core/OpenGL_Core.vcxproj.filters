@@ -25,9 +25,6 @@
     <Filter Include="源文件\Library">
       <UniqueIdentifier>{951b4622-0038-4782-94a3-ebaecf69ab80}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\Library\Imgui">
-      <UniqueIdentifier>{dd097016-9aa6-48f5-bfc8-b5c1989e09f6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件\Manager">
       <UniqueIdentifier>{4b7b8aed-b4d0-4a54-85f3-e34e8c3e3ffa}</UniqueIdentifier>
     </Filter>
@@ -49,9 +46,6 @@
     <Filter Include="头文件\Library">
       <UniqueIdentifier>{79c10f74-8acf-4cef-ad00-6f7e23f27c55}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\Library\Imgui">
-      <UniqueIdentifier>{2de22dee-6cd1-42f7-9caa-45995cddc54e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\Manager">
       <UniqueIdentifier>{b2e328cf-ac88-425e-a1fc-4af76dcccc03}</UniqueIdentifier>
     </Filter>
@@ -61,17 +55,8 @@
     <Filter Include="头文件\ResourceObjects\GL_BufferStruct">
       <UniqueIdentifier>{2758350a-01a4-4e3d-bd60-3ede24a9f704}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\Scripts">
-      <UniqueIdentifier>{2813bc63-9678-46a3-bb9f-fa46d8632f15}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\Scripts">
-      <UniqueIdentifier>{1cb2b0db-3ad6-4c72-92d1-b3995bde674b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="List.cpp">
-      <Filter>源文件\Calculate</Filter>
-    </ClCompile>
     <ClCompile Include="Math.cpp">
       <Filter>源文件\Calculate</Filter>
     </ClCompile>
@@ -105,29 +90,8 @@
     <ClCompile Include="Light.cpp">
       <Filter>源文件\GameSystem\Component</Filter>
     </ClCompile>
-    <ClCompile Include="AssimpImporter.cpp">
-      <Filter>源文件\Library</Filter>
-    </ClCompile>
     <ClCompile Include="glad.c">
       <Filter>源文件\Library</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui.cpp">
-      <Filter>源文件\Library\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui_demo.cpp">
-      <Filter>源文件\Library\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui_draw.cpp">
-      <Filter>源文件\Library\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui_impl_glfw.cpp">
-      <Filter>源文件\Library\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui_impl_opengl3.cpp">
-      <Filter>源文件\Library\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui_widgets.cpp">
-      <Filter>源文件\Library\Imgui</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>源文件\Manager</Filter>
@@ -159,27 +123,24 @@
     <ClCompile Include="VertexArrays.cpp">
       <Filter>源文件\ResourceObjects\GL_BufferStruct</Filter>
     </ClCompile>
-    <ClCompile Include="CameraController.cpp">
-      <Filter>源文件\Scripts</Filter>
+    <ClCompile Include="Color.cpp">
+      <Filter>源文件\Calculate</Filter>
     </ClCompile>
-    <ClCompile Include="PointLightScene.cpp">
-      <Filter>源文件\Scripts</Filter>
+    <ClCompile Include="Behaviour.cpp">
+      <Filter>源文件\GameSystem\Component</Filter>
     </ClCompile>
-    <ClCompile Include="SampleScene.cpp">
-      <Filter>源文件\Scripts</Filter>
+    <ClCompile Include="ScriptBehaviour.cpp">
+      <Filter>源文件\GameSystem\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelImporter.cpp">
+      <Filter>源文件\ResourceObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>源文件\ResourceObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Color.hpp">
-      <Filter>头文件\Calculate</Filter>
-    </ClInclude>
-    <ClInclude Include="List.h">
-      <Filter>头文件\Calculate</Filter>
-    </ClInclude>
     <ClInclude Include="Math.h">
-      <Filter>头文件\Calculate</Filter>
-    </ClInclude>
-    <ClInclude Include="Tuple.h">
       <Filter>头文件\Calculate</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
@@ -218,35 +179,8 @@
     <ClInclude Include="Light.h">
       <Filter>头文件\GameSystem\Component</Filter>
     </ClInclude>
-    <ClInclude Include="AssimpImporter.h">
-      <Filter>头文件\Library</Filter>
-    </ClInclude>
     <ClInclude Include="json.hpp">
       <Filter>头文件\Library</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imconfig.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imgui.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imgui_impl_glfw.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imgui_impl_opengl3.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imgui_internal.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imstb_rectpack.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imstb_textedit.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imstb_truetype.h">
-      <Filter>头文件\Library\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>头文件\Manager</Filter>
@@ -284,29 +218,17 @@
     <ClInclude Include="VertexArrays.h">
       <Filter>头文件\ResourceObjects\GL_BufferStruct</Filter>
     </ClInclude>
-    <ClInclude Include="CameraController.h">
-      <Filter>头文件\Scripts</Filter>
+    <ClInclude Include="List.hpp">
+      <Filter>头文件\Calculate</Filter>
     </ClInclude>
-    <ClInclude Include="ChildGameObject.h">
-      <Filter>头文件\Scripts</Filter>
+    <ClInclude Include="Color.h">
+      <Filter>头文件\Calculate</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleBar.h">
-      <Filter>头文件\Scripts</Filter>
+    <ClInclude Include="Tuple.hpp">
+      <Filter>头文件\Calculate</Filter>
     </ClInclude>
-    <ClInclude Include="FatherGameObject.h">
-      <Filter>头文件\Scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="GaussianBlur.h">
-      <Filter>头文件\Scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="PointLightScene.h">
-      <Filter>头文件\Scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="PostProcess.h">
-      <Filter>头文件\Scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="SampleScene.h">
-      <Filter>头文件\Scripts</Filter>
+    <ClInclude Include="ModelImporter.h">
+      <Filter>头文件\ResourceObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

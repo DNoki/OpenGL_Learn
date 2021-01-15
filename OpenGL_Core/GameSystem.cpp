@@ -14,7 +14,7 @@
 #include "Camera.h"
 
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     GLFWwindow* GameSystem::_window = nullptr;
     unsigned int GameSystem::DrawCallCounter = 0;

@@ -1,13 +1,14 @@
 ﻿#include "PointLightScene.h"
 
-#include "Material.h"
+#include "../OpenGL_Core/Mesh.h"
+#include "../OpenGL_Core/Material.h"
 
-#include "Camera.h"
+#include "../OpenGL_Core/Camera.h"
+#include "../OpenGL_Core/Renderer.h"
+#include "../OpenGL_Core/Light.h"
+#include "../OpenGL_Core/ModelImporter.h"
+
 #include "PostProcess.h"
-#include "Renderer.h"
-#include "Light.h"
-#include "AssimpImporter.h"
-
 #include "CameraController.h"
 #include "ConsoleBar.h"
 
@@ -105,13 +106,13 @@ void OpenGL_Learn::PointLightScene::ImportResource()
         ground.GetTransform().LocalPosition = Vector3::Forward * 10.0f;
 
         {
-            auto importer = AssimpImporter::AssimpLoad("../Asset/Model/PointLightTestScene.fbx");
+            auto importer = ModelImporter::ModelLoad("../Asset/Model/PointLightTestScene.fbx");
             for (auto& mat : importer->materials)
             {
                 mat->AddShaderPass(litPhongShader);
             }
             importer->gameObjects[0]->Name = "PointLightTestScene";
-            AssimpImporter::AssingToScene(*this, *importer);
+            ModelImporter::AssingToScene(*this, *importer);
         }
     }
 }

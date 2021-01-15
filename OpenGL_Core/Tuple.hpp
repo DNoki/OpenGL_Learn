@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     template <typename T1, typename T2>
     struct Tuple2

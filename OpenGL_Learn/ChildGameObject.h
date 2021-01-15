@@ -1,11 +1,12 @@
 ﻿#pragma once
 
-#include "SceneManager.h"
+#include "../OpenGL_Core/SceneManager.h"
 
-#include "ScriptBehaviour.h"
+#include "../OpenGL_Core/ScriptBehaviour.h"
 
 namespace OpenGL_Learn
 {
+    using namespace OpenGL_Core;
 
     class ChildGameObject final : public ScriptBehaviour
     {
@@ -22,7 +23,7 @@ namespace OpenGL_Learn
 
 
             //childObj->GetTransform().LocalRotation = angleAxis(3.1415926f / 4.0f, V3_FORWARD);
-            GetTransform().SetParent(&Camera::Main->GetTransform(), false);
+            GetTransform().SetParent(&Camera::GetMain()->GetTransform(), false);
             //GetTransform().SetPosition(vec3(0, 0, 40), false);
             //GetTransform().LocalScale = V3_ONE * 0.2f;
         }
@@ -30,8 +31,8 @@ namespace OpenGL_Learn
         {
 
             //GetTransform().Rotate(V3_UP, 360 * Time::DeltaTime());
-            GetTransform().SetPosition(Camera::Main->GetTransform().GetPosition()
-                + Camera::Main->GetTransform().GetForward() * 20.0f
+            GetTransform().SetPosition(Camera::GetMain()->GetTransform().GetPosition()
+                + Camera::GetMain()->GetTransform().GetForward() * 20.0f
             );
         }
 

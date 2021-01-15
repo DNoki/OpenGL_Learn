@@ -16,7 +16,7 @@
 #include "UniformManager.h"
 
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     string ReadFile(const string& path)
     {

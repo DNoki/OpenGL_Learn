@@ -1,37 +1,52 @@
 ﻿#pragma once
 
+#include "List.hpp"
 #include "Component.h"
 
-#include "SceneManager.h"
-#include "GameSystem.h"
+//#include "SceneManager.h"
+//#include "GameSystem.h"
 #include "GameObject.h"
 
 #include "Time.h"
 
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     using namespace std;
 
-    // 行为是可以启用或禁用的组件
+    class GameObject;
+
+    /// <summary>
+    /// 行为组件是可以启用或禁用的组件
+    /// </summary>
     class Behaviour : public Component
     {
     public:
-        // 是否激活
+        /// <summary>
+        /// 是否激活
+        /// </summary>
         bool Enabled;
-        // 该行为是否已激活并已启用？
-        inline bool GetIsActiveAndEnabled()
-        {
-            return Enabled && GetGameObject().GetActive();
-        }
+        /// <summary>
+        /// 该行为是否已激活并已启用？
+        /// </summary>
+        /// <returns></returns>
+        bool GetIsActiveAndEnabled();
 
-        // 返回找到的第一个组件
+        /// <summary>
+        /// 返回找到的第一个组件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         template <typename T = Component>
         T * GetComponent() const
         {
             return GetGameObject().GetComponent<T>();
         }
-        // 返回找到的组件
+        /// <summary>
+        /// 返回找到的组件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         template <typename T = Component>
         List<T*> GetComponents() const
         {

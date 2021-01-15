@@ -1,10 +1,11 @@
 ﻿#pragma once
 
 #include "Math.h"
+#include "List.hpp"
 
 #include "Component.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     // 变换
     class Transform final : public Component

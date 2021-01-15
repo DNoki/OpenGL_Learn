@@ -1,5 +1,6 @@
 ﻿#include "Light.h"
 
+#include "SceneManager.h"
 #include "UniformManager.h"
 
 #include "GameSystem.h"
@@ -7,10 +8,17 @@
 #include "Renderer.h"
 
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     Material* DirectionalLight::DirectionalLightShadowmapMaterial;
     Material* PointLight::PointLightShadowmapMaterial;
+
+    Light::Light(GameObject& obj) : Behaviour(obj),
+        Shadows(LightShadows::Soft), Intensity(1.0f), LightColor(Color::White()),
+        ShadowStrength(0.5f), Bias(0.f), NormalBias(0.f),
+        ShadowResolution(1024), ShadowDistance(40), ShadowNearPlaneOffset(0.1f),
+        State()
+    { }
 
     Matrix4x4 DirectionalLight::GetLightSpaceMatrix(Camera* camera) const
     {
@@ -106,7 +114,7 @@ namespace OpenGL_Learn
         for (auto& transform : *shadowTransforms)
         {
             //transform = shadowProj * transform;
-            transform = shadowProj 
+            transform = shadowProj
 #ifdef GLM_FORCE_LEFT_HANDED
                 * Matrix4x4::XInverse
 #endif // GLM_FORCE_LEFT_HANDED

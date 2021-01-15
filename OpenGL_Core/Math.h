@@ -6,7 +6,7 @@
 #include <glm/gtc/quaternion.hpp>
 //#include <glm/gtc/matrix_transform.hpp>
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     // 检查：是否常量参数 是否引用参数 是否常量函数
 
@@ -183,12 +183,29 @@ namespace OpenGL_Learn
         {
             return glm::lookAt(from, to, up);
         };
+        /// <summary>
+        /// 正交投影
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <param name="bottom"></param>
+        /// <param name="top"></param>
+        /// <param name="zNear"></param>
+        /// <param name="zFar"></param>
+        /// <returns></returns>
         static Matrix4x4 Ortho(const float& left, const float& right, const float& bottom, const float& top, const float& zNear, const float& zFar)
         {
             return glm::ortho(left, right, bottom, top, zNear, zFar);
         }
         static Matrix4x4 Frustum(const float& left, const float& right, const float& bottom, const float& top, const float& zNear, const float& zFar);
-        // 给定了角度
+        /// <summary>
+        /// 透视投影
+        /// </summary>
+        /// <param name="fovy"></param>
+        /// <param name="aspect"></param>
+        /// <param name="zNear"></param>
+        /// <param name="zFar"></param>
+        /// <returns></returns>
         static Matrix4x4 Perspective(const float& fovy, const float& aspect, const float& zNear, const float& zFar)
         {
             return glm::perspective(Math::Deg2Rad * fovy, aspect, zNear, zFar);

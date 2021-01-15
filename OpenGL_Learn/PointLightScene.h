@@ -1,9 +1,11 @@
 ﻿#pragma once
 
-#include "Scene.h"
+#include "../OpenGL_Core/Scene.h"
 
 namespace OpenGL_Learn
 {
+    using namespace OpenGL_Core;
+
     class PointLightScene final : public Scene
     {
     public:

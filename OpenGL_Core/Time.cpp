@@ -1,6 +1,6 @@
 ﻿#include "Time.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     double Time::TimeScale = 1.0;
 

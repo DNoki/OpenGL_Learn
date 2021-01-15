@@ -3,7 +3,7 @@
 #include "SceneManager.h"
 #include "RenderTexture.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     void ResourceObject::Destroy(ResourceObject& _object)
     {

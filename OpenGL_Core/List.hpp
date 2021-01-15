@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     using namespace std;
 
@@ -11,7 +11,7 @@ namespace OpenGL_Learn
     class List : public vector<T>
     {
     public:
-        size_t Count() { return this->size(); }
+        inline size_t Count() { return this->size(); }
 
         bool Exists(const T& item)
         {
@@ -61,35 +61,34 @@ namespace OpenGL_Learn
         List(const int _Count, const T& _Val, const allocator<T>& _Al) :vector<T>(_Count, _Val, _Al) {}
     };
 
-    class IList : public vector<int>
-    {
-    public:
-        void Add(const int& item) { this->push_back(item); }
-        size_t GetCount() { return this->size(); }
+    //// 参考用
+    //class IList : public vector<int>
+    //{
+    //public:
+    //    void Add(const int& item) { this->push_back(item); }
+    //    size_t GetCount() { return this->size(); }
 
-        bool Exists(const int& item)
-        {
-            for (auto& i : *this)
-                if (item == i) return true;
-            return false;
-        }
-        int* Find(const int& item)
-        {
-            for (auto& i : *this)
-                if (item == i) return &i;
-            return nullptr;
-        }
+    //    bool Exists(const int& item)
+    //    {
+    //        for (auto& i : *this)
+    //            if (item == i) return true;
+    //        return false;
+    //    }
+    //    int* Find(const int& item)
+    //    {
+    //        for (auto& i : *this)
+    //            if (item == i) return &i;
+    //        return nullptr;
+    //    }
 
-        IList() :vector<int>() {}
-        IList(const allocator<int>& _Al) :vector<int>(_Al) {}
-        IList(vector<int>&& _Right) :vector<int>(_Right) {}
-        IList(const vector<int>& _Right) :vector<int>(_Right) {}
-        IList(vector<int>&& _Right, const allocator<int>& _Al) :vector<int>(_Right, _Al) {}
-        IList(const vector<int>& _Right, const allocator<int>& _Al) :vector<int>(_Right, _Al) {}
-        IList(initializer_list<int>& _Ilist, const allocator<int>& _Al) :vector<int>(_Ilist, _Al) {}
-        IList(const size_type _Count, const allocator<int>& _Al) :vector<int>(_Count, _Al) {}
-        IList(const size_type _Count, const int& _Val, const allocator<int>& _Al) :vector<int>(_Count, _Val, _Al) {}
-    };
-
-
+    //    IList() :vector<int>() {}
+    //    IList(const allocator<int>& _Al) :vector<int>(_Al) {}
+    //    IList(vector<int>&& _Right) :vector<int>(_Right) {}
+    //    IList(const vector<int>& _Right) :vector<int>(_Right) {}
+    //    IList(vector<int>&& _Right, const allocator<int>& _Al) :vector<int>(_Right, _Al) {}
+    //    IList(const vector<int>& _Right, const allocator<int>& _Al) :vector<int>(_Right, _Al) {}
+    //    IList(initializer_list<int>& _Ilist, const allocator<int>& _Al) :vector<int>(_Ilist, _Al) {}
+    //    IList(const size_type _Count, const allocator<int>& _Al) :vector<int>(_Count, _Al) {}
+    //    IList(const size_type _Count, const int& _Val, const allocator<int>& _Al) :vector<int>(_Count, _Val, _Al) {}
+    //};
 }

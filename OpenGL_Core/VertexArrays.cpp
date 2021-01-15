@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     void VertexArrays::VertexAttribPointer(GLuint index, GLint size, GLsizei stride, const void* pointer, GLenum type, GLboolean normalized)
     {

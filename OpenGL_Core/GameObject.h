@@ -7,45 +7,52 @@
 #include "ResourceObject.h"
 #include "Transform.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     using namespace std;
 
     class Component;
-    class Transform;
 
-    // 游戏对象
+    /// <summary>
+    /// 游戏对象
+    /// </summary>
     class GameObject final : public ResourceObject
     {
     public:
-        // 是否激活
+        /// <summary>
+        /// 是否激活
+        /// </summary>
         bool Enabled;
 
-        // 是否是根对象
-        inline bool IsRootObject() { return _transform->GetParent() == nullptr; }
-        inline unsigned int GetChildsCount() { return _transform->GetChilds().size(); }
-        // 是否处于激活状态
-        // @isInHierarchy 在场景中
-        bool GetActive(bool isInHierarchy = true)
-        {
-            if (!isInHierarchy) return Enabled;
-            if (Enabled && !IsRootObject())
-                return _transform->GetParent()->GetGameObject().GetActive();
-            return Enabled;
-        }
-        void SetActive(bool value, bool isInHierarchy = true)
-        {
-            if (!isInHierarchy)
-            {
-                Enabled = value;
-                return;
-            }
-            if (!IsRootObject())
-                _transform->GetParent()->GetGameObject().SetActive(value, isInHierarchy);
-            Enabled = value;
-        }
+        /// <summary>
+        /// 是否是根对象
+        /// </summary>
+        /// <returns></returns>
+        bool IsRootObject();
+        /// <summary>
+        /// 获取子对象数量
+        /// </summary>
+        /// <returns></returns>
+        unsigned int GetChildsCount();
 
-        // 添加组件
+        /// <summary>
+        /// 是否处于激活状态
+        /// </summary>
+        /// <param name="isInHierarchy">在场景中</param>
+        /// <returns></returns>
+        bool GetActive(bool isInHierarchy = true);
+        /// <summary>
+        /// 设置激活状态
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="isInHierarchy"></param>
+        void SetActive(bool value, bool isInHierarchy = true);
+
+        /// <summary>
+        /// 添加组件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         template <class T = Component>
         T& AddComponent()
         {
@@ -57,7 +64,6 @@ namespace OpenGL_Learn
             OnAddComponent(result);
             return *result;
         }
-        void OnAddComponent(Component* component);
         // 返回找到的第一个组件
         template <typename T = Component>
         T* GetComponent() const
@@ -88,15 +94,12 @@ namespace OpenGL_Learn
         inline List<unique_ptr<Component>>& GetAllComponents() { return _components; }
 
 
-        GameObject() :ResourceObject("New GameObject"), Enabled(true),
-            _transform(make_unique<Transform>(Transform(*this))), _components() {}
-        GameObject(const string& name, Transform* parent = nullptr, bool worldPositionStays = true) :ResourceObject(name), Enabled(true),
-            _transform(make_unique<Transform>(Transform(*this))), _components()
-        {
-            _transform->SetParent(parent, worldPositionStays);
-        }
+        GameObject();
+        GameObject(const string& name, Transform* parent = nullptr, bool worldPositionStays = true);
 
     private:
+        void OnAddComponent(Component* component);
+
         unique_ptr<Transform> _transform;
         List<unique_ptr<Component>> _components;
     };

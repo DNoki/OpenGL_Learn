@@ -19,13 +19,47 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GaussianBlur.cpp" />
+    <ClCompile Include="Imgui\imgui.cpp" />
+    <ClCompile Include="Imgui\imgui_demo.cpp" />
+    <ClCompile Include="Imgui\imgui_draw.cpp" />
+    <ClCompile Include="Imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Imgui\imgui_widgets.cpp" />
+    <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="ConsoleBar.cpp" />
+    <ClCompile Include="PointLightScene.cpp" />
+    <ClCompile Include="PostProcess.cpp" />
+    <ClCompile Include="ProjectSetting.cpp" />
+    <ClCompile Include="SampleScene.cpp" />
     <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Imgui\imconfig.h" />
+    <ClInclude Include="Imgui\imgui.h" />
+    <ClInclude Include="Imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="Imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Imgui\imgui_internal.h" />
+    <ClInclude Include="Imgui\imstb_rectpack.h" />
+    <ClInclude Include="Imgui\imstb_textedit.h" />
+    <ClInclude Include="Imgui\imstb_truetype.h" />
+    <ClInclude Include="CameraController.h" />
+    <ClInclude Include="ChildGameObject.h" />
+    <ClInclude Include="ConsoleBar.h" />
+    <ClInclude Include="IConsoleBarScriptBehaviour.hpp" />
+    <ClInclude Include="FatherGameObject.h" />
+    <ClInclude Include="GaussianBlur.h" />
+    <ClInclude Include="PointLightScene.h" />
+    <ClInclude Include="PostProcess.h" />
+    <ClInclude Include="ProjectSetting.h" />
+    <ClInclude Include="SampleScene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{AAEF5195-0B0D-42B6-8BF2-DD32235CDE33}</ProjectGuid>
-    <RootNamespace>OpenGLLEARN</RootNamespace>
+    <RootNamespace>OpenGL_Learn</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>OpenGL_Learn</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -83,11 +117,13 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(SolutionDir)External Libraries\Include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLM_FORCE_LEFT_HANDED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)External Libraries\Library</AdditionalLibraryDirectories>
       <AdditionalDependencies>../Debug/OpenGL_Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>MSVCRT.lib;LIBCMT.lib;</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent>

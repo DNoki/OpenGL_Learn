@@ -2,7 +2,7 @@
 
 #include "GameObject.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     Component::Component(GameObject& obj) :_gameObject(obj), _transform(obj.GetTransform())
     {
@@ -10,5 +10,4 @@ namespace OpenGL_Learn
     Component::Component(GameObject& obj, Transform& trans) : _gameObject(obj), _transform(trans)
     {
     }
-
 }

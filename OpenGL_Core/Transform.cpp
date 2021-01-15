@@ -2,7 +2,7 @@
 
 #include "GameObject.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     inline Vector3 Transform::GetPosition(bool isWorld) const
     {

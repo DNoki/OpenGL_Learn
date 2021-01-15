@@ -4,7 +4,7 @@
 
 struct GLFWwindow;
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     using namespace std;
 
@@ -16,7 +16,9 @@ namespace OpenGL_Learn
 
         //static void Render();
 
-        // 游戏生命周期
+        /// <summary>
+        /// 游戏生命周期
+        /// </summary>
         static void LifeCycle();
 
         inline static GLFWwindow* GetGLFWwindow() { return _window; }

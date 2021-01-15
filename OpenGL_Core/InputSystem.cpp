@@ -2,7 +2,7 @@
 
 #include <GLFW/glfw3.h>
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     map<int, Key> InputSystem::_keys;
     Vector2 InputSystem::_mousePos;

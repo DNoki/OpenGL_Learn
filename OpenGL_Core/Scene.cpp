@@ -8,8 +8,19 @@
 #include "Renderer.h"
 #include "ScriptBehaviour.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
+    List<GameObject*> Scene::GetAllRootGameObjects(bool isUnActiveInclude)
+    {
+        auto objs = List<GameObject*>();
+        for (auto& obj : _hierarchy)
+        {
+            if (!isUnActiveInclude && !obj->GetActive()) continue;
+            if (obj->IsRootObject())
+                objs.push_back(obj.get());
+        }
+        return objs;
+    }
     GameObject& Scene::AddGameObject(unique_ptr<GameObject>&& gameObj)
     {
         return AddGameObject(gameObj);
@@ -205,6 +216,6 @@ namespace OpenGL_Learn
 
     void Scene::BindMainObject()
     {
-        Camera::Main = FindComponent<Camera>();
+
     }
 }

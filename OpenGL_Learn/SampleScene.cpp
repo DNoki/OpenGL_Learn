@@ -1,26 +1,25 @@
 ﻿#include "SampleScene.h"
 
-#include "Texture.h"
-#include "RenderTexture.h"
-#include "Material.h"
-#include "Mesh.h"
-#include "Skybox.h"
+#include "../OpenGL_Core/Texture.h"
+#include "../OpenGL_Core/RenderTexture.h"
+#include "../OpenGL_Core/Material.h"
+#include "../OpenGL_Core/Mesh.h"
+#include "../OpenGL_Core/Skybox.h"
 
-#include "GameSystem.h"
+#include "../OpenGL_Core/GameSystem.h"
 
-#include "Camera.h"
-#include "Light.h"
-#include "Renderer.h"
+#include "../OpenGL_Core/Camera.h"
+#include "../OpenGL_Core/Light.h"
+#include "../OpenGL_Core/Renderer.h"
 #include "PostProcess.h"
 
-#include "AssimpImporter.h"
+#include "../OpenGL_Core/ModelImporter.h"
 
 #include "CameraController.h"
 #include "ConsoleBar.h"
 #include "FatherGameObject.h"
 #include "ChildGameObject.h"
 #include "GaussianBlur.h"
-
 
 namespace OpenGL_Learn
 {
@@ -207,7 +206,7 @@ namespace OpenGL_Learn
             auto unityChanTex = AddResourceObject(Texture2D::CreateTexture2D("Unity Chan Tex", "../Asset/Model/Textures/utc_all2_light.png", true));
             auto unityChanNormalTex = AddResourceObject(Texture2D::CreateTexture2D("Unity Chan Normal Tex", "../Asset/Model/Textures/SD_Unitychan_normal.png", false));
 
-            auto importer = AssimpImporter::AssimpLoad("../Asset/Model/UnityChan.fbx");
+            auto importer = ModelImporter::ModelLoad("../Asset/Model/UnityChan.fbx");
             for (auto& mat : importer->materials)
             {
                 auto unityChanShader = AddResourceObject(make_unique<Shader>(*litPhong));
@@ -217,13 +216,13 @@ namespace OpenGL_Learn
                 //mat->AddShaderPass(displayNormalShader);
                 //mat->AddShaderPass(outlineShader);
             }
-            importer->gameObjects[0]->GetTransform().Rotate(Vector3::Up, 180.0f);
+            //importer->gameObjects[0]->GetTransform().Rotate(Vector3::Up, 180.0f);
             importer->gameObjects[0]->GetTransform().LocalScale = Vector3::One * 0.03f;
             importer->gameObjects[0]->Name = "Unity Chan";
-            AssimpImporter::AssingToScene(*this, *importer);
+            ModelImporter::AssingToScene(*this, *importer);
         }
         //{
-        //    auto importer = AssimpImporter::AssimpLoad("../Asset/Model/DirectionScene.fbx");
+        //    auto importer = ModelImporter::ModelLoad("../Asset/Model/DirectionScene.fbx");
         //    for (auto& mat : importer->materials)
         //    {
         //        auto phoneShader = AddResourceObject(make_unique<Shader>(*litPhong));
@@ -241,7 +240,7 @@ namespace OpenGL_Learn
         //test->SetVector4("_MainColor", Color::Blue());
         //test->BindTexture(*normalTex, "_MainTexture", 0);
 
-        //auto sphereImporter = AssimpImporter::AssimpLoad("../Asset/Model/Sphere.fbx", displayNormalShader);
+        //auto sphereImporter = ModelImporter::ModelLoad("../Asset/Model/Sphere.fbx", displayNormalShader);
         ////sphereImporter->gameObjects[0]->GetTransform().SetPosition(Vector3::Up);
         ////sphereImporter->gameObjects[0]->GetTransform().Rotate(Vector3::Right, 90);
         //AssimpImporter::AssingToScene(*this, *sphereImporter);

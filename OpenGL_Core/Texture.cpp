@@ -5,7 +5,7 @@
 #include <stb_image.h>
 
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     Texture::~Texture()
     {
@@ -143,9 +143,9 @@ namespace OpenGL_Learn
     }
 
     unique_ptr<TextureCube> TextureCube::CreateTextureCube(const string& name,
-        GLsizei width, GLsizei height, 
+        GLsizei width, GLsizei height,
         GLenum internalformat, FormatType format,
-        TextureType type, const void* pixels, 
+        TextureType type, const void* pixels,
         WrapType wrapMode, ScaleFilterType scaleFilterMode)
     {
         GLuint id;
@@ -155,7 +155,7 @@ namespace OpenGL_Learn
         for (size_t i = 0; i < 6; i++)
             glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
                 0, internalformat, width, height, 0, static_cast<int>(format), static_cast<int>(type), pixels);
-            //GenTexture2D(i, width, height, internalformat, format, type, pixels);
+        //GenTexture2D(i, width, height, internalformat, format, type, pixels);
 
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, static_cast<int>(wrapMode));
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, static_cast<int>(wrapMode));
@@ -176,7 +176,7 @@ namespace OpenGL_Learn
     //}
 
 
-    unique_ptr<Texture2DMultisample> Texture2DMultisample::CreateTexture2DMultisample(const string& name,int samples, GLsizei width, GLsizei height, GLenum internalformat)
+    unique_ptr<Texture2DMultisample> Texture2DMultisample::CreateTexture2DMultisample(const string& name, int samples, GLsizei width, GLsizei height, GLenum internalformat)
     {
         GLuint id;
 

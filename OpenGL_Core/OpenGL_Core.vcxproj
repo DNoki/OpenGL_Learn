@@ -19,25 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CameraController.cpp" />
-    <ClCompile Include="PointLightScene.cpp" />
-    <ClCompile Include="SampleScene.cpp" />
-    <ClCompile Include="AssimpImporter.cpp" />
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="ModelImporter.cpp" />
+    <ClCompile Include="Behaviour.cpp" />
     <ClCompile Include="BufferObject.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameSystem.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="Imgui\imgui.cpp" />
-    <ClCompile Include="Imgui\imgui_demo.cpp" />
-    <ClCompile Include="Imgui\imgui_draw.cpp" />
-    <ClCompile Include="Imgui\imgui_impl_glfw.cpp" />
-    <ClCompile Include="Imgui\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="Imgui\imgui_widgets.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Light.cpp" />
-    <ClCompile Include="List.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -45,6 +38,7 @@
     <ClCompile Include="ResourceObject.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ScriptBehaviour.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -54,34 +48,18 @@
     <ClCompile Include="VertexArrays.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CameraController.h" />
-    <ClInclude Include="ChildGameObject.h" />
-    <ClInclude Include="ConsoleBar.h" />
-    <ClInclude Include="FatherGameObject.h" />
-    <ClInclude Include="GaussianBlur.h" />
-    <ClInclude Include="PointLightScene.h" />
-    <ClInclude Include="PostProcess.h" />
-    <ClInclude Include="SampleScene.h" />
-    <ClInclude Include="AssimpImporter.h" />
+    <ClInclude Include="ModelImporter.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="BufferObject.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Color.hpp" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameSystem.h" />
-    <ClInclude Include="Imgui\imconfig.h" />
-    <ClInclude Include="Imgui\imgui.h" />
-    <ClInclude Include="Imgui\imgui_impl_glfw.h" />
-    <ClInclude Include="Imgui\imgui_impl_opengl3.h" />
-    <ClInclude Include="Imgui\imgui_internal.h" />
-    <ClInclude Include="Imgui\imstb_rectpack.h" />
-    <ClInclude Include="Imgui\imstb_textedit.h" />
-    <ClInclude Include="Imgui\imstb_truetype.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Light.h" />
-    <ClInclude Include="List.h" />
+    <ClInclude Include="List.hpp" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Mesh.h" />
@@ -96,7 +74,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Transform.h" />
-    <ClInclude Include="Tuple.h" />
+    <ClInclude Include="Tuple.hpp" />
     <ClInclude Include="UniformBufferObject.h" />
     <ClInclude Include="UniformManager.h" />
     <ClInclude Include="VertexArrays.h" />
@@ -105,7 +83,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{6d2bc32b-bcbd-468d-bfaa-bd51b8081cbd}</ProjectGuid>
-    <RootNamespace>OpenGLCore</RootNamespace>
+    <RootNamespace>OpenGL_Core</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

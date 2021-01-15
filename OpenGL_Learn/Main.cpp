@@ -4,12 +4,11 @@
 #include <vector>
 #include <map>
 
-#include "Math.h"
+#include "../OpenGL_Core/GameSystem.h"
+#include "ProjectSetting.h"
 
 using namespace std;
-
-#include "../OpenGL_Core/GameSystem.h"
-
+using namespace OpenGL_Core;
 using namespace OpenGL_Learn;
 
 void TestFunction(bool (*func_ptr)(const int&))
@@ -24,9 +23,9 @@ int main()
     //TestFunction([](const int& a) ->bool { return true; });
 
     //system("pause");
-
     //return 0;
 
+    ProjectSetting::LoadSetting();
     GameSystem::LifeCycle();
 
     //system("pause");

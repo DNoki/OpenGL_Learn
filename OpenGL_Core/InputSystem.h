@@ -6,20 +6,28 @@
 
 struct GLFWwindow;
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     using namespace std;
 
 
-    //键
+    /// <summary>
+    /// 键
+    /// </summary>
     struct Key
     {
     public:
-        // 在这一帧摁下？
+        /// <summary>
+        /// 在这一帧摁下？
+        /// </summary>
         bool IsPress;
-        // 是否摁下状态
+        /// <summary>
+        /// 是否摁下状态
+        /// </summary>
         bool IsPressed;
-        // 在这一帧释放？
+        /// <summary>
+        /// 在这一帧释放？
+        /// </summary>
         bool IsRelease;
 
         Key();
@@ -30,20 +38,48 @@ namespace OpenGL_Learn
     public:
         inline static Vector2 GetMouseOffset() { return _mouseOffset; }
 
-        // 按键是否被按下
+        /// <summary>
+        /// 按键是否被按下
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         static bool GetKey(int key);
-        // 按键是否在这一帧被按下
+        /// <summary>
+        /// 按键是否在这一帧被按下
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         static bool GetKeyDown(int key);
-        // 按键是否在这一帧被释放
+        /// <summary>
+        /// 按键是否在这一帧被释放
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         static bool GetKeyUp(int key);
 
-        // 每一帧重置
+        /// <summary>
+        /// 每一帧重置
+        /// </summary>
         static void ResetOnFrame();
-        // 输入系统初始化
+        /// <summary>
+        /// 输入系统初始化
+        /// </summary>
         static void Initialize();
-        // 按键的回调函数,当有按键指令触发时调用
+        /// <summary>
+        /// 按键的回调函数,当有按键指令触发时调用
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="key"></param>
+        /// <param name="scancode"></param>
+        /// <param name="action"></param>
+        /// <param name="mode"></param>
         static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
-        // 鼠标位置回调，当鼠标在窗口上时触发
+        /// <summary>
+        /// 鼠标位置回调，当鼠标在窗口上时触发
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="xpos"></param>
+        /// <param name="ypos"></param>
         static void MousePosCallback(GLFWwindow* window, double xpos, double ypos);
 
     private:

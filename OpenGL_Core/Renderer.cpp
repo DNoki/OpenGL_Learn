@@ -5,7 +5,7 @@
 #include "Mesh.h"
 #include "Material.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     unique_ptr<List<unique_ptr<RenderItem>>> Renderer::GetRenderItems()
     {

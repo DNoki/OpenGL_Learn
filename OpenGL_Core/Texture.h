@@ -6,7 +6,7 @@
 
 #include "ResourceObject.h"
 
-namespace OpenGL_Learn
+namespace OpenGL_Core
 {
     using namespace std;
 
@@ -71,11 +71,20 @@ namespace OpenGL_Learn
     public:
         GLuint ID;
 
-        // 获取贴图类型
+        /// <summary>
+        /// 获取贴图类型
+        /// </summary>
+        /// <returns></returns>
         virtual GLenum GetTextureType() const = 0;
-        // 获取宽度
+        /// <summary>
+        /// 获取宽度
+        /// </summary>
+        /// <returns></returns>
         inline int GetWidth() const { return _width; }
-        // 获取高度
+        /// <summary>
+        /// 获取高度
+        /// </summary>
+        /// <returns></returns>
         inline int GetHeight() const { return _height; }
         inline void BindTexture() const { glBindTexture(GetTextureType(), ID); }
 
