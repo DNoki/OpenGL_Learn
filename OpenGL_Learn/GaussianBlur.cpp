@@ -51,7 +51,9 @@ namespace OpenGL_Learn
     void GaussianBlur::OnConsoleBar(int index, stringstream& fmt)
     {
         fmt.str(""); fmt << index;
-        ImGui::Checkbox(fmt.str().c_str(), &this->Enabled); ImGui::SameLine();
+        auto enable = GetEnable();
+        ImGui::Checkbox(fmt.str().c_str(), &enable); ImGui::SameLine();
+        SetEnable(enable);
         fmt.str(""); fmt << "GaussianBlur" << "  0x" << this;
         if (ImGui::TreeNode(fmt.str().c_str()))
         {

@@ -65,6 +65,7 @@ namespace OpenGL_Core
         /// </summary>
         virtual void OnPostRender() {}
 
+
         inline bool GetStarted() { return _isStarted; }
         inline void SetStarted() { _isStarted = true; }
 

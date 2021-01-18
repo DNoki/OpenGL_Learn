@@ -3,7 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGL_LEARN", "OpenGL_LEARN\OpenGL_LEARN.vcxproj", "{AAEF5195-0B0D-42B6-8BF2-DD32235CDE33}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGL_Learn", "OpenGL_Learn\OpenGL_Learn.vcxproj", "{AAEF5195-0B0D-42B6-8BF2-DD32235CDE33}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6D2BC32B-BCBD-468D-BFAA-BD51B8081CBD} = {6D2BC32B-BCBD-468D-BFAA-BD51B8081CBD}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGL_Core", "OpenGL_Core\OpenGL_Core.vcxproj", "{6D2BC32B-BCBD-468D-BFAA-BD51B8081CBD}"
 EndProject

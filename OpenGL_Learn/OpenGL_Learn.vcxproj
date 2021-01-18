@@ -28,6 +28,7 @@
     <ClCompile Include="Imgui\imgui_widgets.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="ConsoleBar.cpp" />
+    <ClCompile Include="PhysiceTestScene.cpp" />
     <ClCompile Include="PointLightScene.cpp" />
     <ClCompile Include="PostProcess.cpp" />
     <ClCompile Include="ProjectSetting.cpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="IConsoleBarScriptBehaviour.hpp" />
     <ClInclude Include="FatherGameObject.h" />
     <ClInclude Include="GaussianBlur.h" />
+    <ClInclude Include="PhysiceTestScene.h" />
     <ClInclude Include="PointLightScene.h" />
     <ClInclude Include="PostProcess.h" />
     <ClInclude Include="ProjectSetting.h" />

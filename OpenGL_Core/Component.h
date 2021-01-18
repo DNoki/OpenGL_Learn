@@ -26,7 +26,10 @@ namespace OpenGL_Core
         /// <returns></returns>
         inline Transform& GetTransform() const { return this->_transform; }
 
-        virtual ~Component() {}
+
+        virtual void OnDestroy() {}
+
+        virtual ~Component() { OnDestroy(); }
 
         //bool operator == (const Component& value) { return this == &value; }
 

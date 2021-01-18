@@ -54,7 +54,7 @@ namespace OpenGL_Core
         auto activeScripts = List<ScriptBehaviour*>();
         for (auto script : activeObjScript)
         {
-            if (script->Enabled)
+            if (script->GetEnable())
                 activeScripts.push_back(script);
         }
 
@@ -72,6 +72,8 @@ namespace OpenGL_Core
         for (auto script : activeScripts)
             script->LateUpdate();
 
+        // 更新物理
+        _physics->ExcuteUpdate();
 
         // 取得所有已开启对象的相机组件
         auto cameras = this->FindComponents<Camera>();
@@ -89,7 +91,7 @@ namespace OpenGL_Core
         List<unique_ptr<RenderItem>> overlays = List<unique_ptr<RenderItem>>();
         for (auto renderer : renderers)
         {
-            if (!renderer->Enabled) continue; // 若组件未开启则跳过
+            if (!renderer->GetEnable()) continue; // 若组件未开启则跳过
             auto items = renderer->GetRenderItems();
             for (auto& item : *items)
             {
@@ -116,7 +118,7 @@ namespace OpenGL_Core
         auto renderCount = 0;
         for (auto camera : cameras)
         {
-            if (!camera->Enabled) continue;
+            if (!camera->GetEnable()) continue;
 
 
             // 获取该相机的所有脚本组件
@@ -140,7 +142,7 @@ namespace OpenGL_Core
             for (auto script : cameraScripts)
                 script->OnPreRender();
 
-            if (dirLight && dirLight->Enabled)
+            if (dirLight && dirLight->GetEnable())
             {
                 // 传送光照数据
                 UniformManager::LightingData->SetSubData(0 * sizeof(float), sizeof(Vector4),
@@ -212,6 +214,11 @@ namespace OpenGL_Core
         // 渲染到窗口
         Camera::RenderToWindow();
 
+    }
+
+    Scene::Scene(const string& name) :Name(name), _hierarchy(), _resourceObjects() 
+    {
+        _physics = make_unique<Physics>();
     }
 
     void Scene::BindMainObject()

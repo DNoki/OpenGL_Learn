@@ -81,6 +81,9 @@
     <ClCompile Include="GaussianBlur.cpp">
       <Filter>源文件\Scripts</Filter>
     </ClCompile>
+    <ClCompile Include="PhysiceTestScene.cpp">
+      <Filter>源文件\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraController.h">
@@ -135,6 +138,9 @@
       <Filter>头文件\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="ProjectSetting.h">
+      <Filter>头文件\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysiceTestScene.h">
       <Filter>头文件\Scenes</Filter>
     </ClInclude>
   </ItemGroup>

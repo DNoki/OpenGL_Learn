@@ -92,7 +92,7 @@ namespace OpenGL_Learn
         // 相机
         auto& cameraObj = AddGameObject(make_unique<GameObject>("Camera Object"));
         cameraObj.AddComponent<CameraController>();
-        cameraObj.AddComponent<GaussianBlur>().Enabled = false;
+        cameraObj.AddComponent<GaussianBlur>().SetEnable(false);
         {
             auto& camera = cameraObj.AddComponent<Camera>();
             //camera.ProjectionMode = ORTHOGRAPHIC;
@@ -144,7 +144,7 @@ namespace OpenGL_Learn
         {
             auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light1"));
             auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
-            plightRenderer.Enabled = false;
+            plightRenderer.SetEnable(false);
             plightRenderer.SetData(*meshBox, *unlitColorMaterial);
             plightObj.GetTransform().SetPosition(Vector3(2, 1, 0));
             plightObj.GetTransform().LocalScale = Vector3::One * 0.1f;
@@ -154,7 +154,7 @@ namespace OpenGL_Learn
         {
             auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light2"));
             auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
-            plightRenderer.Enabled = false;
+            plightRenderer.SetEnable(false);
             plightRenderer.SetData(*meshBox, *unlitColorMaterial);
             plightObj.GetTransform().SetPosition(Vector3(-1, 1, 1.732f));
             plightObj.GetTransform().LocalScale = Vector3::One * 0.15f;
@@ -164,7 +164,7 @@ namespace OpenGL_Learn
         {
             auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light3"));
             auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
-            plightRenderer.Enabled = false;
+            plightRenderer.SetEnable(false);
             plightRenderer.SetData(*meshBox, *unlitColorMaterial);
             plightObj.GetTransform().SetPosition(Vector3(-1.732f, 1, -1));
             plightObj.GetTransform().LocalScale = Vector3::One * 0.2f;

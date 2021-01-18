@@ -78,7 +78,9 @@ namespace OpenGL_Learn
     {
         auto* postProcess = this;
         fmt.str(""); fmt << index;
-        ImGui::Checkbox(fmt.str().c_str(), &postProcess->Enabled); ImGui::SameLine();
+        auto enable = postProcess->GetEnable();
+        ImGui::Checkbox(fmt.str().c_str(), &enable); ImGui::SameLine();
+        postProcess->SetEnable(enable);
         fmt.str(""); fmt << "PostProcess" << "  0x" << postProcess;
         if (ImGui::TreeNode(fmt.str().c_str()))
         {

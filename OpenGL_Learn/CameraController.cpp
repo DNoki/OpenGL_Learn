@@ -42,6 +42,10 @@ namespace OpenGL_Learn
             move.x += 1.0f;
         if (InputSystem::GetKey(KeyCode::A))
             move.x -= 1.0f;
+        if (InputSystem::GetKey(KeyCode::SPACE))
+            move.y += 1.0f;
+        if (InputSystem::GetKey(KeyCode::C))
+            move.y -= 1.0f;
 
         move = forwardRotation * move;
 

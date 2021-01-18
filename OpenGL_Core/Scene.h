@@ -8,6 +8,7 @@
 #include "List.hpp"
 #include "GameObject.h"
 #include "ResourceObject.h"
+#include "Physics.h"
 
 namespace OpenGL_Core
 {
@@ -33,6 +34,7 @@ namespace OpenGL_Core
         inline map<string, List<unique_ptr<ResourceObject>>>& GetAllResourceObjects() { return this->_resourceObjects; }
         inline List<unique_ptr<ResourceObject>>& GetDestroyedObjects() { return _destroyedObjects; }
 
+        inline Physics& GetPhysicsEngine() { return *_physics; }
 
         /// <summary>
         /// 添加资源
@@ -161,7 +163,7 @@ namespace OpenGL_Core
         /// </summary>
         void ExcuteUpdate();
 
-        Scene(const string& name) :Name(name), _hierarchy(), _resourceObjects() {}
+        Scene(const string& name);
 
     protected:
 
@@ -180,6 +182,7 @@ namespace OpenGL_Core
         /// </summary>
         map<string, List<unique_ptr<ResourceObject>>> _resourceObjects;
         List<unique_ptr<ResourceObject>> _destroyedObjects;
+        unique_ptr<Physics> _physics;
 
         /// <summary>
         /// 设定全局主要对象

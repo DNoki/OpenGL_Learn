@@ -22,15 +22,16 @@ namespace OpenGL_Core
     class Behaviour : public Component
     {
     public:
-        /// <summary>
-        /// 是否激活
-        /// </summary>
-        bool Enabled;
+        bool GetEnable();
+        void SetEnable(bool enable);
         /// <summary>
         /// 该行为是否已激活并已启用？
         /// </summary>
         /// <returns></returns>
         bool GetIsActiveAndEnabled();
+
+        virtual void OnEnable() {}
+        virtual void OnDisable() {}
 
         /// <summary>
         /// 返回找到的第一个组件
@@ -53,7 +54,13 @@ namespace OpenGL_Core
             return GetGameObject().GetComponents<T>();
         }
 
-        Behaviour(GameObject& obj) :Component(obj), Enabled(true) {}
+        Behaviour(GameObject& obj) :Component(obj), _enable(true) {}
+
+    private:
+        /// <summary>
+        /// 是否激活
+        /// </summary>
+        bool _enable;
     };
 }
 

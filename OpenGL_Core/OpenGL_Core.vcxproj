@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="ModelImporter.cpp" />
     <ClCompile Include="Behaviour.cpp" />
@@ -48,6 +52,10 @@
     <ClCompile Include="VertexArrays.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="Physics.h" />
+    <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="ModelImporter.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="BufferObject.h" />

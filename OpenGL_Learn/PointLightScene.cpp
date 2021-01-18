@@ -51,7 +51,7 @@ void OpenGL_Learn::PointLightScene::ImportResource()
         {
             auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light1"));
             auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
-            plightRenderer.Enabled = false;
+            plightRenderer.SetEnable(false);
             plightRenderer.SetData(*meshBox, *unlitColorMaterial);
             plightObj.GetTransform().SetPosition(Vector3(0, 0, 0));
             plightObj.GetTransform().LocalScale = Vector3::One * 0.1f;

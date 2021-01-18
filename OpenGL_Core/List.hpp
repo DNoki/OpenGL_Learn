@@ -15,12 +15,14 @@ namespace OpenGL_Core
 
         bool Exists(const T& item)
         {
+            if (this->size() == 0) return false;
             for (auto& i : *this)
                 if (item == i) return true;
             return false;
         }
         T* Find(const T& item)
         {
+            if (this->size() == 0) return nullptr;
             for (auto& i : *this)
                 if (item == i) return &i;
             return nullptr;
@@ -28,6 +30,7 @@ namespace OpenGL_Core
         template <typename _Pr>
         T* Find(_Pr _Pred) // bool (*_Pred)(const T&)
         {
+            if (this->size() == 0) return nullptr;
             for (auto& i : *this)
                 if (_Pred(i))
                     return &i;

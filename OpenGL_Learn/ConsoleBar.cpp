@@ -72,7 +72,9 @@ namespace OpenGL_Learn
         auto camera = dynamic_cast<Camera*>(component);
         if (!camera) return false;
         fmt.str(""); fmt << index;
-        ImGui::Checkbox(fmt.str().c_str(), &camera->Enabled); ImGui::SameLine();
+        auto enable = camera->GetEnable();
+        ImGui::Checkbox(fmt.str().c_str(), &enable); ImGui::SameLine();
+        camera->SetEnable(enable);
         fmt.str(""); fmt << "Camera" << "  0x" << camera;
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
@@ -120,7 +122,9 @@ namespace OpenGL_Learn
         auto dirLight = dynamic_cast<DirectionalLight*>(component);
         if (!dirLight) return false;
         fmt.str(""); fmt << index;
-        ImGui::Checkbox(fmt.str().c_str(), &dirLight->Enabled); ImGui::SameLine();
+        auto enable = dirLight->GetEnable();
+        ImGui::Checkbox(fmt.str().c_str(), &enable); ImGui::SameLine();
+        dirLight->SetEnable(enable);
         fmt.str(""); fmt << "Directional Light" << "  0x" << dirLight;
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
@@ -144,7 +148,9 @@ namespace OpenGL_Learn
         auto pointLight = dynamic_cast<PointLight*>(component);
         if (!pointLight) return false;
         fmt.str(""); fmt << index;
-        ImGui::Checkbox(fmt.str().c_str(), &pointLight->Enabled); ImGui::SameLine();
+        auto enable = pointLight->GetEnable();
+        ImGui::Checkbox(fmt.str().c_str(), &enable); ImGui::SameLine();
+        pointLight->SetEnable(enable);
         fmt.str(""); fmt << "Point Light" << "  0x" << pointLight;
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
@@ -169,7 +175,9 @@ namespace OpenGL_Learn
         auto renderer = dynamic_cast<Renderer*>(component);
         if (!renderer) return false;
         fmt.str(""); fmt << index;
-        ImGui::Checkbox(fmt.str().c_str(), &renderer->Enabled); ImGui::SameLine();
+        auto enable = renderer->GetEnable();
+        ImGui::Checkbox(fmt.str().c_str(), &enable); ImGui::SameLine();
+        renderer->SetEnable(enable);
         fmt.str(""); fmt << "Renderer" << "  0x" << renderer;
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
@@ -584,7 +592,7 @@ namespace OpenGL_Learn
     void ConsoleBar::OnGui()
     {
         this->GetGameObject().SetActive(true);
-        this->Enabled = true;
+        SetEnable(true);
         // Rendering
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

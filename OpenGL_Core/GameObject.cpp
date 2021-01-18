@@ -1,6 +1,7 @@
 ﻿#include "GameObject.h"
 
 #include "ScriptBehaviour.h"
+#include "SceneManager.h"
 
 namespace OpenGL_Core
 {
@@ -29,6 +30,11 @@ namespace OpenGL_Core
         if (!IsRootObject())
             _transform->GetParent()->GetGameObject().SetActive(value, isInHierarchy);
         Enabled = value;
+    }
+
+    GameObject* GameObject::Find(const string& name)
+    {
+        return SceneManager::GetActiveScene().FindGameObject(name);
     }
 
     void GameObject::OnAddComponent(Component* component)

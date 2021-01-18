@@ -88,6 +88,8 @@ namespace OpenGL_Core
             return result;
         }
 
+        static GameObject* Find(const string& name);
+
         // 获取变换
         inline Transform& GetTransform() const { return *(_transform); }
         // 返回所有组件

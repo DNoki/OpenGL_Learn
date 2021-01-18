@@ -138,6 +138,18 @@
     <ClCompile Include="Material.cpp">
       <Filter>源文件\ResourceObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Rigidbody.cpp">
+      <Filter>源文件\GameSystem\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>源文件\GameSystem\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>源文件\GameSystem\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>源文件\GameSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math.h">
@@ -229,6 +241,18 @@
     </ClInclude>
     <ClInclude Include="ModelImporter.h">
       <Filter>头文件\ResourceObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Rigidbody.h">
+      <Filter>头文件\GameSystem\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>头文件\GameSystem\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>头文件\GameSystem\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>头文件\GameSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
