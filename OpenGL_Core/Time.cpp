@@ -1,4 +1,6 @@
-﻿#include "Time.h"
+﻿#include "pch.h"
+
+#include "Time.h"
 
 namespace OpenGL_Core
 {

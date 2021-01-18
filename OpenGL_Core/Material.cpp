@@ -1,4 +1,6 @@
-﻿#include "Material.h"
+﻿#include "pch.h"
+
+#include "Material.h"
 
 namespace OpenGL_Core
 {

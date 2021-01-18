@@ -1,10 +1,11 @@
-﻿#include <Windows.h>
+﻿#include "pch.h"
+#include <Windows.h>
 #include <iostream>
 #include <memory>
 #include <vector>
 #include <map>
 
-#include "../OpenGL_Core/GameSystem.h"
+#include "../OpenGL_Core/OpenGL_CoreCommon.h"
 #include "ProjectSetting.h"
 
 using namespace std;

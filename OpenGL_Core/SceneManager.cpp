@@ -1,4 +1,6 @@
-﻿#include "SceneManager.h"
+﻿#include "pch.h"
+
+#include "SceneManager.h"
 
 #include "Texture.h"
 

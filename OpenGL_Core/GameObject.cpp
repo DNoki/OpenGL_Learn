@@ -1,4 +1,6 @@
-﻿#include "GameObject.h"
+﻿#include "pch.h"
+
+#include "GameObject.h"
 
 #include "ScriptBehaviour.h"
 #include "SceneManager.h"

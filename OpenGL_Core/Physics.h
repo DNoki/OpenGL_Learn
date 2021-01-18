@@ -1,8 +1,5 @@
 ﻿#pragma once
 
-#include <memory>
-#include <Bullet/btBulletDynamicsCommon.h>
-
 #include "Rigidbody.h"
 
 namespace OpenGL_Core

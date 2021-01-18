@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <memory>
 #include <Bullet/btBulletDynamicsCommon.h>
 
 #include "Component.h"

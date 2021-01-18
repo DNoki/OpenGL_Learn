@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <string>
-
 namespace OpenGL_Core
 {
     using namespace std;

@@ -1,12 +1,12 @@
 ﻿#pragma once
 
+#include "../OpenGL_Core/OpenGL_CoreCommon.h"
+
 #include <sstream>
 
-#include "../OpenGL_Core/ScriptBehaviour.h"
-
-#include "Imgui/imgui.h"
-#include "Imgui/imgui_impl_glfw.h"
-#include "Imgui/imgui_impl_opengl3.h"
+#include "../OpenGL_3rd/Imgui/imgui.h"
+#include "../OpenGL_3rd/Imgui/imgui_impl_glfw.h"
+#include "../OpenGL_3rd/Imgui/imgui_impl_opengl3.h"
 
 namespace OpenGL_Learn
 {

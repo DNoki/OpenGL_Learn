@@ -1,6 +1,6 @@
-﻿#include "VertexArrays.h"
+﻿#include "pch.h"
 
-#include <iostream>
+#include "VertexArrays.h"
 
 namespace OpenGL_Core
 {

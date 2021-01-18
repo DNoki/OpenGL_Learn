@@ -1,6 +1,6 @@
-﻿#include "InputSystem.h"
+﻿#include "pch.h"
 
-#include <GLFW/glfw3.h>
+#include "InputSystem.h"
 
 namespace OpenGL_Core
 {

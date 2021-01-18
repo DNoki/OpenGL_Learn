@@ -1,8 +1,6 @@
-﻿#include "Camera.h"
+﻿#include "pch.h"
 
-#include <algorithm>
-
-#include <glad/glad.h>
+#include "Camera.h"
 
 #include "GameSystem.h"
 #include "SceneManager.h"

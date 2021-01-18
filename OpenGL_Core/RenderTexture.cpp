@@ -1,6 +1,6 @@
-﻿#include "RenderTexture.h"
+﻿#include "pch.h"
 
-#include <iostream>
+#include "RenderTexture.h"
 
 #include "GameSystem.h"
 

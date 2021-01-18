@@ -1,10 +1,6 @@
-﻿#include "GameSystem.h"
+﻿#include "pch.h"
 
-#include <iostream>
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
+#include "GameSystem.h"
 
 #include "SceneManager.h"
 #include "UniformManager.h"

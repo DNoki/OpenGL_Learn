@@ -1,4 +1,6 @@
-﻿#include "Physics.h"
+﻿#include "pch.h"
+
+#include "Physics.h"
 
 
 #pragma comment(lib,"Bullet/LinearMath_Debug.lib")

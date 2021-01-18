@@ -1,4 +1,6 @@
-﻿#include "Light.h"
+﻿#include "pch.h"
+
+#include "Light.h"
 
 #include "SceneManager.h"
 #include "UniformManager.h"

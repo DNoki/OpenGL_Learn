@@ -1,8 +1,6 @@
 ﻿#pragma once
 
-#include "../OpenGL_Core/SceneManager.h"
-
-#include "../OpenGL_Core/ScriptBehaviour.h"
+#include "../OpenGL_Core/OpenGL_CoreCommon.h"
 
 namespace OpenGL_Learn
 {

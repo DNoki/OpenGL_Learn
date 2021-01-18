@@ -1,6 +1,6 @@
-﻿#include "ModelImporter.h"
+﻿#include "pch.h"
 
-#include <iostream>
+#include "ModelImporter.h"
 
 #pragma comment(lib,"assimp-vc140-mt.lib")
 #include <assimp/Importer.hpp>

@@ -1,4 +1,6 @@
-﻿#include "Scene.h"
+﻿#include "pch.h"
+
+#include "Scene.h"
 
 #include "GameSystem.h"
 #include "UniformManager.h"

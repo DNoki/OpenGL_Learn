@@ -1,6 +1,6 @@
-﻿#include "Renderer.h"
+﻿#include "pch.h"
 
-#include <iostream>
+#include "Renderer.h"
 
 #include "Mesh.h"
 #include "Material.h"

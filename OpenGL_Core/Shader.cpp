@@ -1,11 +1,6 @@
-﻿#include "Shader.h"
+﻿#include "pch.h"
 
-#include <iostream>
-#include <stdlib.h>
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <regex>
+#include "Shader.h"
 
 #include "json.hpp"
 

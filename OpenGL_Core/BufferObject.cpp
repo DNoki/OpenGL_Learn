@@ -1,6 +1,6 @@
-﻿#include "BufferObject.h"
+﻿#include "pch.h"
 
-#include <iostream>
+#include "BufferObject.h"
 
 namespace OpenGL_Core
 {

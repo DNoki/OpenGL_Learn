@@ -1,4 +1,6 @@
-﻿#include "Math.h"
+﻿#include "pch.h"
+
+#include "Math.h"
 
 namespace OpenGL_Core
 {

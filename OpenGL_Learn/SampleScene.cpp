@@ -1,19 +1,7 @@
-﻿#include "SampleScene.h"
+﻿#include "pch.h"
+#include "SampleScene.h"
 
-#include "../OpenGL_Core/Texture.h"
-#include "../OpenGL_Core/RenderTexture.h"
-#include "../OpenGL_Core/Material.h"
-#include "../OpenGL_Core/Mesh.h"
-#include "../OpenGL_Core/Skybox.h"
-
-#include "../OpenGL_Core/GameSystem.h"
-
-#include "../OpenGL_Core/Camera.h"
-#include "../OpenGL_Core/Light.h"
-#include "../OpenGL_Core/Renderer.h"
 #include "PostProcess.h"
-
-#include "../OpenGL_Core/ModelImporter.h"
 
 #include "CameraController.h"
 #include "ConsoleBar.h"

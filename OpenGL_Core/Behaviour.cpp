@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #include "Behaviour.h"
 
 namespace OpenGL_Core

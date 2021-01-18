@@ -1,9 +1,5 @@
 ﻿#pragma once
 
-#include <memory>
-
-#include <Bullet/btBulletDynamicsCommon.h>
-
 #include "Behaviour.h"
 
 #include "Collider.h"

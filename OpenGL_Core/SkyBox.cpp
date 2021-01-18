@@ -1,4 +1,6 @@
-﻿#include "Skybox.h"
+﻿#include "pch.h"
+
+#include "Skybox.h"
 
 #include "SceneManager.h"
 

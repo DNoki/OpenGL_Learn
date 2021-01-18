@@ -19,18 +19,6 @@
     <Filter Include="头文件\Scripts">
       <UniqueIdentifier>{a56793f7-f5bb-47a6-bebe-d3d8a48afbb8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\Library">
-      <UniqueIdentifier>{787c645a-13bb-429e-b36b-e90f5c10ddab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\Library">
-      <UniqueIdentifier>{136979ec-ff92-4902-ae0f-ff63b03ca5b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\Library\Imgui">
-      <UniqueIdentifier>{4440f1ea-e5d0-43fa-bd95-819638bd2e4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\Library\Imgui">
-      <UniqueIdentifier>{66ceb535-a30c-4a88-985d-2df2d52edfc3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件\Scenes">
       <UniqueIdentifier>{5147cbee-d8b8-495a-9a09-9121d42d1602}</UniqueIdentifier>
     </Filter>
@@ -51,24 +39,6 @@
     <ClCompile Include="PostProcess.cpp">
       <Filter>源文件\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="Imgui\imgui.cpp">
-      <Filter>源文件\Library\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui_demo.cpp">
-      <Filter>源文件\Library\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui_draw.cpp">
-      <Filter>源文件\Library\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui_impl_glfw.cpp">
-      <Filter>源文件\Library\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui_impl_opengl3.cpp">
-      <Filter>源文件\Library\Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\imgui_widgets.cpp">
-      <Filter>源文件\Library\Imgui</Filter>
-    </ClCompile>
     <ClCompile Include="SampleScene.cpp">
       <Filter>源文件\Scenes</Filter>
     </ClCompile>
@@ -83,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="PhysiceTestScene.cpp">
       <Filter>源文件\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -104,30 +77,6 @@
     <ClInclude Include="PostProcess.h">
       <Filter>头文件\Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="Imgui\imconfig.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imgui.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imgui_impl_glfw.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imgui_impl_opengl3.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imgui_internal.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imstb_rectpack.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imstb_textedit.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\imstb_truetype.h">
-      <Filter>头文件\Library\Imgui</Filter>
-    </ClInclude>
     <ClInclude Include="IConsoleBarScriptBehaviour.hpp">
       <Filter>头文件\Scripts</Filter>
     </ClInclude>
@@ -142,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="PhysiceTestScene.h">
       <Filter>头文件\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

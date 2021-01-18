@@ -1,4 +1,6 @@
-﻿#include "ResourceObject.h"
+﻿#include "pch.h"
+
+#include "ResourceObject.h"
 
 #include "SceneManager.h"
 #include "RenderTexture.h"

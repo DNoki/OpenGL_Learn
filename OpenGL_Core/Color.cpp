@@ -1,4 +1,6 @@
-﻿#include "Color.h"
+﻿#include "pch.h"
+
+#include "Color.h"
 
 #include "Math.h"
 

@@ -1,6 +1,5 @@
-﻿#include "ProjectSetting.h"
-
-#include "../OpenGL_Core/SceneManager.h"
+﻿#include "pch.h"
+#include "ProjectSetting.h"
 
 #include "SampleScene.h"
 #include "PointLightScene.h"

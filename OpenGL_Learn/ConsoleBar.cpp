@@ -1,12 +1,7 @@
-﻿#include "ConsoleBar.h"
+﻿#include "pch.h"
 
-#include "../OpenGL_Core/GameSystem.h"
-#include "../OpenGL_Core/SceneManager.h"
-#include "../OpenGL_Core/Mesh.h"
-#include "../OpenGL_Core/Light.h"
-#include "../OpenGL_Core/Renderer.h"
+#include "ConsoleBar.h"
 
-//#include "PostProcess.h"
 #include "IConsoleBarScriptBehaviour.hpp"
 
 namespace OpenGL_Learn

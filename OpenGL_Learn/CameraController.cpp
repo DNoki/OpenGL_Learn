@@ -1,10 +1,5 @@
-﻿#include "CameraController.h"
-
-#include "../OpenGL_Core/InputSystem.h"
-#include "../OpenGL_Core/Time.h"
-
-#include "../OpenGL_Core/SceneManager.h"
-#include "../OpenGL_Core/Light.h"
+﻿#include "pch.h"
+#include "CameraController.h"
 
 namespace OpenGL_Learn
 {

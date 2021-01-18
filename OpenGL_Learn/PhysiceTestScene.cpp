@@ -1,15 +1,5 @@
-﻿#include "PhysiceTestScene.h"
-
-#include "../OpenGL_Core/Material.h"
-#include "../OpenGL_Core/Mesh.h"
-
-#include "../OpenGL_Core/Camera.h"
-#include "../OpenGL_Core/Renderer.h"
-#include "../OpenGL_Core/Light.h"
-
-#include "../OpenGL_Core/Rigidbody.h"
-#include "../OpenGL_Core/BoxCollider.h"
-#include "../OpenGL_Core/Physics.h"
+﻿#include "pch.h"
+#include "PhysiceTestScene.h"
 
 #include "CameraController.h"
 #include "ConsoleBar.h"

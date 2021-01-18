@@ -1,4 +1,6 @@
-﻿#include "BoxCollider.h"
+﻿#include "pch.h"
+
+#include "BoxCollider.h"
 
 #include "GameObject.h"
 

@@ -1,7 +1,6 @@
-﻿#include "Mesh.h"
+﻿#include "pch.h"
 
-#include <iostream>
-
+#include "Mesh.h"
 
 #include "GameSystem.h"
 #include "Material.h"

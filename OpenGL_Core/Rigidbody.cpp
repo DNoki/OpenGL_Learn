@@ -1,4 +1,6 @@
-﻿#pragma comment(lib,"Bullet/LinearMath_Debug.lib")
+﻿#include "pch.h"
+
+#pragma comment(lib,"Bullet/LinearMath_Debug.lib")
 #pragma comment(lib,"Bullet/BulletCollision_Debug.lib")
 #pragma comment(lib,"Bullet/BulletDynamics_Debug.lib")
 #pragma comment(lib,"Bullet/BulletSoftBody_Debug.lib")

@@ -1,10 +1,4 @@
-﻿#include "../OpenGL_Core/SceneManager.h"
-#include "../OpenGL_Core/Scene.h"
-#include "../OpenGL_Core/GameSystem.h"
-#include "../OpenGL_Core/RenderTexture.h"
-#include "../OpenGL_Core/Camera.h"
-#include "../OpenGL_Core/Mesh.h"
-#include "../OpenGL_Core/Material.h"
+﻿#include "pch.h"
 
 #include "GaussianBlur.h"
 

@@ -1,4 +1,6 @@
-﻿#include "UniformManager.h"
+﻿#include "pch.h"
+
+#include "UniformManager.h"
 
 #include "Math.h"
 #include "Shader.h"

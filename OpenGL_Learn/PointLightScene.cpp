@@ -1,12 +1,5 @@
-﻿#include "PointLightScene.h"
-
-#include "../OpenGL_Core/Mesh.h"
-#include "../OpenGL_Core/Material.h"
-
-#include "../OpenGL_Core/Camera.h"
-#include "../OpenGL_Core/Renderer.h"
-#include "../OpenGL_Core/Light.h"
-#include "../OpenGL_Core/ModelImporter.h"
+﻿#include "pch.h"
+#include "PointLightScene.h"
 
 #include "PostProcess.h"
 #include "CameraController.h"
