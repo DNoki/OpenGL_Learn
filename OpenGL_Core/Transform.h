@@ -40,7 +40,7 @@ namespace OpenGL_Core
         // 获取旋转矩阵
         Matrix4x4 GetRotationMatrix() const;
         // 尝试设置变换矩阵
-        void SetTransformMatrix(Matrix4x4 matrix, bool isWorld = false);
+        void SetTransformMatrix(Matrix4x4& matrix, bool isWorld = false);
 
         // 获取前方向
         Vector3 GetForward() const;

@@ -2,12 +2,6 @@
 
 #include "../OpenGL_Core/OpenGL_CoreCommon.h"
 
-#include <sstream>
-
-#include "../OpenGL_3rd/Imgui/imgui.h"
-#include "../OpenGL_3rd/Imgui/imgui_impl_glfw.h"
-#include "../OpenGL_3rd/Imgui/imgui_impl_opengl3.h"
-
 namespace OpenGL_Learn
 {
     using namespace OpenGL_Core;

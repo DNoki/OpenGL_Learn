@@ -1,8 +1,10 @@
 ﻿#include "pch.h"
+
 #include "PhysiceTestScene.h"
 
 #include "CameraController.h"
 #include "ConsoleBar.h"
+#include "RigidbodyController.h"
 
 namespace OpenGL_Learn
 {
@@ -32,7 +34,6 @@ namespace OpenGL_Learn
         auto meshSquare = AddResourceObject(Mesh::CreatePresetMesh(PresetMesh::SQUARE));
         auto meshBox = AddResourceObject(Mesh::CreatePresetMesh(PresetMesh::BOX));
 
-
         // 灯光
         auto& lightObj = AddGameObject(make_unique<GameObject>("Directional Light"));
         auto& light = lightObj.AddComponent<DirectionalLight>();
@@ -43,17 +44,35 @@ namespace OpenGL_Learn
         lightObj.GetTransform().LookAt(Vector3::Zero);
 
         auto& ground = AddGameObject(make_unique<GameObject>("Ground"));
-        ground.AddComponent<MeshRenderer>().SetData(*meshSquare, *blinnMaterial);
         {
+            auto shader = AddResourceObject(make_unique<Shader>("Lit_Blinn", "../Asset/Shader/Lit/Blinn.glsl"));
+            auto material = AddResourceObject(make_unique<Material>("Blinn Material", shader));
+            material->GetMainShader()->SetVector4("_MainColor", Vector4(0.5f, 0.5f, 0.5f, 1.0f));
+
+            ground.AddComponent<MeshRenderer>().SetData(*meshSquare, *material);
             auto& transform = ground.GetTransform();
-            transform.LocalScale = Vector3(200.0f, 200.0f, 200.0f);
+            transform.LocalScale = Vector3(2000.0f, 2000.0f, 2000.0f);
 
             auto& boxCollider = ground.AddComponent<BoxCollider>();
-            boxCollider.SetSize(Vector3(200.0f, 0.0f, 200.0f));
+            boxCollider.SetSize(Vector3(transform.LocalScale.x, 0.01f, transform.LocalScale.z));
             auto& rigid = ground.AddComponent<Rigidbody>();
             rigid.SetCollider(boxCollider);
             rigid.SetMass(0.0f);
         }
+
+        //auto& box = AddGameObject(make_unique<GameObject>("box"));
+        //{
+        //    box.AddComponent<MeshRenderer>().SetData(*meshBox, *blinnMaterial);
+        //    auto& transform = box.GetTransform();
+        //    transform.LocalPosition = Vector3(0.0f, 50.0f, 0.0f);
+
+        //    auto& boxCollider = box.AddComponent<BoxCollider>();
+        //    auto& rigid = box.AddComponent<Rigidbody>();
+        //    rigid.SetCollider(boxCollider);
+        //    rigid.SetMass(1.0f);
+
+        //    box.AddComponent<RigidbodyController>();
+        //}
 
         for (size_t i = 0; i < 100; i++)
         {
@@ -62,7 +81,7 @@ namespace OpenGL_Learn
             {
                 auto& transform = box.GetTransform();
                 //transform.LocalPosition = Vector3((i % 2) * 2.0f - 1.0f, 2.0f * i, 0.0f);
-                transform.LocalPosition = Vector3(sin(2.0f * Math::PI * i / 100.0f), 2.0f * i, 0.0f);
+                transform.SetPosition(Vector3(sin(2.0f * Math::PI * i / 100.0f), 2.0f * i, 0.0f), false);
 
                 auto& boxCollider = box.AddComponent<BoxCollider>();
                 auto& rigid = box.AddComponent<Rigidbody>();

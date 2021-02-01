@@ -24,7 +24,7 @@ namespace OpenGL_Core
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
         //glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);// 禁用双缓冲
-        // 多重采样抗锯齿(Multisample Anti-aliasing, MSAA)
+        // 多重采样抗锯齿(Multisample Anti-aliasing, MSAA)  // 可以使用相机渲染到多采样贴图，而无需在此开启
         //glfwWindowHint(GLFW_SAMPLES, 4);
 
         _window = glfwCreateWindow(GameSystem::ScreenWidth, GameSystem::ScreenHeight, "OpenGL", nullptr, nullptr);

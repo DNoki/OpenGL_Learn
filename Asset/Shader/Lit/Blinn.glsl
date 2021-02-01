@@ -146,7 +146,7 @@ void main()
     float shadow = max(1.0f - ShadowCalculation(f.LightSpacePosition), 1.0f - ShadowStrength);
     
     //alpha*R(B)+(1-alpha)*R(A)
-    vec3 color = (lambert + specular) 
+    vec3 color = (_MainColor.rgb * lambert + specular) 
     * shadow 
     * LightColor.rgb * texColor.rgb;
     

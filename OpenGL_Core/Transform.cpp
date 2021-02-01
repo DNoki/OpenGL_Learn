@@ -71,7 +71,7 @@ namespace OpenGL_Core
     {
         return GetPositionMatrix() * GetRotationMatrix() * GetScaleMatrix();
     }
-    void Transform::SetTransformMatrix(Matrix4x4 matrix, bool isWorld)
+    void Transform::SetTransformMatrix(Matrix4x4& matrix, bool isWorld)
     {
         matrix = matrix.Transpose();
 
@@ -81,7 +81,7 @@ namespace OpenGL_Core
         scaleVar = Vector3(length(matrix[0]), length(matrix[1]), length(matrix[2]));
         pos = Vector3(matrix[3][0], matrix[3][1], matrix[3][2]);
 
-        auto rotateMatrix = matrix;
+        auto& rotateMatrix = matrix;
         for (unsigned int x = 0; x < 3; x++)
         {
             for (unsigned int y = 0; y < 3; y++)

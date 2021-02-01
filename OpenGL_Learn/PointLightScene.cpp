@@ -1,4 +1,5 @@
 ﻿#include "pch.h"
+
 #include "PointLightScene.h"
 
 #include "PostProcess.h"
@@ -96,7 +97,7 @@ void OpenGL_Learn::PointLightScene::ImportResource()
         auto& ground = AddGameObject(make_unique<GameObject>("Ground"));
         ground.AddComponent<MeshRenderer>().SetData(*meshBox, *worldPositionMaterial);
         //ground.GetTransform().LocalScale = Vector3::One * 200.0f;
-        ground.GetTransform().LocalPosition = Vector3::Forward * 10.0f;
+        ground.GetTransform().SetPosition(Vector3::Forward * 10.0f, false);
 
         {
             auto importer = ModelImporter::ModelLoad("../Asset/Model/PointLightTestScene.fbx");

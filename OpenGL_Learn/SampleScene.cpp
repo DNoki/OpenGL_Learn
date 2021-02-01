@@ -1,8 +1,8 @@
 ﻿#include "pch.h"
+
 #include "SampleScene.h"
 
 #include "PostProcess.h"
-
 #include "CameraController.h"
 #include "ConsoleBar.h"
 #include "FatherGameObject.h"

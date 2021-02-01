@@ -116,109 +116,112 @@ namespace OpenGL_Core
 
 
         // 按相机深度排序
-        cameras.Sort([](const Camera* left, const Camera* right) { return left->Depth < right->Depth; });
-        auto renderCount = 0;
-        for (auto camera : cameras)
+        if (cameras.size() > 0)
         {
-            if (!camera->GetEnable()) continue;
+            cameras.Sort([](const Camera* left, const Camera* right) { return left->Depth < right->Depth; });
+            auto renderCount = 0;
+            for (auto camera : cameras)
+            {
+                if (!camera->GetEnable()) continue;
 
 
-            // 获取该相机的所有脚本组件
-            auto cameraScripts = camera->GetComponents<ScriptBehaviour>();
+                // 获取该相机的所有脚本组件
+                auto cameraScripts = camera->GetComponents<ScriptBehaviour>();
 
-            // OnPreCull 剔除前调用
-            for (auto script : cameraScripts)
-                script->OnPreCull();
+                // OnPreCull 剔除前调用
+                for (auto script : cameraScripts)
+                    script->OnPreCull();
 
-            // 传送相机数据
-            UniformManager::Transform->SetSubData(0, sizeof(Matrix4x4), camera->GetProjectionMatrix().GetPtr()); // 相机投影数据
-            UniformManager::Transform->SetSubData(sizeof(Matrix4x4), sizeof(Matrix4x4), camera->GetViewMatrix().GetPtr()); // 相机视角数据
-            UniformManager::CameraData->SetSubData(0 * sizeof(float), sizeof(Vector4), Vector4(camera->GetTransform().GetPosition(), 1.0f).GetPtr()); // 相机世界位置
-            UniformManager::CameraData->SetSubData(4 * sizeof(float), sizeof(Vector4), camera->GetOrthoParams().GetPtr()); // 相机正交数据
-            UniformManager::CameraData->SetSubData(8 * sizeof(float), sizeof(Vector4),
-                Vector4(GameSystem::ScreenWidth, GameSystem::ScreenHeight, 1.0f / GameSystem::ScreenWidth, 1.0f / GameSystem::ScreenHeight).GetPtr()); // 屏幕数据
+                // 传送相机数据
+                UniformManager::Transform->SetSubData(0, sizeof(Matrix4x4), camera->GetProjectionMatrix().GetPtr()); // 相机投影数据
+                UniformManager::Transform->SetSubData(sizeof(Matrix4x4), sizeof(Matrix4x4), camera->GetViewMatrix().GetPtr()); // 相机视角数据
+                UniformManager::CameraData->SetSubData(0 * sizeof(float), sizeof(Vector4), Vector4(camera->GetTransform().GetPosition(), 1.0f).GetPtr()); // 相机世界位置
+                UniformManager::CameraData->SetSubData(4 * sizeof(float), sizeof(Vector4), camera->GetOrthoParams().GetPtr()); // 相机正交数据
+                UniformManager::CameraData->SetSubData(8 * sizeof(float), sizeof(Vector4),
+                    Vector4(GameSystem::ScreenWidth, GameSystem::ScreenHeight, 1.0f / GameSystem::ScreenWidth, 1.0f / GameSystem::ScreenHeight).GetPtr()); // 屏幕数据
 
 #pragma message("实现相机外对象剔除")
 
             // OnPerRender
-            for (auto script : cameraScripts)
-                script->OnPreRender();
+                for (auto script : cameraScripts)
+                    script->OnPreRender();
 
-            if (dirLight && dirLight->GetEnable())
-            {
-                // 传送光照数据
-                UniformManager::LightingData->SetSubData(0 * sizeof(float), sizeof(Vector4),
-                    (static_cast<Vector4>(dirLight->LightColor) * dirLight->Intensity).GetPtr());
-                UniformManager::LightingData->SetSubData(4 * sizeof(float), sizeof(Vector4),
-                    Vector4(dirLight->GetTransform().GetForward(), 0.0f).GetPtr());
-                UniformManager::LightingData->SetSubData(8 * sizeof(float), sizeof(Matrix4x4),
-                    dirLight->GetLightSpaceMatrix(camera).GetPtr());
-                UniformManager::LightingData->SetSubData(24 * sizeof(float), sizeof(float),
-                    &dirLight->ShadowStrength);
-
-                dirLight->RenderShadowMap(nullptr, &geometrys, nullptr, nullptr, nullptr);
-            }
-            else
-            {
-                UniformManager::LightingData->SetSubData(0 * sizeof(float), sizeof(Vector4), Vector4::Zero.GetPtr());
-                UniformManager::LightingData->SetSubData(24 * sizeof(float), sizeof(float), 0x00);
-            }
-            for (size_t i = 0; i < 4; i++)
-            {
-                if (i < pointLights.Count())
+                if (dirLight && dirLight->GetEnable())
                 {
-                    UniformManager::LightingData->SetSubData((28 + i * 4) * sizeof(float), sizeof(Vector4),
-                        Vector4(pointLights[i]->GetTransform().GetPosition(), 1.0f).GetPtr());
-                    UniformManager::LightingData->SetSubData((44 + i * 4) * sizeof(float), sizeof(Vector4),
-                        (static_cast<Vector4>(pointLights[i]->LightColor) * pointLights[i]->Intensity).GetPtr());
-                    UniformManager::LightingData->SetSubData((60 + i * 4) * sizeof(float), sizeof(Vector4),
-                        pointLights[i]->GetPointLightInfo().GetPtr());
+                    // 传送光照数据
+                    UniformManager::LightingData->SetSubData(0 * sizeof(float), sizeof(Vector4),
+                        (static_cast<Vector4>(dirLight->LightColor) * dirLight->Intensity).GetPtr());
+                    UniformManager::LightingData->SetSubData(4 * sizeof(float), sizeof(Vector4),
+                        Vector4(dirLight->GetTransform().GetForward(), 0.0f).GetPtr());
+                    UniformManager::LightingData->SetSubData(8 * sizeof(float), sizeof(Matrix4x4),
+                        dirLight->GetLightSpaceMatrix(camera).GetPtr());
+                    UniformManager::LightingData->SetSubData(24 * sizeof(float), sizeof(float),
+                        &dirLight->ShadowStrength);
 
-                    pointLights[i]->RenderShadowMap(i, nullptr, &geometrys, nullptr, nullptr, nullptr);
+                    dirLight->RenderShadowMap(nullptr, &geometrys, nullptr, nullptr, nullptr);
                 }
                 else
-                    UniformManager::LightingData->SetSubData((28 + i * 4) * sizeof(float), sizeof(Vector4),
-                        Vector4::Zero.GetPtr());
+                {
+                    UniformManager::LightingData->SetSubData(0 * sizeof(float), sizeof(Vector4), Vector4::Zero.GetPtr());
+                    UniformManager::LightingData->SetSubData(24 * sizeof(float), sizeof(float), 0x00);
+                }
+                for (size_t i = 0; i < 4; i++)
+                {
+                    if (i < pointLights.Count())
+                    {
+                        UniformManager::LightingData->SetSubData((28 + i * 4) * sizeof(float), sizeof(Vector4),
+                            Vector4(pointLights[i]->GetTransform().GetPosition(), 1.0f).GetPtr());
+                        UniformManager::LightingData->SetSubData((44 + i * 4) * sizeof(float), sizeof(Vector4),
+                            (static_cast<Vector4>(pointLights[i]->LightColor) * pointLights[i]->Intensity).GetPtr());
+                        UniformManager::LightingData->SetSubData((60 + i * 4) * sizeof(float), sizeof(Vector4),
+                            pointLights[i]->GetPointLightInfo().GetPtr());
+
+                        pointLights[i]->RenderShadowMap(i, nullptr, &geometrys, nullptr, nullptr, nullptr);
+                    }
+                    else
+                        UniformManager::LightingData->SetSubData((28 + i * 4) * sizeof(float), sizeof(Vector4),
+                            Vector4::Zero.GetPtr());
+                }
+
+                renderCount++;
+                camera->BindTarget(); // 渲染到目标渲染贴图
+                camera->ExcuteRender(&backgrounds, &geometrys, &alphaTests, &transparents, &overlays);
+
+                // OnPostRender
+                for (auto script : cameraScripts)
+                    script->OnPostRender();
+
+                // 若是多采样渲染贴图，则将数据拷贝到默认渲染贴图
+                camera->RenderToTargetTexture();
+                // 相机结束后将内容将保存在 默认渲染贴图 或 指定目标渲染贴图 上
             }
+            //if (renderCount == 0) Camera::DefaultClear();
 
-            renderCount++;
-            camera->BindTarget(); // 渲染到目标渲染贴图
-            camera->ExcuteRender(&backgrounds, &geometrys, &alphaTests, &transparents, &overlays);
+            // OnRenderImage
+            for (auto script : activeScripts)
+                script->OnRenderImage(Camera::DefaultTargetTexture);
 
-            // OnPostRender
-            for (auto script : cameraScripts)
-                script->OnPostRender();
+            // 调试显示渲染贴图
+            if (dirLight)
+                Camera::DebugRenderTexture(*dirLight->ShadowMap,
+                    0.75f, 0.5f,
+                    dirLight->ShadowMap->GetTexture(0)->GetWidth() * 0.15f / GameSystem::ScreenWidth,
+                    dirLight->ShadowMap->GetTexture(0)->GetHeight() * 0.15f / GameSystem::ScreenHeight
+                    //0, 0, 1, 1
+                );
 
-            // 若是多采样渲染贴图，则将数据拷贝到默认渲染贴图
-            camera->RenderToTargetTexture();
-            // 相机结束后将内容将保存在 默认渲染贴图 或 指定目标渲染贴图 上
+            Camera::DefaultTargetTexture->BindFramebuffer();
+
+            // OnGui
+            for (auto script : activeScripts)
+                script->OnGui();
+
+            // 渲染到窗口
+            Camera::RenderToWindow();
         }
-        if (renderCount == 0) Camera::DefaultClear();
-
-        // OnRenderImage
-        for (auto script : activeScripts)
-            script->OnRenderImage(Camera::DefaultTargetTexture);
-
-        // 调试显示渲染贴图
-        if (dirLight)
-            Camera::DebugRenderTexture(*dirLight->ShadowMap,
-                0.75f, 0.5f,
-                dirLight->ShadowMap->GetTexture(0)->GetWidth() * 0.15f / GameSystem::ScreenWidth,
-                dirLight->ShadowMap->GetTexture(0)->GetHeight() * 0.15f / GameSystem::ScreenHeight
-                //0, 0, 1, 1
-            );
-
-        Camera::DefaultTargetTexture->BindFramebuffer();
-        // OnGui
-        for (auto script : activeScripts)
-            script->OnGui();
-
-        // 渲染到窗口
-        Camera::RenderToWindow();
-
     }
 
-    Scene::Scene(const string& name) :Name(name), _hierarchy(), _resourceObjects() 
+    Scene::Scene(const string& name) :Name(name), _hierarchy(), _resourceObjects()
     {
         _physics = make_unique<Physics>();
     }

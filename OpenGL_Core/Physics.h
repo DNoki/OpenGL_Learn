@@ -9,6 +9,7 @@ namespace OpenGL_Core
     class Physics
     {
     public :
+
         void ExcuteUpdate();
 
         /// <summary>

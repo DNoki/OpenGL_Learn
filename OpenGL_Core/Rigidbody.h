@@ -14,7 +14,7 @@ namespace OpenGL_Core
     class Rigidbody : public Behaviour
     {
     public:
-        btRigidBody* GetBtRigidBody();
+        inline btRigidBody* GetBtRigidBody() { return _btRigidbody.get(); }
 
         /// <summary>
         /// 设置碰撞体
@@ -32,7 +32,8 @@ namespace OpenGL_Core
 
     private:
         Collider* _collider;
-        btRigidBody* _btRigidbody;
+        unique_ptr<btRigidBody> _btRigidbody;
+        unique_ptr<btMotionState> _btMotionState;
     };
 }
 

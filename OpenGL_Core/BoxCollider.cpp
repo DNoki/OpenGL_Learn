@@ -3,16 +3,10 @@
 #include "BoxCollider.h"
 
 #include "GameObject.h"
+#include "Physics.h"
 
 namespace OpenGL_Core
 {
-    extern Vector3 ToVector3(const btVector3& v);
-    extern btVector3 ToVector3(const Vector3& v);
-    extern Quaternion ToQuaternion(const btQuaternion& q);
-    extern btQuaternion ToQuaternion(const Quaternion& q);
-    extern void SetTransform(Transform& transform, btTransform& bt_transform);
-    extern void SetBtTransform(btTransform& bt_transform, Transform& transform);
-
     btCollisionShape* BoxCollider::GetBtCollisionShape()
     {
         return _btBoxShape.get();
@@ -20,7 +14,7 @@ namespace OpenGL_Core
 
     void BoxCollider::SetSize(Vector3 size)
     {
-        _btBoxShape->setLocalScaling(ToVector3(size));
+        _btBoxShape->setLocalScaling(btVector3(size.x, size.y, size.z));
     }
 
     BoxCollider::BoxCollider(GameObject& obj) : Collider(obj)

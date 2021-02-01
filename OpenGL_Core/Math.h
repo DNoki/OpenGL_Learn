@@ -63,9 +63,17 @@ namespace OpenGL_Core
         static const Vector2 Zero;
         inline const float* GetPtr() const { return &((*this).x); }
 
+        static float Distance(const Vector2& a, const Vector2& b);
+        static float Dot(const Vector2& lhs, const Vector2& rhs);
+        static Vector2 Lerp(const Vector2& a, const Vector2& b, const float& t);
+
+        inline float GetMagnitude() const { return Math::Sqrt(Dot(*this, *this)); }
+        inline Vector2 GetNormalized() const { return *this / GetMagnitude(); }
+        inline float GetSqrMagnitude() const { return Dot(*this, *this); }
+
         Vector2() :glm::vec2() {}
         Vector2(const glm::vec2& v) :glm::vec2(v) {}
-        Vector2(const float& x, const  float& y) :glm::vec2(x, y) {}
+        Vector2(const float& x, const float& y) :glm::vec2(x, y) {}
 
         bool operator ==(const Vector2& v) const { return  Math::Approximately((*this).x, v.x) && Math::Approximately((*this).y, v.y); }
 
@@ -81,29 +89,30 @@ namespace OpenGL_Core
         static const Vector3 Forward;
         static const Vector3 Back;
 
-        static float Angle(const Vector3& from, const Vector3& to)
-        {
-            if (from == Vector3::Zero || to == Vector3::Zero)return 0.0f;
-            Math::Acos(Math::Clamp(Dot(from.GetNormalized(), to.GetNormalized()), -1.0f, 1.0f));
-        }
-        static float Cross(const Vector3& lhs, const Vector3& rhs);
+        static float Angle(const Vector3& from, const Vector3& to);
+        static Vector3 Cross(const Vector3& lhs, const Vector3& rhs);
         static float Distance(const Vector3& a, const Vector3& b);
-        inline static float Dot(const Vector3& lhs, const Vector3& rhs)
-        {
-            auto temp = lhs * rhs;
-            return temp.x + temp.y + temp.z;
-        }
-        static float Lerp(const Vector3& a, const Vector3& b, const float& t);
+        static float Dot(const Vector3& lhs, const Vector3& rhs);
+        static Vector3 Lerp(const Vector3& a, const Vector3& b, const float& t);
 
         inline const float* GetPtr() const { return &((*this).x); }
         inline float GetMagnitude() const { return Math::Sqrt(Dot(*this, *this)); }
         inline Vector3 GetNormalized() const { return *this / GetMagnitude(); }
         inline float GetSqrMagnitude() const { return Dot(*this, *this); }
 
+        inline std::string ToString() const
+        {
+            std::ostringstream oss;
+            oss.precision(2);
+            oss.setf(std::ios::fixed);
+            oss << "(" << x << ", " << y << ", " << z << ")";
+            return oss.str();
+        }
+
         Vector3() :glm::vec3() {}
         Vector3(const glm::vec3& v) :glm::vec3(v) {}
-        Vector3(const float& x, const  float& y) :glm::vec3(x, y, 0.0f) {}
-        Vector3(const float& x, const  float& y, const  float& z) :glm::vec3(x, y, z) {}
+        Vector3(const float& x, const float& y) :glm::vec3(x, y, 0.0f) {}
+        Vector3(const float& x, const float& y, const float& z) :glm::vec3(x, y, z) {}
         //Vector3(const Vector4& v) :vec3(v.x, v.y, v.z) {}
 
         Vector3 operator -() const { return -static_cast<glm::vec3>(*this); }
@@ -157,11 +166,20 @@ namespace OpenGL_Core
         inline const float* GetPtr() const { return &((*this)[0]); }
 
         inline Vector3 GetEulerAngles() const { return glm::eulerAngles(*this) * Math::Rad2Deg; }
-        Quaternion Inverse() { return glm::inverse(*this); }
+        /// <summary>
+        /// 逆四元数
+        /// </summary>
+        /// <returns></returns>
+        inline Quaternion Inverse() { return glm::inverse(*this); }
+        /// <summary>
+        /// 共轭四元数
+        /// </summary>
+        /// <returns></returns>
+        inline Quaternion Conjugate() { return glm::conjugate(*this); }
 
         Quaternion() :glm::quat(1.0f, 0.0f, 0.0f, 0.0f) {}
         Quaternion(const glm::quat& q) :glm::quat(q) {}
-        Quaternion(const float& x, const  float& y, const  float& z, const  float& w) :glm::quat(w, x, w, z) {}
+        Quaternion(const float& x, const  float& y, const  float& z, const  float& w) :glm::quat(w, x, y, z) {}
         Quaternion(const float& x, const  float& y, const  float& z) :glm::quat(glm::vec3(x, y, z)* Math::Deg2Rad) {}
         Quaternion(const Vector3& v) :glm::quat(v* Math::Deg2Rad) {}
 
@@ -213,7 +231,15 @@ namespace OpenGL_Core
 
         inline const float* GetPtr() const { return &((*this)[0].x); }
 
+        /// <summary>
+        /// 逆
+        /// </summary>
+        /// <returns></returns>
         Matrix4x4 Inverse() { return glm::inverse(*this); }
+        /// <summary>
+        /// 转置
+        /// </summary>
+        /// <returns></returns>
         Matrix4x4 Transpose() { return glm::transpose(*this); }
 
         Quaternion QuaternionCast() { return glm::quat_cast(*this); }

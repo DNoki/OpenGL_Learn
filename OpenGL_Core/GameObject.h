@@ -87,6 +87,11 @@ namespace OpenGL_Core
             return result;
         }
 
+        /// <summary>
+        /// 查找并返回场景内找到的第一个已激活对象(仅检索根对象)
+        /// </summary>
+        /// <param name="name">对象名称</param>
+        /// <returns></returns>
         static GameObject* Find(const string& name);
 
         // 获取变换

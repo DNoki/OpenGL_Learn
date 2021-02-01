@@ -12,6 +12,8 @@
 // 添加要在此处预编译的标头
 #include "../OpenGL_Core/OpenGL_CoreCommon.h"
 
-//#include <sstream>
+#include "../OpenGL_3rd/Imgui/imgui.h"
+#include "../OpenGL_3rd/Imgui/imgui_impl_glfw.h"
+#include "../OpenGL_3rd/Imgui/imgui_impl_opengl3.h"
 
 //#endif //PCH_H

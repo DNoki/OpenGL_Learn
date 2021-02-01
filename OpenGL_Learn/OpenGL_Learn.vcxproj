@@ -37,6 +37,7 @@
     <ClInclude Include="PointLightScene.h" />
     <ClInclude Include="PostProcess.h" />
     <ClInclude Include="ProjectSetting.h" />
+    <ClInclude Include="RigidbodyController.h" />
     <ClInclude Include="SampleScene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

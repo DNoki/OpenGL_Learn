@@ -33,6 +33,7 @@ namespace OpenGL_Core
             _fps = totalFPS / counter;
             counter = 0;
             totalFPS = 0.0f;
+            //std::cout << "FPS: " << _fps << std::endl;
         }
     }
 }

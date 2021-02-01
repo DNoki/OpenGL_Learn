@@ -1,11 +1,12 @@
 ﻿#include "pch.h"
+
 #include "CameraController.h"
 
 namespace OpenGL_Learn
 {
     void CameraController::Awake()
     {
-        GetTransform().LocalPosition = Vector3(0.0f, 1.0f, 8.0f);
+        GetTransform().SetPosition(Vector3(0.0f, 1.0f, 8.0f), false);
         GetTransform().LookAt(Vector3::Zero);
     }
 

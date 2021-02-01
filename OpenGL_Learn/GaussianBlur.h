@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <sstream>
-
 #include "IConsoleBarScriptBehaviour.hpp"
 
 namespace OpenGL_Learn

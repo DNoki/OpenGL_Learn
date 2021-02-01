@@ -10,39 +10,56 @@
 
 namespace OpenGL_Core
 {
-    extern Vector3 ToVector3(const btVector3& v);
-    extern btVector3 ToVector3(const Vector3& v);
-    extern Quaternion ToQuaternion(const btQuaternion& q);
-    extern btQuaternion ToQuaternion(const Quaternion& q);
-    extern void SetTransform(Transform& transform, btTransform& bt_transform);
-    extern void SetBtTransform(btTransform& bt_transform, Transform& transform);
-
-    btRigidBody* Rigidbody::GetBtRigidBody()
+    struct CustomBtMotionState : public btMotionState
     {
-        return _btRigidbody;
-    }
+        virtual void getWorldTransform(btTransform& centerOfMassWorldTrans) const
+        {
+            auto pos = _transform.GetPosition();
+            centerOfMassWorldTrans.setOrigin(btVector3(pos.x, pos.y, pos.z));
+            auto rot = _transform.GetRotation();
+            centerOfMassWorldTrans.setRotation(btQuaternion(rot.x, rot.y, rot.z, rot.w));
+        }
+
+        virtual void setWorldTransform(const btTransform& centerOfMassWorldTrans)
+        {
+            auto& pos = centerOfMassWorldTrans.getOrigin();
+            _transform.SetPosition(Vector3(pos.x(), pos.y(), pos.z()));
+            auto rot = centerOfMassWorldTrans.getRotation();
+            _transform.SetRotation(Quaternion(rot.x(), rot.y(), rot.z(), rot.w()));
+        }
+
+        CustomBtMotionState(Transform& trans) : _transform(trans)
+        {}
+
+    private:
+        Transform& _transform;
+    };
 
     void Rigidbody::SetCollider(Collider& shape)
     {
         _collider = &shape;
-
-        auto bt_transform = btTransform();
-        bt_transform.setIdentity();
-        SetBtTransform(bt_transform, GetTransform());
 
         if (_btRigidbody)
         {
             SceneManager::GetActiveScene().GetPhysicsEngine().RemoveRigidbody(*this);
 
             _btRigidbody->setCollisionShape(_collider->GetBtCollisionShape());
-            _btRigidbody->setWorldTransform(bt_transform);
-
+            if (!_btMotionState)
+            {
+                _btMotionState = unique_ptr<btMotionState>(new CustomBtMotionState(GetTransform()));
+                _btRigidbody->setMotionState(_btMotionState.get());
+            }
             SceneManager::GetActiveScene().GetPhysicsEngine().AddRigidbody(*this);
         }
         else
         {
-            auto* motionState = new btDefaultMotionState(bt_transform);
-            _btRigidbody = new btRigidBody(1.0f, motionState, _collider->GetBtCollisionShape());
+            _btMotionState = unique_ptr<btMotionState>(new CustomBtMotionState(GetTransform()));
+            _btRigidbody = unique_ptr<btRigidBody>(new btRigidBody(1.0f, _btMotionState.get(), _collider->GetBtCollisionShape()));
+
+            // 设置为运动学(Kinematic)刚体
+            //_btRigidbody->setCollisionFlags(_btRigidbody->getCollisionFlags() 
+            //    | btCollisionObject::CF_KINEMATIC_OBJECT);
+            //_btRigidbody->setActivationState(DISABLE_DEACTIVATION);
 
             SceneManager::GetActiveScene().GetPhysicsEngine().AddRigidbody(*this);
         }
@@ -63,6 +80,7 @@ namespace OpenGL_Core
     {
         _collider = nullptr;
         _btRigidbody = nullptr;
+        _btMotionState = nullptr;
 
         //auto bt_transform = btTransform();
         //bt_transform.setIdentity();
@@ -82,12 +100,10 @@ namespace OpenGL_Core
     Rigidbody::~Rigidbody()
     {
         SceneManager::GetActiveScene().GetPhysicsEngine().RemoveRigidbody(*this);
+        if (_btMotionState)
+            _btMotionState.reset();
         if (_btRigidbody)
-        {
-            if (_btRigidbody->getMotionState())
-                delete _btRigidbody->getMotionState();
-            delete _btRigidbody;
-        }
+            _btRigidbody.reset();
     }
 }
 
