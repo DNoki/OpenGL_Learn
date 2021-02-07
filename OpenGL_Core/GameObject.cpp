@@ -17,21 +17,34 @@ namespace OpenGL_Core
     }
     bool GameObject::GetActive(bool isInHierarchy)
     {
-        if (!isInHierarchy) return Enabled;
-        if (Enabled && !IsRootObject())
+        if (!isInHierarchy) return _enabled;
+        if (_enabled && !IsRootObject())
             return _transform->GetParent()->GetGameObject().GetActive();
-        return Enabled;
+        return _enabled;
     }
-    void GameObject::SetActive(bool value, bool isInHierarchy)
+    void GameObject::SetActive(bool value)
     {
-        if (!isInHierarchy)
+        //if (isInHierarchy)
+        //{
+        //    if (!IsRootObject())
+        //        _transform->GetParent()->GetGameObject().SetActive(value, isInHierarchy);
+        //}
+        if (_enabled != value)
         {
-            Enabled = value;
-            return;
+            _enabled = value;
+
+            for (auto& component : _components)
+            {
+                auto behaviour = dynamic_cast<Behaviour*>(component.get());
+                if (behaviour)
+                {
+                    if (_enabled)
+                        behaviour->OnEnable();
+                    else
+                        behaviour->OnDisable();
+                }
+            }
         }
-        if (!IsRootObject())
-            _transform->GetParent()->GetGameObject().SetActive(value, isInHierarchy);
-        Enabled = value;
     }
 
     GameObject* GameObject::Find(const string& name)
@@ -46,10 +59,10 @@ namespace OpenGL_Core
             script->Awake();
     }
 
-    GameObject::GameObject() :ResourceObject("New GameObject"), Enabled(true),
+    GameObject::GameObject() :ResourceObject("New GameObject"), _enabled(true),
         _transform(make_unique<Transform>(Transform(*this))), _components() {}
 
-    GameObject::GameObject(const string& name, Transform* parent, bool worldPositionStays) : ResourceObject(name), Enabled(true),
+    GameObject::GameObject(const string& name, Transform* parent, bool worldPositionStays) : ResourceObject(name), _enabled(true),
         _transform(make_unique<Transform>(Transform(*this))), _components()
     {
         _transform->SetParent(parent, worldPositionStays);

@@ -10,10 +10,6 @@ namespace OpenGL_Core
     class BoxCollider : public Collider
     {
     public:
-        /// <summary>
-        /// 在该对象本地空间中测量的盒体中心。
-        /// </summary>
-        Vector3 Center;
 
         btCollisionShape* GetBtCollisionShape() override;
 
@@ -21,7 +17,9 @@ namespace OpenGL_Core
         /// 设置盒体大小
         /// </summary>
         /// <param name="size"></param>
-        void SetSize(Vector3 size);
+        void SetSize(const Vector3& size);
+
+        void Initialize(const Vector3& size, const Vector3& center);
 
         BoxCollider(GameObject& obj);
 

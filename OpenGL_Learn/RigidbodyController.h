@@ -15,7 +15,11 @@ namespace OpenGL_Learn
         {
             rigidbody = GetComponent<Rigidbody>();
 
-            rigidbody->GetBtRigidBody()->setLinearVelocity(btVector3(10, 0, 10));
+            //rigidbody->GetBtRigidBody()->setFriction(1);
+
+            //rigidbody->SetIsKinematic(true);
+
+            //rigidbody->GetBtRigidBody()->setLinearVelocity(btVector3(1, 0, -10));
         }
         void Update() override
         {
@@ -30,6 +34,14 @@ namespace OpenGL_Learn
 
             //    << endl
             //    << endl;
+            if (InputSystem::GetKeyDown(KeyCode::P))
+            {
+                rigidbody->SetIsKinematic(false);
+            }
+            else if (InputSystem::GetKeyDown(KeyCode::O))
+            {
+                rigidbody->SetIsKinematic(true);
+            }
         }
 
         RigidbodyController(GameObject& obj) :ScriptBehaviour(obj) {}

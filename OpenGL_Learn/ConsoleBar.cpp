@@ -9,7 +9,9 @@ namespace OpenGL_Learn
     void ConsoleBar::CheckGameObject(int index, stringstream& fmt, GameObject& obj)
     {
         fmt.str(""); fmt << index;
-        ImGui::Checkbox(fmt.str().c_str(), &obj.Enabled); ImGui::SameLine();
+        auto enable = obj.GetActive(false);
+        ImGui::Checkbox(fmt.str().c_str(), &enable); ImGui::SameLine();
+        obj.SetActive(enable);
         fmt.str(""); fmt << obj.Name << "  0x" << &obj;
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
@@ -96,7 +98,7 @@ namespace OpenGL_Learn
     //    auto postProcess = dynamic_cast<PostProcess*>(component);
     //    if (!postProcess) return false;
     //    fmt.str(""); fmt << index;
-    //    ImGui::Checkbox(fmt.str().c_str(), &postProcess->Enabled); ImGui::SameLine();
+    //    ImGui::Checkbox(fmt.str().c_str(), &postProcess->_enabled); ImGui::SameLine();
     //    fmt.str(""); fmt << "PostProcess" << "  0x" << postProcess;
     //    if (ImGui::TreeNode(fmt.str().c_str()))
     //    {

@@ -19,11 +19,6 @@ namespace OpenGL_Core
     {
     public:
         /// <summary>
-        /// 是否激活
-        /// </summary>
-        bool Enabled;
-
-        /// <summary>
         /// 是否是根对象
         /// </summary>
         /// <returns></returns>
@@ -45,7 +40,7 @@ namespace OpenGL_Core
         /// </summary>
         /// <param name="value"></param>
         /// <param name="isInHierarchy"></param>
-        void SetActive(bool value, bool isInHierarchy = true);
+        void SetActive(bool value);
 
         /// <summary>
         /// 添加组件
@@ -106,6 +101,10 @@ namespace OpenGL_Core
     private:
         void OnAddComponent(Component* component);
 
+        /// <summary>
+        /// 是否激活
+        /// </summary>
+        bool _enabled;
         unique_ptr<Transform> _transform;
         List<unique_ptr<Component>> _components;
     };

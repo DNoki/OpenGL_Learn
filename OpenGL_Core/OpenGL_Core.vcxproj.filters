@@ -165,6 +165,9 @@
     <ClInclude Include="OpenGL_CoreCommon.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionObject.h">
+      <Filter>头文件\GameSystem\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -259,6 +262,9 @@
     </ClCompile>
     <ClCompile Include="UniformManager.cpp">
       <Filter>源文件\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionObject.cpp">
+      <Filter>源文件\GameSystem\Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

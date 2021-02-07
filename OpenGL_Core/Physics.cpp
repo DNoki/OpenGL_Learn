@@ -12,7 +12,6 @@
 
 namespace OpenGL_Core
 {
-    using namespace OpenGL_Core;
 
     //Vector3 Physics::ToVector3(const btVector3& v)
     //{
@@ -33,7 +32,7 @@ namespace OpenGL_Core
 
     void Physics::ExcuteUpdate()
     {
-        DynamicsWorld->stepSimulation(Time::DeltaTime(), 0);
+        DynamicsWorld->stepSimulation(Time::DeltaTime(), 50, 0.02f);
     }
     void Physics::AddRigidbody(Rigidbody& rigidbody)
     {
@@ -50,6 +49,21 @@ namespace OpenGL_Core
             DynamicsWorld->removeCollisionObject(rigidbody.GetBtRigidBody());
         }
     }
+    void Physics::AddCollisionObject(CollisionObject& collisionObject)
+    {
+        if (ColliderList.Exists(&collisionObject))
+            return;
+        ColliderList.push_back(&collisionObject);
+        DynamicsWorld->addCollisionObject(collisionObject.GetBtCollisionObject());
+    }
+    void Physics::RemoveCollisionObject(CollisionObject& collisionObject)
+    {
+        if (ColliderList.Exists(&collisionObject))
+        {
+            ColliderList.Remove(&collisionObject);
+            DynamicsWorld->removeCollisionObject(collisionObject.GetBtCollisionObject());
+        }
+    }
     Physics::Physics()
     {
         CollisionConfiguration = unique_ptr<btDefaultCollisionConfiguration>(new btDefaultCollisionConfiguration());
@@ -59,15 +73,16 @@ namespace OpenGL_Core
         DynamicsWorld = unique_ptr<btDiscreteDynamicsWorld>(new btDiscreteDynamicsWorld(Dispatcher.get(), OverlappingPairCache.get(), Solver.get(), CollisionConfiguration.get()));
         DynamicsWorld->setGravity(btVector3(0.0f, -10.0f, 0.0f));
 
-        RigidbodyList = List<Rigidbody*>();
+        ColliderList = List<CollisionObject*>();
     }
     Physics::~Physics()
     {
-        for (int i = RigidbodyList.size() - 1; i >= 0; i--)
+        for (int i = DynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
         {
-            DynamicsWorld->removeCollisionObject(RigidbodyList[i]->GetBtRigidBody());
-            //RigidbodyList.Remove(RigidbodyList[i]);
+            DynamicsWorld->removeCollisionObject(DynamicsWorld->getCollisionObjectArray()[i]);
         }
+        RigidbodyList.clear();
+        ColliderList.clear();
 
         DynamicsWorld.reset();
         Solver.reset();

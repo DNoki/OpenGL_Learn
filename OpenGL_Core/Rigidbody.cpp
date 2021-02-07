@@ -14,7 +14,7 @@ namespace OpenGL_Core
     {
         virtual void getWorldTransform(btTransform& centerOfMassWorldTrans) const
         {
-            auto pos = _transform.GetPosition();
+            auto pos = _transform.GetPosition() + _transform.GetLossyScale() * _collider.Center;
             centerOfMassWorldTrans.setOrigin(btVector3(pos.x, pos.y, pos.z));
             auto rot = _transform.GetRotation();
             centerOfMassWorldTrans.setRotation(btQuaternion(rot.x, rot.y, rot.z, rot.w));
@@ -23,43 +23,82 @@ namespace OpenGL_Core
         virtual void setWorldTransform(const btTransform& centerOfMassWorldTrans)
         {
             auto& pos = centerOfMassWorldTrans.getOrigin();
-            _transform.SetPosition(Vector3(pos.x(), pos.y(), pos.z()));
+            _transform.SetPosition(Vector3(pos.x(), pos.y(), pos.z()) - _transform.GetLossyScale() * _collider.Center);
             auto rot = centerOfMassWorldTrans.getRotation();
             _transform.SetRotation(Quaternion(rot.x(), rot.y(), rot.z(), rot.w()));
         }
 
-        CustomBtMotionState(Transform& trans) : _transform(trans)
+        CustomBtMotionState(Transform& trans, Collider& collider) : _transform(trans), _collider(collider)
         {}
 
     private:
         Transform& _transform;
+        Collider& _collider;
     };
+
+    void Rigidbody::SetIsKinematic(bool isKinematic)
+    {
+        auto btRigidbody = GetBtRigidBody();
+        auto flag = btRigidbody->getCollisionFlags();
+        if (isKinematic)
+        {
+            flag &= ~(btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_DYNAMIC_OBJECT);
+            flag |= btCollisionObject::CF_KINEMATIC_OBJECT;
+            btRigidbody->setCollisionFlags(flag);
+            if (GetEnable())
+                btRigidbody->setActivationState(DISABLE_DEACTIVATION);
+        }
+        else
+        {
+            flag &= ~(btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_KINEMATIC_OBJECT);
+            flag |= btCollisionObject::CF_DYNAMIC_OBJECT;
+            btRigidbody->setCollisionFlags(flag);
+            if (GetEnable())
+                btRigidbody->setActivationState(ACTIVE_TAG);
+        }
+    }
+
+    void Rigidbody::SetDamping(float lin, float ang)
+    {
+        GetBtRigidBody()->setDamping(lin, ang); // 阻尼
+    }
+
+    void Rigidbody::SetIsContinuousDynamic(bool value)
+    {
+        auto btRigidbody = GetBtRigidBody();
+        if (value)
+        {
+            btRigidbody->setCcdSweptSphereRadius(0.5f); // Swept球半径
+            btRigidbody->setCcdMotionThreshold(0.05f);
+        }
+        else
+        {
+            btRigidbody->setCcdSweptSphereRadius(0.0f);
+            btRigidbody->setCcdMotionThreshold(0.0f);
+        }
+    }
 
     void Rigidbody::SetCollider(Collider& shape)
     {
         _collider = &shape;
 
-        if (_btRigidbody)
+        if (_btCollisionObject)
         {
+            auto btRigidbody = GetBtRigidBody();
             SceneManager::GetActiveScene().GetPhysicsEngine().RemoveRigidbody(*this);
 
-            _btRigidbody->setCollisionShape(_collider->GetBtCollisionShape());
+            btRigidbody->setCollisionShape(_collider->GetBtCollisionShape());
             if (!_btMotionState)
             {
-                _btMotionState = unique_ptr<btMotionState>(new CustomBtMotionState(GetTransform()));
-                _btRigidbody->setMotionState(_btMotionState.get());
+                _btMotionState = unique_ptr<btMotionState>(new CustomBtMotionState(GetTransform(), *_collider));
+                btRigidbody->setMotionState(_btMotionState.get());
             }
             SceneManager::GetActiveScene().GetPhysicsEngine().AddRigidbody(*this);
         }
         else
         {
-            _btMotionState = unique_ptr<btMotionState>(new CustomBtMotionState(GetTransform()));
-            _btRigidbody = unique_ptr<btRigidBody>(new btRigidBody(1.0f, _btMotionState.get(), _collider->GetBtCollisionShape()));
-
-            // 设置为运动学(Kinematic)刚体
-            //_btRigidbody->setCollisionFlags(_btRigidbody->getCollisionFlags() 
-            //    | btCollisionObject::CF_KINEMATIC_OBJECT);
-            //_btRigidbody->setActivationState(DISABLE_DEACTIVATION);
+            _btMotionState = unique_ptr<btMotionState>(new CustomBtMotionState(GetTransform(), *_collider));
+            _btCollisionObject = unique_ptr<btRigidBody>(new btRigidBody(1.0f, _btMotionState.get(), _collider->GetBtCollisionShape()));
 
             SceneManager::GetActiveScene().GetPhysicsEngine().AddRigidbody(*this);
         }
@@ -68,42 +107,34 @@ namespace OpenGL_Core
     void Rigidbody::SetMass(float mass)
     {
         bool isDynamic = (mass != 0.0f);
+        auto btRigidbody = GetBtRigidBody();
 
         btVector3 localInertia(0, 0, 0);
         if (isDynamic)
-            _btRigidbody->getCollisionShape()->calculateLocalInertia(mass, localInertia);
+            btRigidbody->getCollisionShape()->calculateLocalInertia(mass, localInertia);
 
-        _btRigidbody->setMassProps(mass, localInertia);
+        btRigidbody->setMassProps(mass, localInertia);
     }
 
-    Rigidbody::Rigidbody(GameObject& obj) : Behaviour(obj)
+    void Rigidbody::Initialize(Collider& shape, float mass)
     {
-        _collider = nullptr;
-        _btRigidbody = nullptr;
-        _btMotionState = nullptr;
+        SetCollider(shape);
+        SetMass(mass);
 
-        //auto bt_transform = btTransform();
-        //bt_transform.setIdentity();
-        //SetBtTransform(bt_transform, obj.GetTransform());
-
-        //auto* motionState = new btDefaultMotionState(bt_transform);
-
-        //auto* shape = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
-        ////auto rbInfo = btRigidBody::btRigidBodyConstructionInfo(1.0f, motionState, nullptr);
-        //auto rbInfo = btRigidBody::btRigidBodyConstructionInfo(1.0f, motionState, shape);
-        //_btRigidbody = new btRigidBody(rbInfo);
-
-        //_btRigidbody = new btRigidBody(1.0f, motionState, nullptr);
-
-        //SceneManager::GetActiveScene().GetPhysicsEngine().AddRigidbody(*this);
+        auto flag = _btCollisionObject->getCollisionFlags();
+        flag &= ~(btCollisionObject::CF_STATIC_OBJECT | btCollisionObject::CF_KINEMATIC_OBJECT | btCollisionObject::CF_DYNAMIC_OBJECT);
+        flag |= btCollisionObject::CF_DYNAMIC_OBJECT;
+        _btCollisionObject->setCollisionFlags(flag);
     }
+
+    Rigidbody::Rigidbody(GameObject& obj) : CollisionObject(obj), _btMotionState() {}
     Rigidbody::~Rigidbody()
     {
-        SceneManager::GetActiveScene().GetPhysicsEngine().RemoveRigidbody(*this);
+        //SceneManager::GetActiveScene().GetPhysicsEngine().RemoveRigidbody(*this);
         if (_btMotionState)
             _btMotionState.reset();
-        if (_btRigidbody)
-            _btRigidbody.reset();
+        //if (_btRigidbody)
+        //    _btRigidbody.reset();
     }
 }
 

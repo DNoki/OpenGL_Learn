@@ -22,6 +22,8 @@ namespace OpenGL_Core
         /// </summary>
         /// <param name="rigidbody"></param>
         void RemoveRigidbody(Rigidbody& rigidbody);
+        void AddCollisionObject(CollisionObject& collider);
+        void RemoveCollisionObject(CollisionObject& collider);
 
         Physics();
         ~Physics();
@@ -34,5 +36,6 @@ namespace OpenGL_Core
         unique_ptr<btDiscreteDynamicsWorld> DynamicsWorld;
 
         List<Rigidbody*> RigidbodyList;
+        List<CollisionObject*> ColliderList;
     };
 }

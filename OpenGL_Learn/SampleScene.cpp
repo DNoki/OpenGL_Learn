@@ -123,8 +123,8 @@ namespace OpenGL_Learn
 
         // 灯光
         auto& lightObj = AddGameObject(make_unique<GameObject>("Directional Light"));
-        lightObj.Enabled = false;
-        //lightObj.Enabled = false;
+        lightObj.SetActive(false);
+        //lightObj._enabled = false;
         lightObj.AddComponent<DirectionalLight>().GenerateShadowMap();
         lightObj.GetTransform().SetPosition(Vector3(10, 10, 10));
         lightObj.GetTransform().LookAt(Vector3::Zero);

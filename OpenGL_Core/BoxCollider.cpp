@@ -12,9 +12,15 @@ namespace OpenGL_Core
         return _btBoxShape.get();
     }
 
-    void BoxCollider::SetSize(Vector3 size)
+    void BoxCollider::SetSize(const Vector3& size)
     {
         _btBoxShape->setLocalScaling(btVector3(size.x, size.y, size.z));
+    }
+
+    void BoxCollider::Initialize(const Vector3& size, const Vector3& center)
+    {
+        Center = center;
+        SetSize(size);
     }
 
     BoxCollider::BoxCollider(GameObject& obj) : Collider(obj)

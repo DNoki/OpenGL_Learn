@@ -11,6 +11,7 @@
 #include "BoxCollider.h"
 #include "Camera.h"
 #include "Collider.h"
+#include "CollisionObject.h"
 #include "Component.h"
 #include "Light.h"
 #include "Renderer.h"

@@ -56,7 +56,7 @@ void OpenGL_Learn::PointLightScene::ImportResource()
         //{
         //    auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light1"));
         //    auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
-        //    plightRenderer.Enabled = false;
+        //    plightRenderer._enabled = false;
         //    plightRenderer.SetData(*meshBox, *unlitColorMaterial);
         //    plightObj.GetTransform().SetPosition(Vector3(2, 1, 0));
         //    plightObj.GetTransform().LocalScale = Vector3::One * 0.1f;
@@ -66,7 +66,7 @@ void OpenGL_Learn::PointLightScene::ImportResource()
         //{
         //    auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light2"));
         //    auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
-        //    plightRenderer.Enabled = false;
+        //    plightRenderer._enabled = false;
         //    plightRenderer.SetData(*meshBox, *unlitColorMaterial);
         //    plightObj.GetTransform().SetPosition(Vector3(-2, 1, 0));
         //    plightObj.GetTransform().LocalScale = Vector3::One * 0.15f;
@@ -76,7 +76,7 @@ void OpenGL_Learn::PointLightScene::ImportResource()
         //{
         //    auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light3"));
         //    auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
-        //    plightRenderer.Enabled = false;
+        //    plightRenderer._enabled = false;
         //    plightRenderer.SetData(*meshBox, *unlitColorMaterial);
         //    plightObj.GetTransform().SetPosition(Vector3(0, 1, 2));
         //    plightObj.GetTransform().LocalScale = Vector3::One * 0.2f;
@@ -86,7 +86,7 @@ void OpenGL_Learn::PointLightScene::ImportResource()
         //{
         //    auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light4"));
         //    auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
-        //    plightRenderer.Enabled = false;
+        //    plightRenderer._enabled = false;
         //    plightRenderer.SetData(*meshBox, *unlitColorMaterial);
         //    plightObj.GetTransform().SetPosition(Vector3(0, 1, -2));
         //    plightObj.GetTransform().LocalScale = Vector3::One * 0.25f;
