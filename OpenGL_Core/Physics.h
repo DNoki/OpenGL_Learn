@@ -11,6 +11,7 @@ namespace OpenGL_Core
     public :
 
         void ExcuteUpdate();
+        void DeubgDraw();
 
         /// <summary>
         /// 添加刚体

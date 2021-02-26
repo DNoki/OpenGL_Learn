@@ -55,7 +55,7 @@ namespace OpenGL_Core
 
         RenderState State;
 
-        //virtual void RenderShadowMap(List<unique_ptr<RenderItem>>* backgrounds, List<unique_ptr<RenderItem>>* geometrys, List<unique_ptr<RenderItem>>* alphaTests, List<unique_ptr<RenderItem>>* transparents, List<unique_ptr<RenderItem>>* overlays) = 0;
+        //virtual void RenderShadowMap(List<RenderItem*>* backgrounds, List<RenderItem*>* geometrys, List<RenderItem*>* alphaTests, List<RenderItem*>* transparents, List<RenderItem*>* overlays) = 0;
 
         Light(GameObject& obj);
     };
@@ -74,7 +74,7 @@ namespace OpenGL_Core
         /// <returns></returns>
         Matrix4x4 GetLightSpaceMatrix(Camera* camera) const;
         void GenerateShadowMap(UINT width = 2048, UINT height = 2048);
-        void RenderShadowMap(List<unique_ptr<RenderItem>>* backgrounds, List<unique_ptr<RenderItem>>* geometrys, List<unique_ptr<RenderItem>>* alphaTests, List<unique_ptr<RenderItem>>* transparents, List<unique_ptr<RenderItem>>* overlays);
+        void RenderShadowMap(List<RenderItem*>* backgrounds, List<RenderItem*>* geometrys, List<RenderItem*>* alphaTests, List<RenderItem*>* transparents, List<RenderItem*>* overlays);
 
         DirectionalLight(GameObject& obj);
     };
@@ -96,7 +96,7 @@ namespace OpenGL_Core
         /// </summary>
         /// <returns></returns>
         unique_ptr<List<Matrix4x4>> GetLightSpaceMatrix() const;
-        void RenderShadowMap(UINT index, List<unique_ptr<RenderItem>>* backgrounds, List<unique_ptr<RenderItem>>* geometrys, List<unique_ptr<RenderItem>>* alphaTests, List<unique_ptr<RenderItem>>* transparents, List<unique_ptr<RenderItem>>* overlays);
+        void RenderShadowMap(UINT index, List<RenderItem*>* backgrounds, List<RenderItem*>* geometrys, List<RenderItem*>* alphaTests, List<RenderItem*>* transparents, List<RenderItem*>* overlays);
         inline Vector4 GetPointLightInfo() { return Vector4(Attenuation, ShadowStrength, ShadowDistance); }
 
         PointLight(GameObject& obj);

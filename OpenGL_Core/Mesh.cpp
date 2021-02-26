@@ -182,21 +182,6 @@ namespace OpenGL_Core
         return move(mesh);
     }
 
-    void Mesh::DrawMesh(Material& mat, unsigned int index)
-    {
-        if (!mat.UseShaderPass(index)) return;
-
-        GameSystem::PrintError("绘制模型前：");
-        VAO.BindVertexArray();
-        if (GetMode() == MeshMode::ARRAYS)
-            glDrawArrays(GL_TRIANGLES, 0, GetVertexCount());
-        else if (GetMode() == MeshMode::ELEMENTS)
-            glDrawElements(GL_TRIANGLES, GetIndiceCount(), GL_UNSIGNED_INT, 0);
-        VAO.UnBindVertexArray();
-        GameSystem::PrintError("绘制模型后：");
-        GameSystem::DrawCallCounter++;
-    }
-
     void Mesh::Complete()
     {
         GLsizeiptr size;
@@ -205,6 +190,13 @@ namespace OpenGL_Core
         auto tangentCount = tangents.size();
         auto uvCount = uv.size();
         auto colorCount = colors.size();
+
+        if (VAO) VAO.reset();
+        if (VBO) VBO.reset();
+        if (EBO) EBO.reset();
+        VAO = unique_ptr<VertexArrays>(new VertexArrays());
+        VBO = unique_ptr<BufferObject>(new BufferObject(GL_ARRAY_BUFFER));
+        EBO = unique_ptr<BufferObject>(new BufferObject(GL_ELEMENT_ARRAY_BUFFER));
 
         if (vertexCount < 3)
         {
@@ -234,68 +226,70 @@ namespace OpenGL_Core
 
         size = vertexCount * sizeof(Vector3) + normalCount * sizeof(Vector3) + tangentCount * sizeof(Vector3) + colorCount * sizeof(Vector4) + uvCount * sizeof(Vector2);
 
-        VAO.BindVertexArray(); // 绑定顶点数组
-        VBO.BufferData(size, NULL);// 先创造size大小的空间，后输入数据
+        VAO->BindVertexArray(); // 绑定顶点数组
+        VBO->BufferData(size, NULL);// 先创造size大小的空间，后输入数据
 
         GLintptr offset = 0;
 
         {
-            VBO.BufferSubData(offset, vertexCount * sizeof(Vector3), &(vertices[0]));
-            VAO.VertexAttribPointer(0, 3, sizeof(Vector3), (void*)(offset));
+            VBO->BufferSubData(offset, vertexCount * sizeof(Vector3), &(vertices[0]));
+            VAO->VertexAttribPointer(0, 3, sizeof(Vector3), (void*)(offset));
             offset += vertexCount * sizeof(Vector3);
         }
 
         if (normalCount != 0)
         {
-            VBO.BufferSubData(offset, normalCount * sizeof(Vector3), &(normals[0]));
-            VAO.VertexAttribPointer(1, 3, sizeof(Vector3), (void*)(offset));
+            VBO->BufferSubData(offset, normalCount * sizeof(Vector3), &(normals[0]));
+            VAO->VertexAttribPointer(1, 3, sizeof(Vector3), (void*)(offset));
             offset += normalCount * sizeof(Vector3);
         }
         if (tangentCount != 0)
         {
-            VBO.BufferSubData(offset, tangentCount * sizeof(Vector3), &(tangents[0]));
-            VAO.VertexAttribPointer(2, 3, sizeof(Vector3), (void*)(offset));
+            VBO->BufferSubData(offset, tangentCount * sizeof(Vector3), &(tangents[0]));
+            VAO->VertexAttribPointer(2, 3, sizeof(Vector3), (void*)(offset));
             offset += tangentCount * sizeof(Vector3);
         }
         if (colorCount != 0)
         {
-            VBO.BufferSubData(offset, colorCount * sizeof(Vector4), &(colors[0]));
-            VAO.VertexAttribPointer(3, 4, sizeof(Vector4), (void*)(offset));
+            VBO->BufferSubData(offset, colorCount * sizeof(Vector4), &(colors[0]));
+            VAO->VertexAttribPointer(3, 4, sizeof(Vector4), (void*)(offset));
             offset += colorCount * sizeof(Vector4);
         }
         if (uvCount != 0)
         {
-            VBO.BufferSubData(offset, uvCount * sizeof(Vector2), &(uv[0]));
-            VAO.VertexAttribPointer(4, 2, sizeof(Vector2), (void*)(offset));
+            VBO->BufferSubData(offset, uvCount * sizeof(Vector2), &(uv[0]));
+            VAO->VertexAttribPointer(4, 2, sizeof(Vector2), (void*)(offset));
             offset += uvCount * sizeof(Vector2);
         }
 
         if (indices.size() > 0)
         {
-            EBO.BufferData(indices.size() * sizeof(unsigned int), &(indices[0]));
+            EBO->BufferData(indices.size() * sizeof(unsigned int), &(indices[0]));
             mode = MeshMode::ELEMENTS;
         }
-
-        Completed = true;
     }
 
-    Mesh::Mesh(const string& name) :ResourceObject(name), Completed(false), mode(MeshMode::ARRAYS),
+    void Mesh::Clear()
+    {
+        vertices.clear();
+        normals.clear();
+        tangents.clear();
+        colors.clear();
+        uv.clear();
+    }
+
+    Mesh::Mesh(const string& name) :ResourceObject(name), mode(MeshMode::ARRAYS),
+        _renderMode(RenderMode::TRIANGLES),
         vertices(), normals(), tangents(), colors(), uv(), indices(),
-        VAO(), VBO(GL_ARRAY_BUFFER), EBO(GL_ELEMENT_ARRAY_BUFFER)
+        VAO(), VBO(), EBO()
     {
         cout << "LOG:: " << "网格:: Name：" << this->Name << " 已生成"
-            << " VAO_ID=" << VAO.ID
-            << " VBO_ID=" << VBO.ID
-            << " EBO_ID=" << EBO.ID
             << endl << endl;
     }
 
     Mesh::~Mesh()
     {
         cout << "LOG:: " << "网格:: Name：" << this->Name << " 已释放"
-            << " VAO_ID=" << VAO.ID
-            << " VBO_ID=" << VBO.ID
-            << " EBO_ID=" << EBO.ID
             << endl << endl;
     }
 

@@ -9,9 +9,68 @@
 #pragma comment(lib,"Bullet/BulletSoftBody_Debug.lib")
 
 #include "Time.h"
+#include "Mesh.h"
+#include "Shader.h"
+#include "Material.h"
+#include "Graphics.h"
 
 namespace OpenGL_Core
 {
+    class PhysicsDebugDraw : public btIDebugDraw
+    {
+    public:
+
+        virtual void drawLine(const btVector3& from, const btVector3& to, const btVector3& color) override
+        {
+            auto pos = Vector3(from.x(), from.y(), from.z());
+            _mesh->vertices.push_back(pos);
+            pos = Vector3(to.x(), to.y(), to.z());
+            _mesh->vertices.push_back(pos);
+
+            auto c = Vector4(color.x(), color.y(), color.z(), 1.0f);
+            _mesh->colors.push_back(c);
+            _mesh->colors.push_back(c);
+        }
+        virtual void drawContactPoint(const btVector3& PointOnB, const btVector3& normalOnB, btScalar distance, int lifeTime, const btVector3& color) override {}
+        virtual void reportErrorWarning(const char* warningString) override {}
+        virtual void draw3dText(const btVector3& location, const char* textString) override {}
+        virtual void setDebugMode(int debugMode) override { _debugMode = debugMode; }
+        virtual int getDebugMode() const override { return _debugMode; }
+
+        void PreDebugDraw()
+        {
+            _mesh->Clear();
+            _mesh->SetRenderMode(RenderMode::LINES);
+        }
+        void OnDebugDraw()
+        {
+            if (_mesh->vertices.size() > 0)
+            {
+                _mesh->Complete();
+                Graphics::DrawMesh(*_mesh, *_material, 0);
+            }
+        }
+
+        PhysicsDebugDraw()
+        {
+            _debugMode = btIDebugDraw::DBG_NoDebug;
+            //_debugMode = btIDebugDraw::DBG_DrawWireframe;
+            _shader = unique_ptr<Shader>(new Shader("Debug Shader", "../Asset/Shader/Auxiliary/DebguDraw.glsl"));
+            _material = unique_ptr<Material>(new Material("Debug Material", _shader.get()));
+            _mesh = nullptr;
+            _mesh = unique_ptr<Mesh>(new Mesh("Debug Mesh"));
+            _mesh->SetRenderMode(RenderMode::LINES);
+        }
+        ~PhysicsDebugDraw() {}
+
+    private:
+        int _debugMode;
+        unique_ptr<Shader> _shader;
+        unique_ptr<Material> _material;
+        unique_ptr<Mesh> _mesh;
+    };
+
+    unique_ptr<PhysicsDebugDraw> DebugDraw;
 
     //Vector3 Physics::ToVector3(const btVector3& v)
     //{
@@ -34,6 +93,14 @@ namespace OpenGL_Core
     {
         DynamicsWorld->stepSimulation(Time::DeltaTime(), 50, 0.02f);
     }
+
+    void Physics::DeubgDraw()
+    {
+        DebugDraw->PreDebugDraw();
+        DynamicsWorld->debugDrawWorld();
+        DebugDraw->OnDebugDraw();
+    }
+
     void Physics::AddRigidbody(Rigidbody& rigidbody)
     {
         if (RigidbodyList.Exists(&rigidbody))
@@ -72,6 +139,9 @@ namespace OpenGL_Core
         Solver = unique_ptr<btSequentialImpulseConstraintSolver>(new btSequentialImpulseConstraintSolver());
         DynamicsWorld = unique_ptr<btDiscreteDynamicsWorld>(new btDiscreteDynamicsWorld(Dispatcher.get(), OverlappingPairCache.get(), Solver.get(), CollisionConfiguration.get()));
         DynamicsWorld->setGravity(btVector3(0.0f, -10.0f, 0.0f));
+
+        DebugDraw = unique_ptr<PhysicsDebugDraw>(new PhysicsDebugDraw());
+        DynamicsWorld->setDebugDrawer(DebugDraw.get());
 
         ColliderList = List<CollisionObject*>();
     }

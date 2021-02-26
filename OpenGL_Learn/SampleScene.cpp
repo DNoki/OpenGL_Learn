@@ -133,7 +133,7 @@ namespace OpenGL_Learn
             auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light1"));
             auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
             plightRenderer.SetEnable(false);
-            plightRenderer.SetData(*meshBox, *unlitColorMaterial);
+            plightRenderer.Initialize(*meshBox, *unlitColorMaterial);
             plightObj.GetTransform().SetPosition(Vector3(2, 1, 0));
             plightObj.GetTransform().LocalScale = Vector3::One * 0.1f;
             auto& pointLight = plightObj.AddComponent<PointLight>();
@@ -143,7 +143,7 @@ namespace OpenGL_Learn
             auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light2"));
             auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
             plightRenderer.SetEnable(false);
-            plightRenderer.SetData(*meshBox, *unlitColorMaterial);
+            plightRenderer.Initialize(*meshBox, *unlitColorMaterial);
             plightObj.GetTransform().SetPosition(Vector3(-1, 1, 1.732f));
             plightObj.GetTransform().LocalScale = Vector3::One * 0.15f;
             auto& pointLight = plightObj.AddComponent<PointLight>();
@@ -153,7 +153,7 @@ namespace OpenGL_Learn
             auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light3"));
             auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
             plightRenderer.SetEnable(false);
-            plightRenderer.SetData(*meshBox, *unlitColorMaterial);
+            plightRenderer.Initialize(*meshBox, *unlitColorMaterial);
             plightObj.GetTransform().SetPosition(Vector3(-1.732f, 1, -1));
             plightObj.GetTransform().LocalScale = Vector3::One * 0.2f;
             auto& pointLight = plightObj.AddComponent<PointLight>();
@@ -162,12 +162,12 @@ namespace OpenGL_Learn
 
         // 游戏对象
         //auto& fatherObj = AddGameObject(make_unique<GameObject>("Father"));
-        //fatherObj.AddComponent<MeshRenderer>().SetData(*meshBox, *unlitTexMaterial);
+        //fatherObj.AddComponent<MeshRenderer>().Initialize(*meshBox, *unlitTexMaterial);
         //fatherObj.AddComponent<FatherGameObject>();
         //fatherObj.GetTransform().LocalScale = Vector3::One * 0.2f + Vector3::Forward * 0.2f;
 
         //auto& childObj = AddGameObject(make_unique<GameObject>("Child"));
-        //childObj.AddComponent<MeshRenderer>().SetData(meshBox, unlitColorMaterial);
+        //childObj.AddComponent<MeshRenderer>().Initialize(meshBox, unlitColorMaterial);
         //childObj.AddComponent<ChildGameObject>().fatherObj = &fatherObj;
 
         //auto displayNormalShader = AddResourceObject(make_unique<Shader>("Display Normal Shader", "../Asset/Shader/Auxiliary/DisplayNormal.glsl"));
@@ -178,16 +178,16 @@ namespace OpenGL_Learn
         auto displayNormalShaderMaterial = AddResourceObject(make_unique<Material>("outlineShader Material", outlineShader));
 
         auto& _3Obj = AddGameObject(make_unique<GameObject>("3"));
-        _3Obj.AddComponent<MeshRenderer>().SetData(*meshBox, *unlitTexMaterial);
+        _3Obj.AddComponent<MeshRenderer>().Initialize(*meshBox, *unlitTexMaterial);
         _3Obj.GetTransform().SetPosition(Vector3(4.0f, 0.5f, 0.0f));
         //_3Obj.GetTransform().SetParent(&cameraObj.GetTransform(), false);
 
         auto& ground = AddGameObject(make_unique<GameObject>("Ground"));
-        ground.AddComponent<MeshRenderer>().SetData(*meshSquare, *phongMaterial);
+        ground.AddComponent<MeshRenderer>().Initialize(*meshSquare, *phongMaterial);
         ground.GetTransform().LocalScale = Vector3::One * 200.0f;
 
         //auto& transparentObj = AddGameObject(make_unique<GameObject>("TransparentObject"));
-        //transparentObj.AddComponent<MeshRenderer>().SetData(*meshBox, *transparentMaterial);
+        //transparentObj.AddComponent<MeshRenderer>().Initialize(*meshBox, *transparentMaterial);
         //transparentObj.GetTransform().SetPosition(Vector3(0.5f, 0, 0), false);
 
         {

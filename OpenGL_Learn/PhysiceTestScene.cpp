@@ -49,7 +49,7 @@ namespace OpenGL_Learn
             auto material = AddResourceObject(make_unique<Material>("Blinn Material", shader));
             material->GetMainShader()->SetVector4("_MainColor", Vector4(0.5f, 0.5f, 0.5f, 1.0f));
 
-            ground.AddComponent<MeshRenderer>().SetData(*meshSquare, *material);
+            ground.AddComponent<MeshRenderer>().Initialize(*meshSquare, *material);
             auto& transform = ground.GetTransform();
             transform.LocalScale = Vector3(2000.0f, 0.01f, 2000.0f);
 
@@ -61,7 +61,7 @@ namespace OpenGL_Learn
 
         auto& box = AddGameObject(make_unique<GameObject>("box"));
         {
-            box.AddComponent<MeshRenderer>().SetData(*meshBox, *blinnMaterial);
+            box.AddComponent<MeshRenderer>().Initialize(*meshBox, *blinnMaterial);
             auto& transform = box.GetTransform();
             transform.LocalPosition = Vector3(0.0f, 10.0f, 0.0f);
 
@@ -78,7 +78,7 @@ namespace OpenGL_Learn
         for (size_t i = 0; i < 80; i++)
         {
             auto& box = AddGameObject(make_unique<GameObject>("box"));
-            box.AddComponent<MeshRenderer>().SetData(*meshBox, *blinnMaterial);
+            box.AddComponent<MeshRenderer>().Initialize(*meshBox, *blinnMaterial);
             {
                 auto& transform = box.GetTransform();
                 //transform.LocalPosition = Vector3((i % 2) * 2.0f - 1.0f, 2.0f * i, 0.0f);

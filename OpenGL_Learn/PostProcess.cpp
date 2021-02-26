@@ -60,10 +60,10 @@ namespace OpenGL_Learn
         for (unsigned int i = 0; i < _materials.size(); i++)
         {
             if (!_materials[i].Item1) continue;
-            targetTex->Blit(*EffectRenderTexture);// 将默认渲染贴图数据拷贝到效果渲染贴图上
+            Graphics::Blit(*targetTex, *EffectRenderTexture);
             targetTex->BindFramebuffer();// 渲染到默认渲染贴图上
             for (unsigned int j = 0; j < _materials[i].Item2->GetPassCount(); j++)
-                Camera::DefaultTargetTextureMesh->DrawMesh(*_materials[i].Item2, j);
+                Graphics::DrawMesh(*Camera::DefaultTargetTextureMesh, *_materials[i].Item2, j);
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 
+#include "Graphics.h"
 #include "Renderer.h"
 
 #include "Mesh.h"
@@ -7,21 +8,28 @@
 
 namespace OpenGL_Core
 {
-    unique_ptr<List<unique_ptr<RenderItem>>> Renderer::GetRenderItems()
+    List<unique_ptr<RenderItem>>& Renderer::GetRenderItems()
     {
-        auto result = make_unique<List<unique_ptr<RenderItem>>>();
+        return _renderItems;
+    }
+
+    void Renderer::GenerateRenderItems()
+    {
+        _renderItems = List<unique_ptr<RenderItem>>();
         for (unsigned int i = 0; i < _material->GetPassCount(); i++)
         {
             auto item = make_unique<RenderItem>(this, _material, i, (*_material)[i]->RenderSequence);
-            result->push_back(move(item));
+            _renderItems.push_back(move(item));
         }
-        return result;
     }
 
-    void MeshRenderer::SetData(Mesh& mesh, Material& material)
+    Renderer::Renderer(GameObject& obj) :Behaviour(obj), _material(), _renderItems() {}
+
+    void MeshRenderer::Initialize(Mesh& mesh, Material& material)
     {
         _mesh = &mesh;
         _material = &material;
+        GenerateRenderItems();
     }
     void MeshRenderer::Draw(unsigned int index)
     {
@@ -30,7 +38,7 @@ namespace OpenGL_Core
             cout << "WARNING:: " << "网格和材质对象为空，忽略该网格渲染。" << endl;
             throw;
         }
-        this->_mesh->DrawMesh(*_material, index);
+        Graphics::DrawMesh(*_mesh, *_material, index);
     }
     void MeshRenderer::Draw(Material* material, unsigned int index)
     {
@@ -39,6 +47,6 @@ namespace OpenGL_Core
             cout << "WARNING:: " << "网格和材质对象为空，忽略该网格渲染。" << endl;
             throw;
         }
-        this->_mesh->DrawMesh(*material, index);
+        Graphics::DrawMesh(*_mesh, *material, index);
     }
 }

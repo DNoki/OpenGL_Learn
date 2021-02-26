@@ -32,14 +32,14 @@ namespace OpenGL_Learn
     {
         for (unsigned int i = 0; i < Iteration; i++)
         {
-            targetTex->Blit(*EffectRenderTexture, GL_COLOR_BUFFER_BIT, ScaleFilterType::LINEAR);
+            Graphics::Blit(*targetTex, *EffectRenderTexture, GL_COLOR_BUFFER_BIT, ScaleFilterType::LINEAR);
             targetTex->BindFramebuffer();
             gaussianBlurMaterial->GetMainShader()->SetVector4("_Offset", Vector4(Vector3::Right, 0.0f));
-            Camera::DefaultTargetTextureMesh->DrawMesh(*gaussianBlurMaterial, 0);
-            targetTex->Blit(*EffectRenderTexture, GL_COLOR_BUFFER_BIT, ScaleFilterType::LINEAR);
+            Graphics::DrawMesh(*Camera::DefaultTargetTextureMesh, *gaussianBlurMaterial, 0);
+            Graphics::Blit(*targetTex, *EffectRenderTexture, GL_COLOR_BUFFER_BIT, ScaleFilterType::LINEAR);
             targetTex->BindFramebuffer();
             gaussianBlurMaterial->GetMainShader()->SetVector4("_Offset", Vector4(Vector3::Up, 0.0f));
-            Camera::DefaultTargetTextureMesh->DrawMesh(*gaussianBlurMaterial, 0);
+            Graphics::DrawMesh(*Camera::DefaultTargetTextureMesh, *gaussianBlurMaterial, 0);
         }
     }
     void GaussianBlur::OnConsoleBar(int index, stringstream& fmt)

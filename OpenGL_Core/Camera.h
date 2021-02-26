@@ -98,7 +98,6 @@ namespace OpenGL_Core
 
         static void UseRenderState(const RenderState& state);
         static void RenderToWindow();
-        static void DefaultClear();
         static void DebugRenderTexture(RenderTexture& tex, const float& startX, const float& startY, const float& widthScale, const float& heightScale, Shader* shader = nullptr);
 
         RenderState State;
@@ -140,11 +139,12 @@ namespace OpenGL_Core
         /// <param name="alphaTests"></param>
         /// <param name="transparents"></param>
         /// <param name="overlays"></param>
-        void ExcuteRender(List<unique_ptr<RenderItem>>* backgrounds, List<unique_ptr<RenderItem>>* geometrys, List<unique_ptr<RenderItem>>* alphaTests, List<unique_ptr<RenderItem>>* transparents, List<unique_ptr<RenderItem>>* overlays);
+        void ExcuteRender(List<RenderItem*>* backgrounds, List<RenderItem*>* geometrys, List<RenderItem*>* alphaTests, List<RenderItem*>* transparents, List<RenderItem*>* overlays);
         /// <summary>
         /// 按指定模式清除背景（立即）
         /// </summary>
         void Clear();
+        void ClearDepth();
         /// <summary>
         /// 场景绘制完成后渲染天空盒
         /// </summary>

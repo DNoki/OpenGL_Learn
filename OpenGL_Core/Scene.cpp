@@ -44,6 +44,13 @@ namespace OpenGL_Core
         return nullptr;
     }
 
+    void Scene::Initialize()
+    {
+        _physics = make_unique<Physics>();
+        ImportResource();
+        BindMainObject();
+    }
+
     void Scene::ExcuteUpdate()
     {
         GetDestroyedObjects().clear();
@@ -85,34 +92,34 @@ namespace OpenGL_Core
 
         // 取得所有已开启对象的渲染组件
         auto renderers = this->FindComponents<Renderer>();
-        // 按渲染顺序排序  
-        List<unique_ptr<RenderItem>> backgrounds = List<unique_ptr<RenderItem>>();
-        List<unique_ptr<RenderItem>> geometrys = List<unique_ptr<RenderItem>>();
-        List<unique_ptr<RenderItem>> alphaTests = List<unique_ptr<RenderItem>>();
-        List<unique_ptr<RenderItem>> transparents = List<unique_ptr<RenderItem>>();
-        List<unique_ptr<RenderItem>> overlays = List<unique_ptr<RenderItem>>();
+        // 按渲染顺序排序
+        List<RenderItem*> backgrounds = List<RenderItem*>();
+        List<RenderItem*> geometrys = List<RenderItem*>();
+        List<RenderItem*> alphaTests = List<RenderItem*>();
+        List<RenderItem*> transparents = List<RenderItem*>();
+        List<RenderItem*> overlays = List<RenderItem*>();
         for (auto renderer : renderers)
         {
             if (!renderer->GetEnable()) continue; // 若组件未开启则跳过
-            auto items = renderer->GetRenderItems();
-            for (auto& item : *items)
+            auto& items = renderer->GetRenderItems();
+            for (auto& item : items)
             {
                 // 0~1000 Background
-                if (item->sequence < 1001) backgrounds.push_back(move(item));
+                if (item->sequence < 1001) backgrounds.push_back(item.get());
                 // 1001~2332 Geometry
-                else if (1001 <= item->sequence && item->sequence < 2333) geometrys.push_back(move(item));
+                else if (1001 <= item->sequence && item->sequence < 2333) geometrys.push_back(item.get());
                 // 2334~2999 AlphaTest
-                else if (2334 <= item->sequence && item->sequence < 3000) alphaTests.push_back(move(item));
+                else if (2334 <= item->sequence && item->sequence < 3000) alphaTests.push_back(item.get());
                 // 3000~3999 Transparent
-                else if (3000 <= item->sequence && item->sequence < 4000) transparents.push_back(move(item));
+                else if (3000 <= item->sequence && item->sequence < 4000) transparents.push_back(item.get());
                 // 4000+ Overlay
-                else if (4000 <= item->sequence) overlays.push_back(move(item));
+                else if (4000 <= item->sequence) overlays.push_back(item.get());
             }
         }
-        backgrounds.Sort([](const unique_ptr<RenderItem>& left, const unique_ptr<RenderItem>& right) {return left->sequence < right->sequence; });
-        geometrys.Sort([](const unique_ptr<RenderItem>& left, const unique_ptr<RenderItem>& right) {return left->sequence < right->sequence; });
-        alphaTests.Sort([](const unique_ptr<RenderItem>& left, const unique_ptr<RenderItem>& right) {return left->sequence < right->sequence; });
-        overlays.Sort([](const unique_ptr<RenderItem>& left, const unique_ptr<RenderItem>& right) {return left->sequence < right->sequence; });
+        backgrounds.Sort([](const RenderItem* left, const RenderItem* right) {return left->sequence < right->sequence; });
+        geometrys.Sort([](const RenderItem* left, const RenderItem* right) {return left->sequence < right->sequence; });
+        alphaTests.Sort([](const RenderItem* left, const RenderItem* right) {return left->sequence < right->sequence; });
+        overlays.Sort([](const RenderItem* left, const RenderItem* right) {return left->sequence < right->sequence; });
 
 
         // 按相机深度排序
@@ -216,6 +223,16 @@ namespace OpenGL_Core
             for (auto script : activeScripts)
                 script->OnGui();
 
+            auto camera = cameras[0];
+            camera->ClearDepth();
+            UniformManager::Transform->SetSubData(0, sizeof(Matrix4x4), camera->GetProjectionMatrix().GetPtr()); // 相机投影数据
+            UniformManager::Transform->SetSubData(sizeof(Matrix4x4), sizeof(Matrix4x4), camera->GetViewMatrix().GetPtr()); // 相机视角数据
+            UniformManager::CameraData->SetSubData(0 * sizeof(float), sizeof(Vector4), Vector4(camera->GetTransform().GetPosition(), 1.0f).GetPtr()); // 相机世界位置
+            UniformManager::CameraData->SetSubData(4 * sizeof(float), sizeof(Vector4), camera->GetOrthoParams().GetPtr()); // 相机正交数据
+            UniformManager::CameraData->SetSubData(8 * sizeof(float), sizeof(Vector4),
+                Vector4(GameSystem::ScreenWidth, GameSystem::ScreenHeight, 1.0f / GameSystem::ScreenWidth, 1.0f / GameSystem::ScreenHeight).GetPtr()); // 屏幕数据
+            _physics->DeubgDraw();
+
             // 渲染到窗口
             Camera::RenderToWindow();
         }
@@ -223,7 +240,7 @@ namespace OpenGL_Core
 
     Scene::Scene(const string& name) :Name(name), _hierarchy(), _resourceObjects()
     {
-        _physics = make_unique<Physics>();
+        
     }
 
     void Scene::BindMainObject()

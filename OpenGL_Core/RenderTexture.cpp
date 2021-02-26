@@ -6,6 +6,11 @@
 
 namespace OpenGL_Core
 {
+    void RenderTexture::UnBindFramebuffer()
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
+
     unique_ptr<RenderTexture> RenderTexture::CreateRenderTexture(const string& name, GLsizei width, GLsizei height, int samples)
     {
         auto rt = unique_ptr<RenderTexture>(new RenderTexture(name, width, height));
@@ -108,11 +113,9 @@ namespace OpenGL_Core
         UnBindFramebuffer();
     }
 
-    void RenderTexture::Blit(RenderTexture& renderTexture, GLbitfield mask, ScaleFilterType filter)
+    void RenderTexture::BindFramebuffer() const
     {
-        glBindFramebuffer(GL_READ_FRAMEBUFFER, _framebufferID);
-        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, renderTexture._framebufferID);
-        glBlitFramebuffer(0, 0, _width, _height, 0, 0, renderTexture._width, renderTexture._height, mask, static_cast<int>(filter));
+        glBindFramebuffer(GL_FRAMEBUFFER, this->_framebufferID);
     }
 
     RenderTexture::~RenderTexture()

@@ -168,6 +168,15 @@
     <ClInclude Include="CollisionObject.h">
       <Filter>头文件\GameSystem\Component</Filter>
     </ClInclude>
+    <ClInclude Include="CharacterController.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CapsuleCollider.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -265,6 +274,15 @@
     </ClCompile>
     <ClCompile Include="CollisionObject.cpp">
       <Filter>源文件\GameSystem\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterController.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CapsuleCollider.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

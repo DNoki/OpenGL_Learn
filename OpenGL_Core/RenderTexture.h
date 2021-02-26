@@ -20,7 +20,7 @@ namespace OpenGL_Core
         /// <summary>
         /// 使用默认窗口缓冲
         /// </summary>
-        static inline void UnBindFramebuffer() { glBindFramebuffer(GL_FRAMEBUFFER, 0); }
+        static void UnBindFramebuffer();
         //@brief 创建渲染贴图
         //@param name 名称
         //@param width 宽度
@@ -71,20 +71,16 @@ namespace OpenGL_Core
         /// <summary>
         /// 激活绑定的帧缓冲
         /// </summary>
-        inline void BindFramebuffer() const { glBindFramebuffer(GL_FRAMEBUFFER, this->_framebufferID); }
-        /// <summary>
-        /// 位块传送 拷贝到指定帧缓冲
-        /// </summary>
-        /// <param name="renderTexture">帧缓冲（默认拷贝到窗口）</param>
-        /// <param name="mask">指定要读取的缓冲区 // GL_COLOR_BUFFER_BIT 颜色缓冲区 // GL_DEPTH_BUFFER_BIT 深度缓冲区 // GL_STENCIL_BUFFER_BIT 模板缓冲区</param>
-        /// <param name="filter">伸缩变形时的插值方法 GL_NEAREST  GL_LINEAR</param>
-        void Blit(RenderTexture& renderTexture, GLbitfield mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT, ScaleFilterType filter = ScaleFilterType::NEAREST);
+        void BindFramebuffer() const;
+        
         inline Texture* GetTexture(UINT index)
         {
             if (index < _textureIDs.Count())
                 return _textureIDs[index].get();
             else return nullptr;
         }
+        inline UINT GetWidth() const { return _width; }
+        inline UINT GetHeight() const { return _height; }
         inline GLuint GetFrameBufferID() const { return _framebufferID; }
         inline List<unique_ptr<Texture>>& GetTextures() { return _textureIDs; }
         inline GLuint GetRenderBufferObjectID() const { return _renderBufferObjectID; }

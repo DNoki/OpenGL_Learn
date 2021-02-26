@@ -46,7 +46,7 @@ void OpenGL_Learn::PointLightScene::ImportResource()
             auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light1"));
             auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
             plightRenderer.SetEnable(false);
-            plightRenderer.SetData(*meshBox, *unlitColorMaterial);
+            plightRenderer.Initialize(*meshBox, *unlitColorMaterial);
             plightObj.GetTransform().SetPosition(Vector3(0, 0, 0));
             plightObj.GetTransform().LocalScale = Vector3::One * 0.1f;
             auto& pointLight = plightObj.AddComponent<PointLight>();
@@ -57,7 +57,7 @@ void OpenGL_Learn::PointLightScene::ImportResource()
         //    auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light1"));
         //    auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
         //    plightRenderer._enabled = false;
-        //    plightRenderer.SetData(*meshBox, *unlitColorMaterial);
+        //    plightRenderer.Initialize(*meshBox, *unlitColorMaterial);
         //    plightObj.GetTransform().SetPosition(Vector3(2, 1, 0));
         //    plightObj.GetTransform().LocalScale = Vector3::One * 0.1f;
         //    auto& pointLight = plightObj.AddComponent<PointLight>();
@@ -67,7 +67,7 @@ void OpenGL_Learn::PointLightScene::ImportResource()
         //    auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light2"));
         //    auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
         //    plightRenderer._enabled = false;
-        //    plightRenderer.SetData(*meshBox, *unlitColorMaterial);
+        //    plightRenderer.Initialize(*meshBox, *unlitColorMaterial);
         //    plightObj.GetTransform().SetPosition(Vector3(-2, 1, 0));
         //    plightObj.GetTransform().LocalScale = Vector3::One * 0.15f;
         //    auto& pointLight = plightObj.AddComponent<PointLight>();
@@ -77,7 +77,7 @@ void OpenGL_Learn::PointLightScene::ImportResource()
         //    auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light3"));
         //    auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
         //    plightRenderer._enabled = false;
-        //    plightRenderer.SetData(*meshBox, *unlitColorMaterial);
+        //    plightRenderer.Initialize(*meshBox, *unlitColorMaterial);
         //    plightObj.GetTransform().SetPosition(Vector3(0, 1, 2));
         //    plightObj.GetTransform().LocalScale = Vector3::One * 0.2f;
         //    auto& pointLight = plightObj.AddComponent<PointLight>();
@@ -87,7 +87,7 @@ void OpenGL_Learn::PointLightScene::ImportResource()
         //    auto& plightObj = AddGameObject(make_unique<GameObject>("Point Light4"));
         //    auto& plightRenderer = plightObj.AddComponent<MeshRenderer>();
         //    plightRenderer._enabled = false;
-        //    plightRenderer.SetData(*meshBox, *unlitColorMaterial);
+        //    plightRenderer.Initialize(*meshBox, *unlitColorMaterial);
         //    plightObj.GetTransform().SetPosition(Vector3(0, 1, -2));
         //    plightObj.GetTransform().LocalScale = Vector3::One * 0.25f;
         //    auto& pointLight = plightObj.AddComponent<PointLight>();
@@ -95,7 +95,7 @@ void OpenGL_Learn::PointLightScene::ImportResource()
         //}
 
         auto& ground = AddGameObject(make_unique<GameObject>("Ground"));
-        ground.AddComponent<MeshRenderer>().SetData(*meshBox, *worldPositionMaterial);
+        ground.AddComponent<MeshRenderer>().Initialize(*meshBox, *worldPositionMaterial);
         //ground.GetTransform().LocalScale = Vector3::One * 200.0f;
         ground.GetTransform().SetPosition(Vector3::Forward * 10.0f, false);
 

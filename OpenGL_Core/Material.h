@@ -21,14 +21,14 @@ namespace OpenGL_Core
         /// </summary>
         List<Shader*> Shaders;
 
-        inline unsigned int GetPassCount() { return (unsigned int)Shaders.size(); }
+        inline unsigned int GetPassCount() const { return (unsigned int)Shaders.size(); }
         inline Shader* GetMainShader() { return GetPassCount() > 0 ? Shaders[0] : nullptr; }
         /// <summary>
         /// 添加着色器通道
         /// </summary>
         /// <param name="shader"></param>
         inline void AddShaderPass(Shader* shader) { if (shader) Shaders.push_back(shader); }
-        bool UseShaderPass(unsigned int index);
+        bool UseShaderPass(unsigned int index) const;
         //// 设置整形
         //inline void SetInt(const unsigned int& index, const string& name, const int& value)
         //{

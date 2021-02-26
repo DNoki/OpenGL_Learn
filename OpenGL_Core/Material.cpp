@@ -4,7 +4,7 @@
 
 namespace OpenGL_Core
 {
-    bool  Material::UseShaderPass(unsigned int index)
+    bool Material::UseShaderPass(unsigned int index) const
     {
         if (index < GetPassCount())
         {

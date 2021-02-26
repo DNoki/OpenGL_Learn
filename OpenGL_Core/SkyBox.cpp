@@ -3,6 +3,7 @@
 #include "Skybox.h"
 
 #include "SceneManager.h"
+#include "Graphics.h"
 
 #include "Mesh.h"
 #include "Material.h"
@@ -15,7 +16,7 @@ namespace OpenGL_Core
     void Skybox::DrawSkyBox()
     {
         for (unsigned int i = 0; i < _material->GetPassCount(); i++)
-            skyboxMesh->DrawMesh(*_material, i);
+            Graphics::DrawMesh(*skyboxMesh, *_material, i);
     }
 
     Skybox::Skybox(const string& name, Material* material) :ResourceObject(name), _material(material)

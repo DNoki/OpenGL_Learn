@@ -153,11 +153,7 @@ namespace OpenGL_Core
         /// <summary>
         /// 初始化场景
         /// </summary>
-        inline void Initialize()
-        {
-            ImportResource();
-            BindMainObject();
-        }
+        void Initialize();
         /// <summary>
         /// 由系统调用更新场景
         /// </summary>

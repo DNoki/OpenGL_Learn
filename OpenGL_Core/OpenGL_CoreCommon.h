@@ -10,6 +10,8 @@
 #include "Behaviour.h"
 #include "BoxCollider.h"
 #include "Camera.h"
+#include "CapsuleCollider.h"
+#include "CharacterController.h"
 #include "Collider.h"
 #include "CollisionObject.h"
 #include "Component.h"
@@ -21,6 +23,7 @@
 
 #include "GameObject.h"
 #include "GameSystem.h"
+#include "Graphics.h"
 #include "InputSystem.h"
 #include "Physics.h"
 #include "Scene.h"

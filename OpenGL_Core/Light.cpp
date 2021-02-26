@@ -55,7 +55,7 @@ namespace OpenGL_Core
         GLfloat borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
         glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
     }
-    void DirectionalLight::RenderShadowMap(List<unique_ptr<RenderItem>>* backgrounds, List<unique_ptr<RenderItem>>* geometrys, List<unique_ptr<RenderItem>>* alphaTests, List<unique_ptr<RenderItem>>* transparents, List<unique_ptr<RenderItem>>* overlays)
+    void DirectionalLight::RenderShadowMap(List<RenderItem*>* backgrounds, List<RenderItem*>* geometrys, List<RenderItem*>* alphaTests, List<RenderItem*>* transparents, List<RenderItem*>* overlays)
     {
         this->ShadowMap->BindFramebuffer();
         Camera::UseRenderState(this->State);
@@ -68,7 +68,7 @@ namespace OpenGL_Core
         }
 
         if (geometrys)
-            for (auto& item : *geometrys)
+            for (auto item : *geometrys)
             {
                 auto m = item->renderer->GetTransform().GetTransformMatrix();
                 UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), m.GetPtr()); // 模型变换数据
@@ -125,7 +125,7 @@ namespace OpenGL_Core
 
         return shadowTransforms;
     }
-    void PointLight::RenderShadowMap(UINT index, List<unique_ptr<RenderItem>>* backgrounds, List<unique_ptr<RenderItem>>* geometrys, List<unique_ptr<RenderItem>>* alphaTests, List<unique_ptr<RenderItem>>* transparents, List<unique_ptr<RenderItem>>* overlays)
+    void PointLight::RenderShadowMap(UINT index, List<RenderItem*>* backgrounds, List<RenderItem*>* geometrys, List<RenderItem*>* alphaTests, List<RenderItem*>* transparents, List<RenderItem*>* overlays)
     {
         this->CubeShadowMap->BindFramebuffer();
         Camera::UseRenderState(this->State);
@@ -145,7 +145,7 @@ namespace OpenGL_Core
         }
 
         if (geometrys)
-            for (auto& item : *geometrys)
+            for (auto item : *geometrys)
             {
                 auto m = item->renderer->GetTransform().GetTransformMatrix();
                 UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), m.GetPtr()); // 模型变换数据

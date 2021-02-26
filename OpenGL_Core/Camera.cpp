@@ -5,6 +5,7 @@
 #include "GameSystem.h"
 #include "SceneManager.h"
 #include "UniformManager.h"
+#include "Graphics.h"
 
 #include "Skybox.h"
 #include "Mesh.h"
@@ -54,20 +55,9 @@ namespace OpenGL_Core
         UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), Matrix4x4::Identity.GetPtr());
 
         RenderTexture::UnBindFramebuffer();
-        DefaultTargetTextureMesh->DrawMesh(*DefaultTargetTextureMaterial, 0);
+        Graphics::DrawMesh(*DefaultTargetTextureMesh, *DefaultTargetTextureMaterial, 0);
     }
-    void Camera::DefaultClear()
-    {
-        Camera::DefaultTargetTexture->BindFramebuffer();
-        realRenderState->BackgroundColor = Vector4::Zero;
-        realRenderState->ClearDepth = 1.0f;
-        realRenderState->ClearStencil = 0;
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        glClearDepth(1.0);
-        glClearStencil(0);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-    }
     void Camera::DebugRenderTexture(RenderTexture& tex, const float& startX, const float& startY, const float& widthScale, const float& heightScale, Shader* shader)
     {
         unique_ptr<Shader> _shader;
@@ -86,14 +76,17 @@ namespace OpenGL_Core
         UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), transform.GetPtr());
 
         DefaultTargetTexture->BindFramebuffer();
-        Camera::DefaultTargetTextureMesh->DrawMesh(material, 0);
+        Graphics::DrawMesh(*Camera::DefaultTargetTextureMesh, material, 0);
     }
 
     void Camera::BindTarget() const
     {
         // 渲染到指定目标
         if (this->TargetTexture)
+        {
             this->TargetTexture->BindFramebuffer();
+            return;
+        }
 
         // 渲染到默认贴图上 （直接渲染到窗口会出错）
         if (this->IsMSAA)
@@ -105,22 +98,22 @@ namespace OpenGL_Core
         if (targetTex) // 渲染到指定贴图存在
         {
             if (this->TargetTexture) // 相机指定贴图数据拷贝
-                this->TargetTexture->Blit(*targetTex);
+                Graphics::Blit(*TargetTexture, *targetTex);
             else if (this->IsMSAA) // 默认多采样渲染贴图数据拷贝
-                Camera::DefaultTargetMultisampleTexture->Blit(*targetTex);
+                Graphics::Blit(*Camera::DefaultTargetMultisampleTexture, *targetTex);
             else // 默认渲染贴图数据拷贝
-                Camera::DefaultTargetTexture->Blit(*targetTex);
+                Graphics::Blit(*Camera::DefaultTargetTexture, *targetTex);
         }
         else
         {
             if (this->TargetTexture) return; // 相机指定贴图不修改
             else if (this->IsMSAA) // 默认多采样渲染贴图数据拷贝到默认渲染贴图
-                Camera::DefaultTargetMultisampleTexture->Blit(*Camera::DefaultTargetTexture);
+                Graphics::Blit(*Camera::DefaultTargetMultisampleTexture, *Camera::DefaultTargetTexture);
             else return; // 默认渲染贴图不修改
         }
     }
 
-    void Camera::ExcuteRender(List<unique_ptr<RenderItem>>* backgrounds, List<unique_ptr<RenderItem>>* geometrys, List<unique_ptr<RenderItem>>* alphaTests, List<unique_ptr<RenderItem>>* transparents, List<unique_ptr<RenderItem>>* overlays)
+    void Camera::ExcuteRender(List<RenderItem*>* backgrounds, List<RenderItem*>* geometrys, List<RenderItem*>* alphaTests, List<RenderItem*>* transparents, List<RenderItem*>* overlays)
     {
         glViewport(0, 0, GameSystem::ScreenWidth, GameSystem::ScreenHeight);
         // Rendering
@@ -128,7 +121,7 @@ namespace OpenGL_Core
 
         // 0~1000 Background
         if (backgrounds)
-            for (auto& item : *backgrounds)
+            for (auto item : *backgrounds)
             {
                 auto m = item->renderer->GetTransform().GetTransformMatrix();
                 UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), m.GetPtr());
@@ -136,7 +129,7 @@ namespace OpenGL_Core
             }
         // 1001~2332 Geometry
         if (geometrys)
-            for (auto& item : *geometrys)
+            for (auto item : *geometrys)
             {
                 auto m = item->renderer->GetTransform().GetTransformMatrix();
                 UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), m.GetPtr());
@@ -147,7 +140,7 @@ namespace OpenGL_Core
 
         // 2334~2999 AlphaTest
         if (alphaTests)
-            for (auto& item : *alphaTests)
+            for (auto item : *alphaTests)
             {
                 auto m = item->renderer->GetTransform().GetTransformMatrix();
                 UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), m.GetPtr());
@@ -158,13 +151,13 @@ namespace OpenGL_Core
         if (transparents)
         {
             auto cameraPos = this->GetTransform().GetPosition();
-            for (auto& item : *transparents)
+            for (auto item : *transparents)
             {
                 auto pos = item->renderer->GetTransform().GetPosition() - cameraPos;
                 item->depth = Vector3::Dot(pos, pos);// 仅做比较时无需开方
             }
-            sort(transparents->begin(), transparents->end(), [](const unique_ptr<RenderItem>& left, const unique_ptr<RenderItem>& right) { return left->depth > right->depth; });
-            for (auto& item : *transparents)
+            sort(transparents->begin(), transparents->end(), [](const RenderItem* left, const RenderItem* right) { return left->depth > right->depth; });
+            for (auto item : *transparents)
             {
                 auto m = item->renderer->GetTransform().GetTransformMatrix();
                 UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), m.GetPtr());
@@ -173,7 +166,7 @@ namespace OpenGL_Core
         }
         // 4000+ Overlay
         if (overlays)
-            for (auto& item : *overlays)
+            for (auto item : *overlays)
             {
                 auto m = item->renderer->GetTransform().GetTransformMatrix();
                 UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), m.GetPtr());
@@ -193,6 +186,12 @@ namespace OpenGL_Core
             Camera::UseRenderState(this->State);
             glClear(GL_DEPTH_BUFFER_BIT);
         }
+    }
+
+    void Camera::ClearDepth()
+    {
+        Camera::UseRenderState(this->State);
+        glClear(GL_DEPTH_BUFFER_BIT);
     }
 
     void Camera::DrawSkybox()

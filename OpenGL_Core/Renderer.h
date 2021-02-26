@@ -52,7 +52,7 @@ namespace OpenGL_Core
         /// </summary>
         /// <returns></returns>
         inline Material* GetMaterial() { return _material; }
-        unique_ptr<List<unique_ptr<RenderItem>>> GetRenderItems();
+        List<unique_ptr<RenderItem>>& GetRenderItems();
         /// <summary>
         /// 绘制
         /// </summary>
@@ -67,8 +67,11 @@ namespace OpenGL_Core
 
     protected:
         Material* _material;
+        List<unique_ptr<RenderItem>> _renderItems;
 
-        Renderer(GameObject& obj) :Behaviour(obj), _material() {}
+        void GenerateRenderItems();
+
+        Renderer(GameObject& obj);
 
     private:
     };
@@ -79,12 +82,6 @@ namespace OpenGL_Core
     class MeshRenderer final : public Renderer
     {
     public:
-        /// <summary>
-        /// 设置一对模型与材质
-        /// </summary>
-        /// <param name="mesh"></param>
-        /// <param name="material"></param>
-        void SetData(Mesh& mesh, Material& material);
         inline Mesh* GetMesh() { return _mesh; }
 
         /// <summary>
@@ -93,6 +90,13 @@ namespace OpenGL_Core
         /// <param name="index"></param>
         void Draw(unsigned int index) override;
         void Draw(Material* material, unsigned int index) override;
+
+        /// <summary>
+        /// 设置一对模型与材质
+        /// </summary>
+        /// <param name="mesh"></param>
+        /// <param name="material"></param>
+        void Initialize(Mesh& mesh, Material& material);
 
         MeshRenderer(GameObject& obj) :Renderer(obj), _mesh() {}
 

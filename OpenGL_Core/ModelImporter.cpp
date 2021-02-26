@@ -76,7 +76,7 @@ namespace OpenGL_Core
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
         {
             auto meshRenderer = &obj->AddComponent<MeshRenderer>();
-            meshRenderer->SetData(*importer.meshs[node->mMeshes[i]],
+            meshRenderer->Initialize(*importer.meshs[node->mMeshes[i]],
                 *importer.materials[scene->mMeshes[node->mMeshes[i]]->mMaterialIndex]);
         }
 
@@ -88,7 +88,7 @@ namespace OpenGL_Core
         //    // 处理节点所有的网格（如果有的话）
         //    for (unsigned int i = 0; i < node->mNumMeshes; i++)
         //    {
-        //        meshRenderer->SetData(
+        //        meshRenderer->Initialize(
         //            *meshs[node->mMeshes[i]].get(),
         //            *materials[scene->mMeshes[node->mMeshes[i]]->mMaterialIndex]);
         //    }

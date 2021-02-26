@@ -15,6 +15,14 @@ namespace OpenGL_Core
 
     class Material;
 
+    enum class RenderMode
+    {
+        POINTS = GL_POINTS,
+        LINES = GL_LINES,
+        LINE_LOOP = GL_LINE_LOOP,
+        LINE_STRIP = GL_LINE_STRIP,
+        TRIANGLES = GL_TRIANGLES,
+    };
     enum class MeshMode
     {
         /// <summary>
@@ -52,8 +60,6 @@ namespace OpenGL_Core
         /// <returns></returns>
         static unique_ptr<Mesh> CreatePresetMesh(PresetMesh name);
 
-        bool Completed;
-
         /*  网格数据  */
         List<Vector3> vertices;
         List<Vector3> normals;
@@ -63,13 +69,10 @@ namespace OpenGL_Core
 
         List<unsigned int> indices;
 
-        /// <summary>
-        /// 使用指定着色器Pass绘制模型 绘制前需输入变换、材质
-        /// </summary>
-        /// <param name="mat"></param>
-        /// <param name="index"></param>
-        void DrawMesh(Material& mat, unsigned int index);
+        inline VertexArrays* GetVAO() const { return VAO.get(); }
 
+        inline void SetRenderMode(RenderMode renderMode) { _renderMode = renderMode; }
+        inline RenderMode GetRenderMode() const { return _renderMode; }
         inline MeshMode GetMode() const { return this->mode; }
         /// <summary>
         /// 获取顶点数量
@@ -83,6 +86,7 @@ namespace OpenGL_Core
         inline unsigned int GetIndiceCount() const { return (unsigned int)indices.size(); }
 
         void Complete();
+        void Clear();
 
 
         Mesh(const string& name);
@@ -91,23 +95,22 @@ namespace OpenGL_Core
     private:
 
         MeshMode mode;
+        RenderMode _renderMode;
 
         /*  渲染数据  */
 
         /// <summary>
         /// 顶点数组对象：Vertex Array Object，VAO
         /// </summary>
-        VertexArrays VAO;
+        unique_ptr<VertexArrays> VAO;
         /// <summary>
         /// 顶点缓冲对象：Vertex Buffer Object，VBO
         /// </summary>
-        BufferObject VBO;
+        unique_ptr<BufferObject> VBO;
         /// <summary>
         /// 索引缓冲对象：Element Buffer Object，EBO
         /// </summary>
-        BufferObject EBO;
-
-
+        unique_ptr<BufferObject> EBO;
     };
 
 
