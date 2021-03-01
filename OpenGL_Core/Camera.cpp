@@ -16,18 +16,18 @@
 
 namespace OpenGL_Core
 {
-    Mesh* Camera::DefaultTargetTextureMesh = nullptr;
-    Shader* Camera::DefaultTargetTextureShader = nullptr;
-    Material* Camera::DefaultTargetTextureMaterial = nullptr;
-    RenderTexture* Camera::DefaultTargetTexture = nullptr;
-    RenderTexture* Camera::DefaultTargetMultisampleTexture = nullptr;
+    unique_ptr<Mesh> Camera::DefaultTargetTextureMesh = nullptr;
+    unique_ptr<Shader> Camera::DefaultTargetTextureShader = nullptr;
+    unique_ptr<Material> Camera::DefaultTargetTextureMaterial = nullptr;
+    unique_ptr<RenderTexture> Camera::DefaultTargetTexture = nullptr;
+    unique_ptr<RenderTexture> Camera::DefaultTargetMultisampleTexture = nullptr;
 
     unique_ptr<RenderState> Camera::realRenderState = nullptr;
 
 
     Camera* Camera::GetMain()
     {
-        return SceneManager::GetActiveScene().FindComponent<Camera>();
+        return SceneManager::GetActiveScene()->FindComponent<Camera>();
     }
 
     void Camera::UseRenderState(const RenderState& state)
@@ -249,7 +249,7 @@ namespace OpenGL_Core
     {
         if (!DefaultTargetTextureMesh)
         {
-            DefaultTargetTextureMesh = SceneManager::GetActiveScene().AddResourceObject(make_unique<Mesh>("Default TargetTexture Mesh"));
+            DefaultTargetTextureMesh = make_unique<Mesh>("Default TargetTexture Mesh");
             DefaultTargetTextureMesh->HideFlag = HideFlagType::STATIC;
 
             // 初始化特效要使用的平面
@@ -279,8 +279,8 @@ namespace OpenGL_Core
 
         if (!DefaultTargetMultisampleTexture)
         {
-            DefaultTargetMultisampleTexture = SceneManager::GetActiveScene().AddResourceObject(
-                RenderTexture::CreateRenderTexture("Default Multisample TargetTexture", GameSystem::ScreenWidth, GameSystem::ScreenHeight, 4));
+            DefaultTargetMultisampleTexture =
+                RenderTexture::CreateRenderTexture("Default Multisample TargetTexture", GameSystem::ScreenWidth, GameSystem::ScreenHeight, 4);
             DefaultTargetMultisampleTexture->HideFlag = HideFlagType::STATIC;
             DefaultTargetMultisampleTexture->AttachmentMultisampleTexture(GL_RGBA16F);
             DefaultTargetMultisampleTexture->AttachmentRenderBuffer();
@@ -288,8 +288,8 @@ namespace OpenGL_Core
         }
         if (!DefaultTargetTexture)
         {
-            DefaultTargetTexture = SceneManager::GetActiveScene().AddResourceObject(
-                RenderTexture::CreateRenderTexture("Default TargetTexture", GameSystem::ScreenWidth, GameSystem::ScreenHeight));
+            DefaultTargetTexture =
+                RenderTexture::CreateRenderTexture("Default TargetTexture", GameSystem::ScreenWidth, GameSystem::ScreenHeight);
             //RenderTexture::CreateRenderTexture("Default TargetTexture", GameSystem::ScreenWidth, GameSystem::ScreenHeight, GL_RGBA16F, FormatType::RGBA));
             DefaultTargetTexture->HideFlag = HideFlagType::STATIC;
             DefaultTargetTexture->AttachmentTexture2D(GL_RGBA16F, FormatType::RGBA);
@@ -299,14 +299,14 @@ namespace OpenGL_Core
 
         if (!DefaultTargetTextureShader)
         {
-            DefaultTargetTextureShader = SceneManager::GetActiveScene().AddResourceObject(make_unique<Shader>("Default TargetTexture Shader", "../Asset/Shader/Unlit/Texture.glsl"));
+            DefaultTargetTextureShader = make_unique<Shader>("Default TargetTexture Shader", "../Asset/Shader/Unlit/Texture.glsl");
             DefaultTargetTextureShader->State.DepthTest = false;
             DefaultTargetTextureShader->State.Blend = false;
             DefaultTargetTextureShader->State.CullFace = false;
             DefaultTargetTextureShader->HideFlag = HideFlagType::STATIC;
             //auto shader = make_unique<Shader>("Default TargetTexture Shader", "../Asset/Shader/Shadow/ShowDepth.glsl");
 
-            DefaultTargetTextureMaterial = SceneManager::GetActiveScene().AddResourceObject(unique_ptr<Material>(new Material("Default TargetTexture Material", { DefaultTargetTextureShader })));
+            DefaultTargetTextureMaterial = unique_ptr<Material>(new Material("Default TargetTexture Material", DefaultTargetTextureShader.get()));
             DefaultTargetTextureMaterial->GetMainShader()->BindTexture(*DefaultTargetTexture->GetTexture(0), "_MainTexture", 0);
             DefaultTargetTextureMaterial->HideFlag = HideFlagType::STATIC;
         }

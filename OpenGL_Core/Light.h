@@ -63,7 +63,8 @@ namespace OpenGL_Core
     class DirectionalLight : public Light
     {
     public:
-        static Material* DirectionalLightShadowmapMaterial;
+        static unique_ptr<Shader> DirectionalLightShadowMapShader;
+        static unique_ptr<Material> DirectionalLightShadowmapMaterial;
 
         RenderTexture* ShadowMap;
 
@@ -82,7 +83,8 @@ namespace OpenGL_Core
     class PointLight : public Light
     {
     public:
-        static Material* PointLightShadowmapMaterial;
+        static unique_ptr<Shader> PointLightShadowmapShader;
+        static unique_ptr<Material> PointLightShadowmapMaterial;
 
         /// <summary>
         /// 衰减 C=1.0, L=x, Q=y   衰减强度 = 1.0 / (C + L * d + Q * d^2)

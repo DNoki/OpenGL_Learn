@@ -75,23 +75,25 @@ namespace OpenGL_Learn
             box.AddComponent<RigidbodyController>();
         }
 
-        for (size_t i = 0; i < 80; i++)
-        {
-            auto& box = AddGameObject(make_unique<GameObject>("box"));
-            box.AddComponent<MeshRenderer>().Initialize(*meshBox, *blinnMaterial);
-            {
-                auto& transform = box.GetTransform();
-                //transform.LocalPosition = Vector3((i % 2) * 2.0f - 1.0f, 2.0f * i, 0.0f);
-                //transform.SetPosition(Vector3(sin(2.0f * Math::PI * i / 100.0f), 2.0f * i, 0.0f), false);
-                transform.SetPosition(Vector3(0, 2.0f * i, 0.0f), false);
+        //for (size_t i = 0; i < 80; i++)
+        //{
+        //    auto& box = AddGameObject(make_unique<GameObject>("box"));
+        //    box.AddComponent<MeshRenderer>().Initialize(*meshBox, *blinnMaterial);
+        //    {
+        //        auto& transform = box.GetTransform();
+        //        //transform.LocalPosition = Vector3((i % 2) * 2.0f - 1.0f, 2.0f * i, 0.0f);
+        //        //transform.SetPosition(Vector3(sin(2.0f * Math::PI * i / 100.0f), 2.0f * i, 0.0f), false);
+        //        transform.SetPosition(Vector3(0, 2.0f * i, 0.0f), false);
 
-                auto& boxCollider = box.AddComponent<BoxCollider>();
-                auto& rigid = box.AddComponent<Rigidbody>();
-                rigid.Initialize(boxCollider, 1.0f);
-                rigid.SetIsContinuousDynamic(true);
-                rigid.SetFriction(1.5f);
-            }
-        }
+        //        auto& boxCollider = box.AddComponent<BoxCollider>();
+        //        auto& rigid = box.AddComponent<Rigidbody>();
+        //        rigid.Initialize(boxCollider, 1.0f);
+        //        rigid.SetIsContinuousDynamic(true);
+        //        rigid.SetFriction(1.5f);
+        //    }
+        //}
+
+        Physics::SetDebugEnable(true);
     }
 
 }

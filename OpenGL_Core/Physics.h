@@ -9,21 +9,19 @@ namespace OpenGL_Core
     class Physics
     {
     public :
-
+        static void SetDebugEnable(bool enable);
         void ExcuteUpdate();
-        void DeubgDraw();
+        void DebugDraw();
 
         /// <summary>
-        /// 添加刚体
+        /// 添加碰撞器
         /// </summary>
-        /// <param name="rigidbody"></param>
-        void AddRigidbody(Rigidbody& rigidbody);
-        /// <summary>
-        /// 移除刚体
-        /// </summary>
-        /// <param name="rigidbody"></param>
-        void RemoveRigidbody(Rigidbody& rigidbody);
+        /// <param name="collider"></param>
         void AddCollisionObject(CollisionObject& collider);
+        /// <summary>
+        /// 移除碰撞器
+        /// </summary>
+        /// <param name="collider"></param>
         void RemoveCollisionObject(CollisionObject& collider);
 
         Physics();
@@ -36,7 +34,6 @@ namespace OpenGL_Core
         unique_ptr<btSequentialImpulseConstraintSolver> Solver;
         unique_ptr<btDiscreteDynamicsWorld> DynamicsWorld;
 
-        List<Rigidbody*> RigidbodyList;
-        List<CollisionObject*> ColliderList;
+        List<CollisionObject*> CollisionList;
     };
 }

@@ -13,7 +13,7 @@ namespace OpenGL_Core
     {
         glBindFramebuffer(GL_READ_FRAMEBUFFER, source.GetFrameBufferID());
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, dest.GetFrameBufferID());
-        glBlitFramebuffer(0, 0, dest.GetWidth(), dest.GetHeight(), 0, 0, source.GetWidth(), source.GetHeight(), mask, static_cast<int>(filter));
+        glBlitFramebuffer(0, 0, source.GetWidth(), source.GetHeight(), 0, 0, dest.GetWidth(), dest.GetHeight(), mask, static_cast<int>(filter));
     }
 
     void Graphics::DrawMesh(const Mesh& mesh, const Matrix4x4& matrix, const Material& material, unsigned int index)

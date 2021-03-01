@@ -44,6 +44,7 @@ namespace OpenGL_Core
     }
     void CollisionObject::OnEnable()
     {
+        SceneManager::GetActiveScene()->GetPhysicsEngine().AddCollisionObject(*this);
         //if (_btCollisionObject->isKinematicObject())
         //    _btCollisionObject->setActivationState(WANTS_DEACTIVATION);
         //else
@@ -51,6 +52,7 @@ namespace OpenGL_Core
     }
     void CollisionObject::OnDisable()
     {
+        SceneManager::GetActiveScene()->GetPhysicsEngine().RemoveCollisionObject(*this);
         //_btCollisionObject->setActivationState(DISABLE_SIMULATION);
     }
 
@@ -58,7 +60,7 @@ namespace OpenGL_Core
 
     CollisionObject::~CollisionObject()
     {
-        SceneManager::GetActiveScene().GetPhysicsEngine().RemoveCollisionObject(*this);
+        SceneManager::GetActiveScene()->GetPhysicsEngine().RemoveCollisionObject(*this);
         if (_btCollisionObject)
             _btCollisionObject.reset();
     }
@@ -69,11 +71,11 @@ namespace OpenGL_Core
 
         if (_btCollisionObject)
         {
-            SceneManager::GetActiveScene().GetPhysicsEngine().RemoveCollisionObject(*this);
+            SceneManager::GetActiveScene()->GetPhysicsEngine().RemoveCollisionObject(*this);
             _btCollisionObject->setCollisionShape(_collider->GetBtCollisionShape());
             _btCollisionObject->setWorldTransform(ToTransform(GetTransform(), _collider->Center));
 
-            SceneManager::GetActiveScene().GetPhysicsEngine().AddCollisionObject(*this);
+            SceneManager::GetActiveScene()->GetPhysicsEngine().AddCollisionObject(*this);
         }
         else
         {
@@ -81,7 +83,7 @@ namespace OpenGL_Core
             _btCollisionObject->setCollisionShape(shape.GetBtCollisionShape());
             _btCollisionObject->setWorldTransform(ToTransform(GetTransform(), _collider->Center));
 
-            SceneManager::GetActiveScene().GetPhysicsEngine().AddCollisionObject(*this);
+            SceneManager::GetActiveScene()->GetPhysicsEngine().AddCollisionObject(*this);
         }
     }
 }

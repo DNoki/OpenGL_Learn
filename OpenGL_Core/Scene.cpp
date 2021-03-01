@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 
+#include "Graphics.h"
 #include "GameSystem.h"
 #include "UniformManager.h"
 
@@ -48,7 +49,6 @@ namespace OpenGL_Core
     {
         _physics = make_unique<Physics>();
         ImportResource();
-        BindMainObject();
     }
 
     void Scene::ExcuteUpdate()
@@ -206,7 +206,7 @@ namespace OpenGL_Core
 
             // OnRenderImage
             for (auto script : activeScripts)
-                script->OnRenderImage(Camera::DefaultTargetTexture);
+                script->OnRenderImage(Camera::DefaultTargetTexture.get());
 
             // 调试显示渲染贴图
             if (dirLight)
@@ -219,31 +219,65 @@ namespace OpenGL_Core
 
             Camera::DefaultTargetTexture->BindFramebuffer();
 
+            // 物理调试显示需要优化
+            {
+                auto camera = cameras[0];
+                camera->ClearDepth();
+                UniformManager::Transform->SetSubData(0, sizeof(Matrix4x4), camera->GetProjectionMatrix().GetPtr()); // 相机投影数据
+                UniformManager::Transform->SetSubData(sizeof(Matrix4x4), sizeof(Matrix4x4), camera->GetViewMatrix().GetPtr()); // 相机视角数据
+                UniformManager::CameraData->SetSubData(0 * sizeof(float), sizeof(Vector4), Vector4(camera->GetTransform().GetPosition(), 1.0f).GetPtr()); // 相机世界位置
+                UniformManager::CameraData->SetSubData(4 * sizeof(float), sizeof(Vector4), camera->GetOrthoParams().GetPtr()); // 相机正交数据
+                UniformManager::CameraData->SetSubData(8 * sizeof(float), sizeof(Vector4),
+                    Vector4(GameSystem::ScreenWidth, GameSystem::ScreenHeight, 1.0f / GameSystem::ScreenWidth, 1.0f / GameSystem::ScreenHeight).GetPtr()); // 屏幕数据
+                _physics->DebugDraw();
+            }
+
             // OnGui
             for (auto script : activeScripts)
                 script->OnGui();
 
-            auto camera = cameras[0];
-            camera->ClearDepth();
-            UniformManager::Transform->SetSubData(0, sizeof(Matrix4x4), camera->GetProjectionMatrix().GetPtr()); // 相机投影数据
-            UniformManager::Transform->SetSubData(sizeof(Matrix4x4), sizeof(Matrix4x4), camera->GetViewMatrix().GetPtr()); // 相机视角数据
-            UniformManager::CameraData->SetSubData(0 * sizeof(float), sizeof(Vector4), Vector4(camera->GetTransform().GetPosition(), 1.0f).GetPtr()); // 相机世界位置
-            UniformManager::CameraData->SetSubData(4 * sizeof(float), sizeof(Vector4), camera->GetOrthoParams().GetPtr()); // 相机正交数据
-            UniformManager::CameraData->SetSubData(8 * sizeof(float), sizeof(Vector4),
-                Vector4(GameSystem::ScreenWidth, GameSystem::ScreenHeight, 1.0f / GameSystem::ScreenWidth, 1.0f / GameSystem::ScreenHeight).GetPtr()); // 屏幕数据
-            _physics->DeubgDraw();
-
             // 渲染到窗口
             Camera::RenderToWindow();
         }
+        else
+        {
+            auto state = RenderState();
+            state.BackgroundColor = Color(0.0f, 0.0f, 0.0f);
+            Camera::UseRenderState(state);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+            // OnGui
+            for (auto script : activeScripts)
+                script->OnGui();
+        }
     }
 
-    Scene::Scene(const string& name) :Name(name), _hierarchy(), _resourceObjects()
+    void Scene::Close()
     {
-        
+        for (auto& obj : _resourceObjects)
+        {
+            for (auto& r : obj.second)
+                r.reset();
+        }
+        _resourceObjects.clear();
+
+        for (auto& obj : _destroyedObjects)
+            obj.reset();
+        _destroyedObjects.clear();
+
+        for (auto& obj : _hierarchy)
+            obj.reset();
+        _hierarchy.clear();
+
+        _physics.reset();
     }
 
-    void Scene::BindMainObject()
+    Scene::Scene(const string& name) :Name(name), _hierarchy(), _resourceObjects(), _destroyedObjects(), _physics()
+    {
+
+    }
+
+    Scene::~Scene()
     {
 
     }

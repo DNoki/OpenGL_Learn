@@ -34,6 +34,7 @@ namespace OpenGL_Learn
         void OnGui() override;
 
         ConsoleBar(GameObject& obj) :ScriptBehaviour(obj) {}
+        ~ConsoleBar();
     };
 
 

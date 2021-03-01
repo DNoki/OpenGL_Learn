@@ -82,6 +82,18 @@ namespace OpenGL_Core
         InputSystem::_keys.insert({ GLFW_KEY_Z, Key() });
 
         InputSystem::_keys.insert({ GLFW_KEY_ESCAPE, Key() });
+        InputSystem::_keys.insert({ GLFW_KEY_F1, Key() });
+        InputSystem::_keys.insert({ GLFW_KEY_F2, Key() });
+        InputSystem::_keys.insert({ GLFW_KEY_F3, Key() });
+        InputSystem::_keys.insert({ GLFW_KEY_F4, Key() });
+        InputSystem::_keys.insert({ GLFW_KEY_F5, Key() });
+        InputSystem::_keys.insert({ GLFW_KEY_F6, Key() });
+        InputSystem::_keys.insert({ GLFW_KEY_F7, Key() });
+        InputSystem::_keys.insert({ GLFW_KEY_F8, Key() });
+        InputSystem::_keys.insert({ GLFW_KEY_F9, Key() });
+        InputSystem::_keys.insert({ GLFW_KEY_F10, Key() });
+        InputSystem::_keys.insert({ GLFW_KEY_F11, Key() });
+        InputSystem::_keys.insert({ GLFW_KEY_F12, Key() });
     }
 
     void InputSystem::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)

@@ -12,7 +12,7 @@ namespace OpenGL_Learn
         auto enable = obj.GetActive(false);
         ImGui::Checkbox(fmt.str().c_str(), &enable); ImGui::SameLine();
         obj.SetActive(enable);
-        fmt.str(""); fmt << obj.Name << "  0x" << &obj;
+        fmt.str(""); fmt << obj.Name;
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
             ImGui::NextColumn(); ImGui::NextColumn();
@@ -50,7 +50,7 @@ namespace OpenGL_Learn
                     }
                     else
                     {
-                        fmt.str(""); fmt << j << " " << typeid(*components[j]).name() << "  0x" << components[j].get();
+                        fmt.str(""); fmt << j << " " << typeid(*components[j]).name();
                         if (ImGui::TreeNode(fmt.str().c_str()))
                             // 其他未设定组件
                             ImGui::TreePop();
@@ -72,7 +72,7 @@ namespace OpenGL_Learn
         auto enable = camera->GetEnable();
         ImGui::Checkbox(fmt.str().c_str(), &enable); ImGui::SameLine();
         camera->SetEnable(enable);
-        fmt.str(""); fmt << "Camera" << "  0x" << camera;
+        fmt.str(""); fmt << "Camera";
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
             ImGui::NextColumn();
@@ -99,7 +99,7 @@ namespace OpenGL_Learn
     //    if (!postProcess) return false;
     //    fmt.str(""); fmt << index;
     //    ImGui::Checkbox(fmt.str().c_str(), &postProcess->_enabled); ImGui::SameLine();
-    //    fmt.str(""); fmt << "PostProcess" << "  0x" << postProcess;
+    //    fmt.str(""); fmt << "PostProcess" ;
     //    if (ImGui::TreeNode(fmt.str().c_str()))
     //    {
     //        for (size_t i = 0; i < postProcess->GetEffectCount(); i++)
@@ -122,7 +122,7 @@ namespace OpenGL_Learn
         auto enable = dirLight->GetEnable();
         ImGui::Checkbox(fmt.str().c_str(), &enable); ImGui::SameLine();
         dirLight->SetEnable(enable);
-        fmt.str(""); fmt << "Directional Light" << "  0x" << dirLight;
+        fmt.str(""); fmt << "Directional Light";
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
             ImGui::NextColumn();
@@ -148,7 +148,7 @@ namespace OpenGL_Learn
         auto enable = pointLight->GetEnable();
         ImGui::Checkbox(fmt.str().c_str(), &enable); ImGui::SameLine();
         pointLight->SetEnable(enable);
-        fmt.str(""); fmt << "Point Light" << "  0x" << pointLight;
+        fmt.str(""); fmt << "Point Light";
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
             ImGui::NextColumn();
@@ -175,7 +175,7 @@ namespace OpenGL_Learn
         auto enable = renderer->GetEnable();
         ImGui::Checkbox(fmt.str().c_str(), &enable); ImGui::SameLine();
         renderer->SetEnable(enable);
-        fmt.str(""); fmt << "Renderer" << "  0x" << renderer;
+        fmt.str(""); fmt << "Renderer";
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
             ImGui::Text("Material:");
@@ -275,7 +275,7 @@ namespace OpenGL_Learn
     {
         auto shader = dynamic_cast<Shader*>(obj);
         if (!shader) return false;
-        fmt.str(""); fmt << index << " " << shader->Name << "  0x" << shader;
+        fmt.str(""); fmt << index << " " << shader->Name;
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
             ImGui::NextColumn();
@@ -397,7 +397,7 @@ namespace OpenGL_Learn
     {
         auto material = dynamic_cast<Material*>(obj);
         if (!material) return false;
-        fmt.str(""); fmt << index << " " << material->Name << "  0x" << material;
+        fmt.str(""); fmt << index << " " << material->Name;
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
             ImGui::NextColumn();
@@ -416,7 +416,7 @@ namespace OpenGL_Learn
     {
         auto mesh = dynamic_cast<Mesh*>(obj);
         if (!mesh) return false;
-        fmt.str(""); fmt << index << " " << mesh->Name << "  0x" << mesh;
+        fmt.str(""); fmt << index << " " << mesh->Name;
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
             ImGui::NextColumn();
@@ -432,7 +432,7 @@ namespace OpenGL_Learn
     {
         auto texture = dynamic_cast<Texture*>(obj);
         if (!texture) return false;
-        fmt.str(""); fmt << index << " " << texture->Name << "  0x" << texture;
+        fmt.str(""); fmt << index << " " << texture->Name;
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
             ImGui::NextColumn();
@@ -456,7 +456,7 @@ namespace OpenGL_Learn
     {
         auto texture = dynamic_cast<RenderTexture*>(obj);
         if (!texture) return false;
-        fmt.str(""); fmt << index << " " << texture->Name << "  0x" << texture;
+        fmt.str(""); fmt << index << " " << texture->Name;
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
             ImGui::NextColumn();
@@ -517,7 +517,7 @@ namespace OpenGL_Learn
         ImGui::NewFrame();
 
         {
-            auto objs = SceneManager::GetActiveScene().GetAllRootGameObjects(true);
+            auto objs = SceneManager::GetActiveScene()->GetAllRootGameObjects(true);
             ImGui::Begin("Hierarchy");
             ImGui::Text("FPS:%.f", Time::FPS());
             ImGui::SameLine();
@@ -528,13 +528,15 @@ namespace OpenGL_Learn
             stringstream fmt;
             for (size_t i = 0; i < objs.Count(); i++)
             {
+                if (objs[i]->Name == "Console Bar") 
+                    continue;
                 ImGui::NextColumn(); ImGui::NextColumn();
                 CheckGameObject(i, fmt, *objs[i]);
             }
             ImGui::End();
         }
         {
-            auto& objs = SceneManager::GetActiveScene().GetAllResourceObjects();
+            auto& objs = SceneManager::GetActiveScene()->GetAllResourceObjects();
             ImGui::Begin("Resources");
             ImGui::Columns(2, "component", true);
             CheckResources(objs);
@@ -593,5 +595,10 @@ namespace OpenGL_Learn
         // Rendering
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    }
+    ConsoleBar::~ConsoleBar()
+    {
+        ImGui_ImplGlfw_Shutdown();
+        ImGui_ImplOpenGL3_Shutdown();
     }
 }

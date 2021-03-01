@@ -65,11 +65,11 @@ namespace OpenGL_Core
         /// <param name="index"></param>
         virtual void Draw(Material* material, unsigned int index) = 0;
 
+        void GenerateRenderItems();
+
     protected:
         Material* _material;
         List<unique_ptr<RenderItem>> _renderItems;
-
-        void GenerateRenderItems();
 
         Renderer(GameObject& obj);
 

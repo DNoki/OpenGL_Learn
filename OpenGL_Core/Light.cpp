@@ -12,8 +12,10 @@
 
 namespace OpenGL_Core
 {
-    Material* DirectionalLight::DirectionalLightShadowmapMaterial;
-    Material* PointLight::PointLightShadowmapMaterial;
+    unique_ptr<Shader> DirectionalLight::DirectionalLightShadowMapShader = nullptr;
+    unique_ptr<Material> DirectionalLight::DirectionalLightShadowmapMaterial = nullptr;
+    unique_ptr<Shader> PointLight::PointLightShadowmapShader = nullptr;
+    unique_ptr<Material> PointLight::PointLightShadowmapMaterial = nullptr;
 
     Light::Light(GameObject& obj) : Behaviour(obj),
         Shadows(LightShadows::Soft), Intensity(1.0f), LightColor(Color::White()),
@@ -41,11 +43,11 @@ namespace OpenGL_Core
     }
     void DirectionalLight::GenerateShadowMap(UINT width, UINT height)
     {
-        //ShadowMap = SceneManager::GetActiveScene().AddResourceObject(
+        //ShadowMap = SceneManager::GetActiveScene()->AddResourceObject(
         //    RenderTexture::CreateRenderTexture("Shadowmap", width, height,
         //        GL_DEPTH_COMPONENT, FormatType::DEPTH_COMPONENT, TextureType::FLOAT,
         //        WrapType::CLAMP_TO_BORDER, ScaleFilterType::NEAREST, AttachmentType::DEPTH_ATTACHMENT, false));
-        ShadowMap = SceneManager::GetActiveScene().AddResourceObject(
+        ShadowMap = SceneManager::GetActiveScene()->AddResourceObject(
             RenderTexture::CreateRenderTexture("Shadowmap", width, height));
         ShadowMap->AttachmentTexture2D(GL_DEPTH_COMPONENT, FormatType::DEPTH_COMPONENT, TextureType::FLOAT,
             WrapType::CLAMP_TO_BORDER, ScaleFilterType::NEAREST, AttachmentType::DEPTH_ATTACHMENT);
@@ -72,7 +74,7 @@ namespace OpenGL_Core
             {
                 auto m = item->renderer->GetTransform().GetTransformMatrix();
                 UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), m.GetPtr()); // 模型变换数据
-                item->renderer->Draw(DirectionalLightShadowmapMaterial, item->index);
+                item->renderer->Draw(DirectionalLightShadowmapMaterial.get(), item->index);
                 // 绑定阴影贴图
                 (*item->material)[item->index]->BindTexture(*this->ShadowMap->GetTexture(0), "_ShadowMap", 10);
             }
@@ -81,15 +83,15 @@ namespace OpenGL_Core
     {
         if (!DirectionalLightShadowmapMaterial)
         {
-            auto shader = SceneManager::GetActiveScene().AddResourceObject(
-                make_unique<Shader>("DirectionalLight ShadowMap Shader", "../Asset/Shader/Shadow/DirectionalLightShadowMap.glsl"));
-            shader->HideFlag = HideFlagType::STATIC;
-            shader->State.DepthTestMode = TestModeType::LESS;
-            shader->State.CullFace = true;
-            shader->State.CullFaceMode = CullFaceModeType::FRONT;
+            DirectionalLightShadowMapShader =
+                make_unique<Shader>("DirectionalLight ShadowMap Shader", "../Asset/Shader/Shadow/DirectionalLightShadowMap.glsl");
+            DirectionalLightShadowMapShader->HideFlag = HideFlagType::STATIC;
+            DirectionalLightShadowMapShader->State.DepthTestMode = TestModeType::LESS;
+            DirectionalLightShadowMapShader->State.CullFace = true;
+            DirectionalLightShadowMapShader->State.CullFaceMode = CullFaceModeType::FRONT;
 
-            DirectionalLightShadowmapMaterial = SceneManager::GetActiveScene().AddResourceObject(
-                unique_ptr<Material>(new Material("DirectionalLight ShadowMap Material", { shader })));
+            DirectionalLightShadowmapMaterial =
+                unique_ptr<Material>(new Material("DirectionalLight ShadowMap Material", { DirectionalLightShadowMapShader.get() }));
             DirectionalLightShadowmapMaterial->HideFlag = HideFlagType::STATIC;
         }
         Bias = 0.00002f;
@@ -149,7 +151,7 @@ namespace OpenGL_Core
             {
                 auto m = item->renderer->GetTransform().GetTransformMatrix();
                 UniformManager::Transform->SetSubData(2 * sizeof(Matrix4x4), sizeof(Matrix4x4), m.GetPtr()); // 模型变换数据
-                item->renderer->Draw(PointLightShadowmapMaterial, item->index);
+                item->renderer->Draw(PointLightShadowmapMaterial.get(), item->index);
                 // 绑定阴影贴图
                 (*item->material)[item->index]->BindTexture(*this->CubeShadowMap->GetTexture(0), "_PointLight4ShadowMap[" + to_string(index) + "]", 11 + index);
             }
@@ -160,19 +162,19 @@ namespace OpenGL_Core
     {
         if (!PointLightShadowmapMaterial)
         {
-            auto shader = SceneManager::GetActiveScene().AddResourceObject(
-                make_unique<Shader>("PointLight ShadowMap Shader", "../Asset/Shader/Shadow/PointLightShadowMap.glsl"));
-            shader->HideFlag = HideFlagType::STATIC;
-            shader->State.DepthTestMode = TestModeType::LESS;
-            shader->State.CullFace = true;
-            shader->State.CullFaceMode = CullFaceModeType::FRONT;
+            PointLightShadowmapShader =
+                make_unique<Shader>("PointLight ShadowMap Shader", "../Asset/Shader/Shadow/PointLightShadowMap.glsl");
+            PointLightShadowmapShader->HideFlag = HideFlagType::STATIC;
+            PointLightShadowmapShader->State.DepthTestMode = TestModeType::LESS;
+            PointLightShadowmapShader->State.CullFace = true;
+            PointLightShadowmapShader->State.CullFaceMode = CullFaceModeType::FRONT;
 
-            PointLightShadowmapMaterial = SceneManager::GetActiveScene().AddResourceObject(
-                unique_ptr<Material>(new Material("PointLight ShadowMap Material", { shader })));
+            PointLightShadowmapMaterial =
+                unique_ptr<Material>(new Material("PointLight ShadowMap Material", { PointLightShadowmapShader.get() }));
             PointLightShadowmapMaterial->HideFlag = HideFlagType::STATIC;
         }
-        CubeShadowMap = SceneManager::GetActiveScene().AddResourceObject(RenderTexture::CreateRenderTexture("Cube Shadowmap", 1024, 1024));
-        //CubeShadowMap = SceneManager::GetActiveScene().AddResourceObject(CubeRenderTexture::CreateRenderTexture("Cube Shadowmap", 1024, 1024,
+        CubeShadowMap = SceneManager::GetActiveScene()->AddResourceObject(RenderTexture::CreateRenderTexture("Cube Shadowmap", 1024, 1024));
+        //CubeShadowMap = SceneManager::GetActiveScene()->AddResourceObject(CubeRenderTexture::CreateRenderTexture("Cube Shadowmap", 1024, 1024,
         //    GL_DEPTH_COMPONENT, FormatType::DEPTH_COMPONENT, TextureType::FLOAT,
         //    WrapType::CLAMP_TO_EDGE, ScaleFilterType::NEAREST, AttachmentType::DEPTH_ATTACHMENT));
         CubeShadowMap->AttachmentTextureCube(GL_DEPTH_COMPONENT, FormatType::DEPTH_COMPONENT, TextureType::FLOAT,

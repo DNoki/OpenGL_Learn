@@ -10,7 +10,7 @@
 
 namespace OpenGL_Core
 {
-    Mesh* Skybox::skyboxMesh;
+    unique_ptr<Mesh> Skybox::skyboxMesh;
 
 
     void Skybox::DrawSkyBox()
@@ -24,7 +24,7 @@ namespace OpenGL_Core
         // 初始化天空盒模型
         if (!skyboxMesh)
         {
-            skyboxMesh = SceneManager::GetActiveScene().AddResourceObject(make_unique<Mesh>("SkyboxMesh"));
+            skyboxMesh = make_unique<Mesh>("SkyboxMesh");
             skyboxMesh->HideFlag = HideFlagType::STATIC;
             float skyboxVertices[] = {
                 // positions          

@@ -158,8 +158,10 @@ namespace OpenGL_Core
         /// 由系统调用更新场景
         /// </summary>
         void ExcuteUpdate();
+        void Close();
 
         Scene(const string& name);
+        ~Scene();
 
     protected:
 
@@ -179,10 +181,5 @@ namespace OpenGL_Core
         map<string, List<unique_ptr<ResourceObject>>> _resourceObjects;
         List<unique_ptr<ResourceObject>> _destroyedObjects;
         unique_ptr<Physics> _physics;
-
-        /// <summary>
-        /// 设定全局主要对象
-        /// </summary>
-        void BindMainObject();
     };
 }

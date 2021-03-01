@@ -88,11 +88,11 @@ namespace OpenGL_Core
         /// <summary>
         /// 渲染贴图所使用的平面
         /// </summary>
-        static Mesh* DefaultTargetTextureMesh;
-        static Shader* DefaultTargetTextureShader;
-        static Material* DefaultTargetTextureMaterial;
-        static RenderTexture* DefaultTargetTexture;
-        static RenderTexture* DefaultTargetMultisampleTexture;
+        static unique_ptr<Mesh> DefaultTargetTextureMesh;
+        static unique_ptr<Shader> DefaultTargetTextureShader;
+        static unique_ptr<Material> DefaultTargetTextureMaterial;
+        static unique_ptr<RenderTexture> DefaultTargetTexture;
+        static unique_ptr<RenderTexture> DefaultTargetMultisampleTexture;
 
         static Camera* GetMain();
 

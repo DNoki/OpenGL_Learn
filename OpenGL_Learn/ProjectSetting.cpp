@@ -13,6 +13,9 @@ namespace OpenGL_Learn
     void ProjectSetting::LoadSetting()
     {
         // 添加场景
-        SceneManager::AddScene(make_unique<PhysiceTestScene>("SampleScene"));
+        SceneManager::AddScene(make_unique<SampleScene>("SampleScene"));
+        SceneManager::AddScene(make_unique<PhysiceTestScene>("PhysiceTestScene"));
+        SceneManager::AddScene(make_unique<PointLightScene>("PointLightScene"));
+        SceneManager::SetStartupScene(0);
     }
 }

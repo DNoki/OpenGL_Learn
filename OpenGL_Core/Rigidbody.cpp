@@ -85,7 +85,7 @@ namespace OpenGL_Core
         if (_btCollisionObject)
         {
             auto btRigidbody = GetBtRigidBody();
-            SceneManager::GetActiveScene().GetPhysicsEngine().RemoveRigidbody(*this);
+            SceneManager::GetActiveScene()->GetPhysicsEngine().RemoveCollisionObject(*this);
 
             btRigidbody->setCollisionShape(_collider->GetBtCollisionShape());
             if (!_btMotionState)
@@ -93,14 +93,14 @@ namespace OpenGL_Core
                 _btMotionState = unique_ptr<btMotionState>(new CustomBtMotionState(GetTransform(), *_collider));
                 btRigidbody->setMotionState(_btMotionState.get());
             }
-            SceneManager::GetActiveScene().GetPhysicsEngine().AddRigidbody(*this);
+            SceneManager::GetActiveScene()->GetPhysicsEngine().AddCollisionObject(*this);
         }
         else
         {
             _btMotionState = unique_ptr<btMotionState>(new CustomBtMotionState(GetTransform(), *_collider));
             _btCollisionObject = unique_ptr<btRigidBody>(new btRigidBody(1.0f, _btMotionState.get(), _collider->GetBtCollisionShape()));
 
-            SceneManager::GetActiveScene().GetPhysicsEngine().AddRigidbody(*this);
+            SceneManager::GetActiveScene()->GetPhysicsEngine().AddCollisionObject(*this);
         }
     }
 
@@ -130,7 +130,7 @@ namespace OpenGL_Core
     Rigidbody::Rigidbody(GameObject& obj) : CollisionObject(obj), _btMotionState() {}
     Rigidbody::~Rigidbody()
     {
-        //SceneManager::GetActiveScene().GetPhysicsEngine().RemoveRigidbody(*this);
+        //SceneManager::GetActiveScene()->GetPhysicsEngine().RemoveCollisionObject(*this);
         if (_btMotionState)
             _btMotionState.reset();
         //if (_btRigidbody)

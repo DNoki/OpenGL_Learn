@@ -74,7 +74,8 @@ namespace OpenGL_Core
             InputSystem::ResetOnFrame();
             glfwPollEvents();// glfwPollEvents函数检查有没有触发什么事件（比如键盘输入、鼠标移动等），然后调用对应的回调函数（可以通过回调方法手动设置）。我们一般在游戏循环的开始调用事件处理函数。
 
-            SceneManager::GetActiveScene().ExcuteUpdate();
+            SceneManager::CheckLoadNextScene();
+            SceneManager::GetActiveScene()->ExcuteUpdate();
 
             // 交换缓冲
             glfwSwapBuffers(_window);// glfwSwapBuffers函数会交换颜色缓冲（它是一个储存着GLFW窗口每一个像素颜色的大缓冲），它在这一迭代中被用来绘制，并且将会作为输出显示在屏幕上。

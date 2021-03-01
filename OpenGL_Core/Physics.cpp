@@ -55,7 +55,7 @@ namespace OpenGL_Core
         {
             _debugMode = btIDebugDraw::DBG_NoDebug;
             //_debugMode = btIDebugDraw::DBG_DrawWireframe;
-            _shader = unique_ptr<Shader>(new Shader("Debug Shader", "../Asset/Shader/Auxiliary/DebguDraw.glsl"));
+            _shader = unique_ptr<Shader>(new Shader("Debug Shader", "../Asset/Shader/Auxiliary/DebugDraw.glsl"));
             _material = unique_ptr<Material>(new Material("Debug Material", _shader.get()));
             _mesh = nullptr;
             _mesh = unique_ptr<Mesh>(new Mesh("Debug Mesh"));
@@ -70,7 +70,7 @@ namespace OpenGL_Core
         unique_ptr<Mesh> _mesh;
     };
 
-    unique_ptr<PhysicsDebugDraw> DebugDraw;
+    unique_ptr<PhysicsDebugDraw> DebugDrawInstance;
 
     //Vector3 Physics::ToVector3(const btVector3& v)
     //{
@@ -89,45 +89,41 @@ namespace OpenGL_Core
     //    return btQuaternion(q.x, q.y, q.z, q.w);
     //}
 
+    void Physics::SetDebugEnable(bool enable)
+    {
+        if (enable)
+            DebugDrawInstance->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+        else DebugDrawInstance->setDebugMode(btIDebugDraw::DBG_NoDebug);
+    }
+
     void Physics::ExcuteUpdate()
     {
         DynamicsWorld->stepSimulation(Time::DeltaTime(), 50, 0.02f);
     }
 
-    void Physics::DeubgDraw()
+    void Physics::DebugDraw()
     {
-        DebugDraw->PreDebugDraw();
+        DebugDrawInstance->PreDebugDraw();
         DynamicsWorld->debugDrawWorld();
-        DebugDraw->OnDebugDraw();
+        DebugDrawInstance->OnDebugDraw();
     }
 
-    void Physics::AddRigidbody(Rigidbody& rigidbody)
-    {
-        if (RigidbodyList.Exists(&rigidbody))
-            return;
-        RigidbodyList.push_back(&rigidbody);
-        DynamicsWorld->addRigidBody(rigidbody.GetBtRigidBody());
-    }
-    void Physics::RemoveRigidbody(Rigidbody& rigidbody)
-    {
-        if (RigidbodyList.Exists(&rigidbody))
-        {
-            RigidbodyList.Remove(&rigidbody);
-            DynamicsWorld->removeCollisionObject(rigidbody.GetBtRigidBody());
-        }
-    }
     void Physics::AddCollisionObject(CollisionObject& collisionObject)
     {
-        if (ColliderList.Exists(&collisionObject))
+        if (CollisionList.Exists(&collisionObject))
             return;
-        ColliderList.push_back(&collisionObject);
-        DynamicsWorld->addCollisionObject(collisionObject.GetBtCollisionObject());
+        CollisionList.push_back(&collisionObject);
+
+        btRigidBody* rigidbody = btRigidBody::upcast(collisionObject.GetBtCollisionObject());
+        if (rigidbody)
+            DynamicsWorld->addRigidBody(rigidbody);
+        else DynamicsWorld->addCollisionObject(collisionObject.GetBtCollisionObject());
     }
     void Physics::RemoveCollisionObject(CollisionObject& collisionObject)
     {
-        if (ColliderList.Exists(&collisionObject))
+        if (CollisionList.Exists(&collisionObject))
         {
-            ColliderList.Remove(&collisionObject);
+            CollisionList.Remove(&collisionObject);
             DynamicsWorld->removeCollisionObject(collisionObject.GetBtCollisionObject());
         }
     }
@@ -140,19 +136,18 @@ namespace OpenGL_Core
         DynamicsWorld = unique_ptr<btDiscreteDynamicsWorld>(new btDiscreteDynamicsWorld(Dispatcher.get(), OverlappingPairCache.get(), Solver.get(), CollisionConfiguration.get()));
         DynamicsWorld->setGravity(btVector3(0.0f, -10.0f, 0.0f));
 
-        DebugDraw = unique_ptr<PhysicsDebugDraw>(new PhysicsDebugDraw());
-        DynamicsWorld->setDebugDrawer(DebugDraw.get());
+        DebugDrawInstance = unique_ptr<PhysicsDebugDraw>(new PhysicsDebugDraw());
+        DynamicsWorld->setDebugDrawer(DebugDrawInstance.get());
 
-        ColliderList = List<CollisionObject*>();
+        CollisionList = List<CollisionObject*>();
     }
     Physics::~Physics()
     {
-        for (int i = DynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+        for (auto collider : CollisionList)
         {
-            DynamicsWorld->removeCollisionObject(DynamicsWorld->getCollisionObjectArray()[i]);
+            DynamicsWorld->removeCollisionObject(collider->GetBtCollisionObject());
         }
-        RigidbodyList.clear();
-        ColliderList.clear();
+        CollisionList.clear();
 
         DynamicsWorld.reset();
         Solver.reset();

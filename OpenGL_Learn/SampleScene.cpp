@@ -13,10 +13,8 @@ namespace OpenGL_Learn
 {
     void SampleScene::ImportResource()
     {
-
-        //auto texture = AddResourceObject(Texture2D::CreateTexture2D("测试贴图唯一名称", "../Asset/TestImage.png", true));
-        auto texture = AddResourceObject(Texture2D::CreateTexture2D("测试贴图唯一名称", "../Asset/Checker.png", true));
-        auto transparentTexture = AddResourceObject(Texture2D::CreateTexture2D("透明贴图", "../Asset/Transparent.png", true));
+        auto texture = AddResourceObject(Texture2D::CreateTexture2D("Checker", "../Asset/Checker.png", true));
+        auto transparentTexture = AddResourceObject(Texture2D::CreateTexture2D("Transparent", "../Asset/Transparent.png", true));
 
 
         auto unlitColor = AddResourceObject(make_unique<Shader>("Unlit_Color", "../Asset/Shader/Unlit/Color.glsl"));
@@ -55,27 +53,27 @@ namespace OpenGL_Learn
 
         // 天空盒
         Skybox* skybox = nullptr;
-        //{
-        //    auto faces = List<string>(
-        //        {
-        //            "../Asset/Skybox/right.jpg",
-        //            "../Asset/Skybox/left.jpg",
-        //            "../Asset/Skybox/top.jpg",
-        //            "../Asset/Skybox/bottom.jpg",
-        //            "../Asset/Skybox/front.jpg",
-        //            "../Asset/Skybox/back.jpg"
-        //        });
-        //    auto skyboxTexture = AddResourceObject(TextureCube::CreateTextureCube("Cube_SkyCube", faces, true,
-        //        WrapType::CLAMP_TO_EDGE, ScaleFilterType::LINEAR, false));
+        {
+            auto faces = List<string>(
+                {
+                    "../Asset/Skybox/right.jpg",
+                    "../Asset/Skybox/left.jpg",
+                    "../Asset/Skybox/top.jpg",
+                    "../Asset/Skybox/bottom.jpg",
+                    "../Asset/Skybox/front.jpg",
+                    "../Asset/Skybox/back.jpg"
+                });
+            auto skyboxTexture = AddResourceObject(TextureCube::CreateTextureCube("Cube_SkyCube", faces, true,
+                WrapType::CLAMP_TO_EDGE, ScaleFilterType::LINEAR, false));
 
-        //    auto skyboxShader = AddResourceObject(make_unique<Shader>("Skybox Shader", "../Asset/Shader/Skybox.glsl"));
-        //    skyboxShader->BindTexture(*skyboxTexture, "_CubeTexture", 0);
-        //    skyboxShader->State.DepthTestMode = TestModeType::LEQUAL;
-        //    skyboxShader->State.DepthMask = false;
-        //    skyboxShader->State.CullFaceMode = CullFaceModeType::FRONT;
-        //    auto skyboxMaterial = AddResourceObject(make_unique<Material>("Skybox Material", skyboxShader));
-        //    skybox = AddResourceObject(make_unique<Skybox>("天空盒", skyboxMaterial));
-        //}
+            auto skyboxShader = AddResourceObject(make_unique<Shader>("Skybox Shader", "../Asset/Shader/Skybox.glsl"));
+            skyboxShader->BindTexture(*skyboxTexture, "_CubeTexture", 0);
+            skyboxShader->State.DepthTestMode = TestModeType::LEQUAL;
+            skyboxShader->State.DepthMask = false;
+            skyboxShader->State.CullFaceMode = CullFaceModeType::FRONT;
+            auto skyboxMaterial = AddResourceObject(make_unique<Material>("Skybox Material", skyboxShader));
+            skybox = AddResourceObject(make_unique<Skybox>("天空盒", skyboxMaterial));
+        }
 
         // 相机
         auto& cameraObj = AddGameObject(make_unique<GameObject>("Camera Object"));
@@ -177,7 +175,7 @@ namespace OpenGL_Learn
         auto outlineShader = AddResourceObject(make_unique<Shader>("Display Normal Shader", "../Asset/Shader/Auxiliary/Outline.glsl"));
         auto displayNormalShaderMaterial = AddResourceObject(make_unique<Material>("outlineShader Material", outlineShader));
 
-        auto& _3Obj = AddGameObject(make_unique<GameObject>("3"));
+        auto& _3Obj = AddGameObject(make_unique<GameObject>("Check Box"));
         _3Obj.AddComponent<MeshRenderer>().Initialize(*meshBox, *unlitTexMaterial);
         _3Obj.GetTransform().SetPosition(Vector3(4.0f, 0.5f, 0.0f));
         //_3Obj.GetTransform().SetParent(&cameraObj.GetTransform(), false);
@@ -204,6 +202,14 @@ namespace OpenGL_Learn
                 //mat->AddShaderPass(displayNormalShader);
                 //mat->AddShaderPass(outlineShader);
             }
+
+            // 临时功能，需要改进生成渲染项调用位置
+            for (auto& obj : importer->gameObjects)
+            {
+                auto renderer = obj->GetComponent<Renderer>();
+                if (renderer) renderer->GenerateRenderItems();
+            }
+
             //importer->gameObjects[0]->GetTransform().Rotate(Vector3::Up, 180.0f);
             importer->gameObjects[0]->GetTransform().LocalScale = Vector3::One * 0.03f;
             importer->gameObjects[0]->Name = "Unity Chan";
@@ -220,11 +226,11 @@ namespace OpenGL_Learn
         //    AssimpImporter::AssingToScene(*this, *importer);
         //}
 
-        //auto normalTex = SceneManager::GetActiveScene().AddResourceObject(unique_ptr<Texture2D>(Texture2D::CreateTexture2D(
+        //auto normalTex = SceneManager::GetActiveScene()->AddResourceObject(unique_ptr<Texture2D>(Texture2D::CreateTexture2D(
         //    "Normal Tex",
         //    "F:/LocalCGLearn/OpenGL/OpenGL_LEARN/Asset/Model/Textures/SD_Unitychan_normal.png",
         //    false)));
-        //auto test = SceneManager::GetActiveScene().AddResourceObject(unique_ptr<Shader>(new Shader("Test Normal", "../Asset/Shader/TestNormal.glsl")));
+        //auto test = SceneManager::GetActiveScene()->AddResourceObject(unique_ptr<Shader>(new Shader("Test Normal", "../Asset/Shader/TestNormal.glsl")));
         //test->SetVector4("_MainColor", Color::Blue());
         //test->BindTexture(*normalTex, "_MainTexture", 0);
 

@@ -17,6 +17,7 @@ namespace OpenGL_Core
         rt->_samples = samples;
         // 生成帧缓冲
         glGenFramebuffers(1, &rt->_framebufferID);
+        cout << "LOG:: 渲染贴图:: Name：" << rt->Name << " FramebufferID：" << rt->_framebufferID << " 帧缓冲已生成。" << endl << endl;
 
         return rt;
     }
@@ -123,7 +124,7 @@ namespace OpenGL_Core
         GLuint framebufferID = this->_framebufferID, renderBufferObjectID = this->_renderBufferObjectID;
 
         glDeleteFramebuffers(1, &(this->_framebufferID));
-        cout << "LOG:: 渲染贴图:: Name：" << Name << " FramebufferID：" << framebufferID << " 帧缓冲已释放。";
+        cout << "LOG:: 渲染贴图:: Name：" << Name << " FramebufferID：" << framebufferID << " 帧缓冲已释放。" << endl << endl;
 
         if (this->_renderBufferObjectID != GL_INVALID_INDEX)
         {

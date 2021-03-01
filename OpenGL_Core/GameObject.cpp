@@ -49,7 +49,7 @@ namespace OpenGL_Core
 
     GameObject* GameObject::Find(const string& name)
     {
-        return SceneManager::GetActiveScene().FindGameObject(name);
+        return SceneManager::GetActiveScene()->FindGameObject(name);
     }
 
     void GameObject::OnAddComponent(Component* component)

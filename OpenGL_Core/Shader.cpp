@@ -437,14 +437,15 @@ namespace OpenGL_Core
                     else if (uniform.Item1 == UniformType::SAMPLER_2D)
                     {
                         Texture2D* tex = nullptr;
+                        auto activeScene = SceneManager::GetActiveScene();
                         if (propertyJson.at(uniform.Item2)[1].get<string>() == "White")
-                            tex = SceneManager::GetActiveScene().FindResourceObject<Texture2D>("Default White Texture");
+                            tex = activeScene->FindResourceObject<Texture2D>("Default White Texture");
                         else if (propertyJson.at(uniform.Item2)[1].get<string>() == "Gray")
-                            tex = SceneManager::GetActiveScene().FindResourceObject<Texture2D>("Default Gray Texture");
+                            tex = activeScene->FindResourceObject<Texture2D>("Default Gray Texture");
                         else if (propertyJson.at(uniform.Item2)[1].get<string>() == "Black")
-                            tex = SceneManager::GetActiveScene().FindResourceObject<Texture2D>("Default Black Texture");
+                            tex = activeScene->FindResourceObject<Texture2D>("Default Black Texture");
                         else if (propertyJson.at(uniform.Item2)[1].get<string>() == "Normal")
-                            tex = SceneManager::GetActiveScene().FindResourceObject<Texture2D>("Default Normal Texture");
+                            tex = activeScene->FindResourceObject<Texture2D>("Default Normal Texture");
                         if (tex != nullptr)
                             BindTexture(*tex, uniform.Item2, propertyJson.at(uniform.Item2)[0].get<int>());
                     }
@@ -452,7 +453,7 @@ namespace OpenGL_Core
                     {
                         TextureCube* tex = nullptr;
                         if (propertyJson.at(uniform.Item2)[1].get<string>() == "White")
-                            tex = SceneManager::GetActiveScene().FindResourceObject<TextureCube>("Default White TextureCube");
+                            tex = SceneManager::GetActiveScene()->FindResourceObject<TextureCube>("Default White TextureCube");
                         if (tex != nullptr)
                             BindTexture(*tex, uniform.Item2, propertyJson.at(uniform.Item2)[0].get<int>());
                     }
@@ -463,6 +464,15 @@ namespace OpenGL_Core
 
     Shader::~Shader()
     {
+        if (StaticIntUniforms.count(this->ID) != 0)
+            StaticIntUniforms.erase(this->ID);
+        if (StaticFloatUniforms.count(this->ID) != 0)
+            StaticFloatUniforms.erase(this->ID);
+        if (StaticVector4Uniforms.count(this->ID) != 0)
+            StaticVector4Uniforms.erase(this->ID);
+        if (StaticMatrix4x4Uniforms.count(this->ID) != 0)
+            StaticMatrix4x4Uniforms.erase(this->ID);
+
         if (Counter.count(this->ID) == 0)
         {
             auto id = this->ID;
@@ -557,8 +567,8 @@ namespace OpenGL_Core
         UniformManager::UniformBlockBinding(this);
 
         // 绑定默认ShadowMap
-        auto defaultWhiteTexture = SceneManager::GetActiveScene().FindResourceObject<Texture2D>("Default White Texture");
-        auto defaultWhiteTextureCube = SceneManager::GetActiveScene().FindResourceObject<TextureCube>("Default White TextureCube");
+        auto defaultWhiteTexture = SceneManager::GetActiveScene()->FindResourceObject<Texture2D>("Default White Texture");
+        auto defaultWhiteTextureCube = SceneManager::GetActiveScene()->FindResourceObject<TextureCube>("Default White TextureCube");
         this->BindTexture(*defaultWhiteTexture, "_ShadowMap", 10);
         this->BindTexture(*defaultWhiteTextureCube, "_PointLight4ShadowMap[0]", 11);
         this->BindTexture(*defaultWhiteTextureCube, "_PointLight4ShadowMap[1]", 12);

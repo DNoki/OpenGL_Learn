@@ -14,11 +14,11 @@ namespace OpenGL_Learn
         void Awake() override
         {
             //GetGameObject().AddComponent<MeshRenderer>().AddData(
-            //    *SceneManager::GetActiveScene().FindResourceObject<Mesh>("Box"),
-            //    *SceneManager::GetActiveScene().FindResourceObject<Material>("Test Material"));
+            //    *SceneManager::GetActiveScene()->FindResourceObject<Mesh>("Box"),
+            //    *SceneManager::GetActiveScene()->FindResourceObject<Material>("Test Material"));
             GetTransform().SetPosition(Vector3::Right * 2.0f);
 
-            auto light = SceneManager::GetActiveScene().FindComponent<DirectionalLight>();
+            auto light = SceneManager::GetActiveScene()->FindComponent<DirectionalLight>();
             tempValue = light->Bias;
             //cout << tempValue * light->ShadowDistance << endl;
         }
@@ -30,7 +30,7 @@ namespace OpenGL_Learn
             //    mat->SetFloat("time", abs(sin(pi<float>() * Time::RunTime())));
 
 
-            auto lights = SceneManager::GetActiveScene().FindComponents<Light>();
+            auto lights = SceneManager::GetActiveScene()->FindComponents<Light>();
 
             for (auto light : lights)
             {

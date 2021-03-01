@@ -13,11 +13,11 @@ namespace OpenGL_Learn
 
         void Awake() override
         {
-            fatherObj = SceneManager::GetActiveScene().FindGameObject("Father");
+            fatherObj = SceneManager::GetActiveScene()->FindGameObject("Father");
 
             //GetGameObject().AddComponent<MeshRenderer>().AddData(
-            //    *SceneManager::GetActiveScene().FindResourceObject<Mesh>("Box"),
-            //    *SceneManager::GetActiveScene().FindResourceObject<Material>("Test Material"));
+            //    *SceneManager::GetActiveScene()->FindResourceObject<Mesh>("Box"),
+            //    *SceneManager::GetActiveScene()->FindResourceObject<Material>("Test Material"));
 
 
             //childObj->GetTransform().LocalRotation = angleAxis(3.1415926f / 4.0f, V3_FORWARD);

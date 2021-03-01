@@ -51,11 +51,20 @@ namespace OpenGL_Learn
 
         transform.SetPosition(position);
 
+        // 临时
         // 旋转点光
-        auto pointLights = SceneManager::GetActiveScene().FindComponents<PointLight>();
+        auto pointLights = SceneManager::GetActiveScene()->FindComponents<PointLight>();
         for (auto& light : pointLights)
         {
             light->GetTransform().RotateAround(Vector3::Zero, Vector3::Up, -Time::DeltaTime() * 30.0f);
         }
+
+        // 切换场景
+        if (InputSystem::GetKeyDown(KeyCode::F1))
+            SceneManager::LoadNextScene(0);
+        else if (InputSystem::GetKeyDown(KeyCode::F2))
+            SceneManager::LoadNextScene(1);
+        else if (InputSystem::GetKeyDown(KeyCode::F3))
+            SceneManager::LoadNextScene(2);
     }
 }

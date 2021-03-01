@@ -33,7 +33,7 @@ namespace OpenGL_Core
         /// <summary>
         /// 天空盒绘制所需网格
         /// </summary>
-        static Mesh* skyboxMesh;
+        static unique_ptr<Mesh> skyboxMesh;
 
         Material* _material;
     };

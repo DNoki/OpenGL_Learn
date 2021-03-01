@@ -8,7 +8,7 @@ namespace OpenGL_Learn
     {
         if (!EffectRenderTexture)
         {
-            EffectRenderTexture = SceneManager::GetActiveScene().AddResourceObject(RenderTexture::CreateRenderTexture("Effect Render Texture",
+            EffectRenderTexture = SceneManager::GetActiveScene()->AddResourceObject(RenderTexture::CreateRenderTexture("Effect Render Texture",
                 GameSystem::ScreenWidth, GameSystem::ScreenHeight));
             EffectRenderTexture->AttachmentTexture2D(GL_RGBA16F, FormatType::RGBA);
             //EffectRenderTexture->HideFlag = HideFlagType::STATIC;
@@ -74,7 +74,7 @@ namespace OpenGL_Learn
         auto enable = postProcess->GetEnable();
         ImGui::Checkbox(fmt.str().c_str(), &enable); ImGui::SameLine();
         postProcess->SetEnable(enable);
-        fmt.str(""); fmt << "PostProcess" << "  0x" << postProcess;
+        fmt.str(""); fmt << "PostProcess";
         if (ImGui::TreeNode(fmt.str().c_str()))
         {
             for (size_t i = 0; i < postProcess->GetEffectCount(); i++)
