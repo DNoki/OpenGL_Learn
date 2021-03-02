@@ -175,10 +175,10 @@ namespace OpenGL_Learn
         auto outlineShader = AddResourceObject(make_unique<Shader>("Display Normal Shader", "../Asset/Shader/Auxiliary/Outline.glsl"));
         auto displayNormalShaderMaterial = AddResourceObject(make_unique<Material>("outlineShader Material", outlineShader));
 
-        auto& _3Obj = AddGameObject(make_unique<GameObject>("Check Box"));
-        _3Obj.AddComponent<MeshRenderer>().Initialize(*meshBox, *unlitTexMaterial);
-        _3Obj.GetTransform().SetPosition(Vector3(4.0f, 0.5f, 0.0f));
-        //_3Obj.GetTransform().SetParent(&cameraObj.GetTransform(), false);
+        auto& check = AddGameObject(make_unique<GameObject>("Check Box"));
+        check.AddComponent<MeshRenderer>().Initialize(*meshBox, *unlitTexMaterial);
+        check.GetTransform().SetPosition(Vector3(4.0f, 0.5f, 0.0f));
+        //check.GetTransform().SetParent(&cameraObj.GetTransform(), false);
 
         auto& ground = AddGameObject(make_unique<GameObject>("Ground"));
         ground.AddComponent<MeshRenderer>().Initialize(*meshSquare, *phongMaterial);

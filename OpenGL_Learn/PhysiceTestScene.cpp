@@ -21,8 +21,10 @@ namespace OpenGL_Learn
             camera.IsMSAA = true;
         }
         cameraObj.AddComponent<CameraController>();
-        cameraObj.GetTransform().SetPosition(Vector3(0.0f, 5.0f, 25.0f));
-        cameraObj.GetTransform().LookAt(Vector3::Zero);
+        cameraObj.GetTransform().SetPosition(Vector3(0.0f, 5.0f, 15.0f));
+        cameraObj.GetTransform().SetEulerAngles(Vector3(180.0f, 0.0f, 180.0f));
+
+        //Physics::SetDebugEnable(true);
 
         auto&& consoleBar = AddGameObject(make_unique<GameObject>("Console Bar"));
         consoleBar.AddComponent<ConsoleBar>();
@@ -33,6 +35,7 @@ namespace OpenGL_Learn
 
         auto meshSquare = AddResourceObject(Mesh::CreatePresetMesh(PresetMesh::SQUARE));
         auto meshBox = AddResourceObject(Mesh::CreatePresetMesh(PresetMesh::BOX));
+        auto meshSphere = AddResourceObject(Mesh::CreatePresetMesh(PresetMesh::SPHERE));
 
         // 灯光
         auto& lightObj = AddGameObject(make_unique<GameObject>("Directional Light"));
@@ -55,45 +58,111 @@ namespace OpenGL_Learn
 
             auto& boxCollider = ground.AddComponent<BoxCollider>();
             boxCollider.Initialize(Vector3(transform.LocalScale.x, 0.01f, transform.LocalScale.z), Vector3::Zero);
-            auto& rigid = ground.AddComponent<CollisionObject>();
-            rigid.Initialize(boxCollider);
+            auto& collision = ground.AddComponent<CollisionObject>();
+            collision.Initialize(boxCollider);
         }
 
-        auto& box = AddGameObject(make_unique<GameObject>("box"));
+        for (size_t i = 0; i < 4; i++)
         {
-            box.AddComponent<MeshRenderer>().Initialize(*meshBox, *blinnMaterial);
-            auto& transform = box.GetTransform();
-            transform.LocalPosition = Vector3(0.0f, 10.0f, 0.0f);
+            auto& wall = AddGameObject(make_unique<GameObject>("wall" + i));
+            {
+                auto& transform = wall.GetTransform();
+                switch (i)
+                {
+                case 0:
+                    transform.LocalScale = Vector3(10.0f, 10.0f, 1.0f);
+                    transform.SetPosition(Vector3(0.0f, 5.0f, 5.0f));
+                    break;
+                case 1:
+                    transform.LocalScale = Vector3(10.0f, 10.0f, 1.0f);
+                    transform.SetPosition(Vector3(0.0f, 5.0f, -5.0f));
+                    break;
+                case 2:
+                    transform.LocalScale = Vector3(1.0f, 10.0f, 10.0f);
+                    transform.SetPosition(Vector3(5.0f, 5.0f, 0.0f));
+                    break;
+                case 3:
+                    transform.LocalScale = Vector3(1.0f, 10.0f, 10.0f);
+                    transform.SetPosition(Vector3(-5.0f, 5.0f, 0.0f));
+                    break;
+                }
 
-            auto& boxCollider = box.AddComponent<BoxCollider>();
-            boxCollider.Initialize(Vector3::One, Vector3::Zero);
-
-            auto& rigid = box.AddComponent<Rigidbody>();
-            rigid.Initialize(boxCollider, 1.0f);
-            rigid.SetIsContinuousDynamic(true);
-
-            box.AddComponent<RigidbodyController>();
+                auto& boxCollider = wall.AddComponent<BoxCollider>();
+                boxCollider.Initialize(transform.LocalScale, Vector3::Zero);
+                auto& collision = wall.AddComponent<CollisionObject>();
+                collision.Initialize(boxCollider);
+            }
         }
 
-        //for (size_t i = 0; i < 80; i++)
+        //auto& box = AddGameObject(make_unique<GameObject>("box"));
         //{
-        //    auto& box = AddGameObject(make_unique<GameObject>("box"));
         //    box.AddComponent<MeshRenderer>().Initialize(*meshBox, *blinnMaterial);
-        //    {
-        //        auto& transform = box.GetTransform();
-        //        //transform.LocalPosition = Vector3((i % 2) * 2.0f - 1.0f, 2.0f * i, 0.0f);
-        //        //transform.SetPosition(Vector3(sin(2.0f * Math::PI * i / 100.0f), 2.0f * i, 0.0f), false);
-        //        transform.SetPosition(Vector3(0, 2.0f * i, 0.0f), false);
+        //    auto& transform = box.GetTransform();
+        //    transform.LocalPosition = Vector3(0.0f, 10.0f, 0.0f);
 
-        //        auto& boxCollider = box.AddComponent<BoxCollider>();
-        //        auto& rigid = box.AddComponent<Rigidbody>();
-        //        rigid.Initialize(boxCollider, 1.0f);
-        //        rigid.SetIsContinuousDynamic(true);
-        //        rigid.SetFriction(1.5f);
-        //    }
+        //    auto& boxCollider = box.AddComponent<BoxCollider>();
+        //    boxCollider.Initialize(Vector3::One, Vector3::Zero);
+
+        //    auto& rigid = box.AddComponent<Rigidbody>();
+        //    rigid.Initialize(boxCollider, 1.0f);
+        //    rigid.SetIsContinuousDynamic(true);
+
+        //    box.AddComponent<RigidbodyController>();
         //}
 
-        Physics::SetDebugEnable(true);
+        auto& sphere = AddGameObject(make_unique<GameObject>("sphere"));
+        {
+            sphere.AddComponent<MeshRenderer>().Initialize(*meshBox, *blinnMaterial);
+            auto& transform = sphere.GetTransform();
+            transform.LocalPosition = Vector3(0.0f, 10.0f, 0.0f);
+
+            auto& sphereCollider = sphere.AddComponent<SphereCollider>();
+            sphereCollider.Initialize(0.5f, Vector3::Zero);
+
+            auto& rigid = sphere.AddComponent<Rigidbody>();
+            rigid.Initialize(sphereCollider, 1.0f);
+            rigid.SetIsContinuousDynamic(true);
+
+            sphere.AddComponent<RigidbodyController>();
+        }
+
+        for (size_t i = 0; i < 40; i++)
+        {
+            auto& box = AddGameObject(make_unique<GameObject>("box"));
+            box.AddComponent<MeshRenderer>().Initialize(*meshBox, *blinnMaterial);
+            {
+                auto& transform = box.GetTransform();
+                //transform.LocalPosition = Vector3((i % 2) * 2.0f - 1.0f, 2.0f * i, 0.0f);
+                //transform.SetPosition(Vector3(sin(2.0f * Math::PI * i / 100.0f), 2.0f * i, 0.0f), false);
+                transform.SetPosition(Vector3(sin(2.0f * Math::PI * i / 20.0f), 2.0f * i + 5.0f, sin(2.0f * Math::PI * i / 20.0f)), false);
+
+                auto& boxCollider = box.AddComponent<BoxCollider>();
+                auto& rigid = box.AddComponent<Rigidbody>();
+                rigid.Initialize(boxCollider, 1.0f);
+                rigid.SetIsContinuousDynamic(true);
+                rigid.SetFriction(1.5f);
+            }
+        }
+
+        for (size_t i = 0; i < 40; i++)
+        {
+            auto& sphere = AddGameObject(make_unique<GameObject>("sphere"));
+            sphere.AddComponent<MeshRenderer>().Initialize(*meshSphere, *blinnMaterial);
+            {
+                auto& transform = sphere.GetTransform();
+                //transform.LocalPosition = Vector3((i % 2) * 2.0f - 1.0f, 2.0f * i, 0.0f);
+                //transform.SetPosition(Vector3(sin(2.0f * Math::PI * i / 100.0f), 2.0f * i, 0.0f), false);
+                transform.SetPosition(Vector3(sin(-2.0f * Math::PI * i / 10.0f), 1.5f * i + 5.0f, sin(-2.0f * Math::PI * i / 10.0f)), false);
+
+                auto& sphereCollider = sphere.AddComponent<SphereCollider>();
+                //sphereCollider.Initialize(0.5f, Vector3::Zero);
+
+                auto& rigid = sphere.AddComponent<Rigidbody>();
+                rigid.Initialize(sphereCollider, 1.0f);
+                rigid.SetIsContinuousDynamic(true);
+                rigid.SetFriction(1.5f);
+            }
+        }
     }
 
 }

@@ -22,6 +22,7 @@
     <ClCompile Include="PointLightScene.cpp" />
     <ClCompile Include="PostProcess.cpp" />
     <ClCompile Include="ProjectSetting.cpp" />
+    <ClCompile Include="RayMarching.cpp" />
     <ClCompile Include="SampleScene.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
@@ -37,6 +38,7 @@
     <ClInclude Include="PointLightScene.h" />
     <ClInclude Include="PostProcess.h" />
     <ClInclude Include="ProjectSetting.h" />
+    <ClInclude Include="RayMarching.h" />
     <ClInclude Include="RigidbodyController.h" />
     <ClInclude Include="SampleScene.h" />
   </ItemGroup>

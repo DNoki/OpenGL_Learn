@@ -2,8 +2,15 @@
 
 #include "Mesh.h"
 
+#include "ModelImporter.h"
 #include "GameSystem.h"
 #include "Material.h"
+
+#include "Math.h"
+#include "Scene.h"
+#include "GameObject.h"
+#include "Renderer.h"
+
 
 namespace OpenGL_Core
 {
@@ -176,6 +183,11 @@ namespace OpenGL_Core
             mesh->uv.push_back(Vector2(0.0f, 1.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 1.0f));
             mesh->uv.push_back(Vector2(0.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(0.0f, 1.0f));
             mesh->uv.push_back(Vector2(0.0f, 1.0f)); mesh->uv.push_back(Vector2(1.0f, 0.0f)); mesh->uv.push_back(Vector2(1.0f, 1.0f));
+        }
+        else if (name == PresetMesh::SPHERE)
+        {
+            auto importer = ModelImporter::ModelLoad("../Asset/Model/Sphere.fbx");
+            mesh = move(importer->meshs[0]);
         }
 
         mesh->Complete();

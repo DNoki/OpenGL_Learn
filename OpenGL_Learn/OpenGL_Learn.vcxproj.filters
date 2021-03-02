@@ -57,6 +57,9 @@
     <ClCompile Include="pch.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="RayMarching.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraController.h">
@@ -96,6 +99,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="RigidbodyController.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RayMarching.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

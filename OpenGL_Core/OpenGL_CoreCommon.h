@@ -19,6 +19,7 @@
 #include "Renderer.h"
 #include "Rigidbody.h"
 #include "ScriptBehaviour.h"
+#include "SphereCollider.h"
 #include "Transform.h"
 
 #include "GameObject.h"

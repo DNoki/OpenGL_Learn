@@ -48,6 +48,10 @@ namespace OpenGL_Core
         /// 正方体
         /// </summary>
         BOX,
+        /// <summary>
+        /// 球体
+        /// </summary>
+        SPHERE,
     };
 
     class Mesh : public ResourceObject

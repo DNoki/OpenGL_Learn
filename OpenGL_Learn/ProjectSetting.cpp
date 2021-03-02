@@ -5,6 +5,7 @@
 #include "SampleScene.h"
 #include "PointLightScene.h"
 #include "PhysiceTestScene.h"
+#include "RayMarching.h"
 
 namespace OpenGL_Learn
 {
@@ -15,7 +16,7 @@ namespace OpenGL_Learn
         // 添加场景
         SceneManager::AddScene(make_unique<SampleScene>("SampleScene"));
         SceneManager::AddScene(make_unique<PhysiceTestScene>("PhysiceTestScene"));
-        SceneManager::AddScene(make_unique<PointLightScene>("PointLightScene"));
+        //SceneManager::AddScene(make_unique<RayMarching>("RayMarching"));
         SceneManager::SetStartupScene(0);
     }
 }
