@@ -1,6 +1,7 @@
 # OpenGL Learn
 
 这个项目主要用于个人学习 OpenGL、图形学与游戏开发。  
+可执行程序下载：<https://github.com/DNoki/OpenGL_Learn/releases>
 
 ***
 ### 目前主要已经实现了以下效果：
