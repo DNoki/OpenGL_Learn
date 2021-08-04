@@ -5,6 +5,7 @@
 #include "CameraController.h"
 #include "ConsoleBar.h"
 #include "RigidbodyController.h"
+#include "PostProcess.h"
 
 namespace OpenGL_Learn
 {
@@ -19,6 +20,13 @@ namespace OpenGL_Learn
             //camera.SetSkybox(skybox);
             camera.ClearFlags = CameraClearFlags::SKYBOX;
             camera.IsMSAA = true;
+
+            auto ColorBalance = AddResourceObject(make_unique<Shader>("ColorBalance Shader", "../Asset/Shader/Post/ColorBalance.glsl"));
+            ColorBalance->State.DepthTest = false;
+
+            auto& postProcess = cameraObj.AddComponent<PostProcess>();
+            postProcess.AddEffect(*AddResourceObject(
+                make_unique<Material>("ColorBalance Material", ColorBalance)));
         }
         cameraObj.AddComponent<CameraController>();
         cameraObj.GetTransform().SetPosition(Vector3(0.0f, 5.0f, 15.0f));

@@ -25,6 +25,7 @@
     <ClCompile Include="RayMarching.cpp" />
     <ClCompile Include="SampleScene.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ToonShaderTestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraController.h" />
@@ -41,6 +42,7 @@
     <ClInclude Include="RayMarching.h" />
     <ClInclude Include="RigidbodyController.h" />
     <ClInclude Include="SampleScene.h" />
+    <ClInclude Include="ToonShaderTestScene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

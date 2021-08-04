@@ -172,8 +172,8 @@ namespace OpenGL_Learn
         //displayNormalShader->SetFloat("_Magnitude", 0.05f);
         //auto displayNormalShaderMaterial = AddResourceObject(make_unique<Material>("displayNormalShader Material", displayNormalShader));
 
-        auto outlineShader = AddResourceObject(make_unique<Shader>("Display Normal Shader", "../Asset/Shader/Auxiliary/Outline.glsl"));
-        auto displayNormalShaderMaterial = AddResourceObject(make_unique<Material>("outlineShader Material", outlineShader));
+        //auto outlineShader = AddResourceObject(make_unique<Shader>("Display Normal Shader", "../Asset/Shader/Auxiliary/Outline.glsl"));
+        //auto displayNormalShaderMaterial = AddResourceObject(make_unique<Material>("outlineShader Material", outlineShader));
 
         auto& check = AddGameObject(make_unique<GameObject>("Check Box"));
         check.AddComponent<MeshRenderer>().Initialize(*meshBox, *unlitTexMaterial);
