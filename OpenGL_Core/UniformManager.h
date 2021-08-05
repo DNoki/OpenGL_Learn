@@ -36,6 +36,7 @@ namespace OpenGL_Core
         /// vec4 WorldSpaceLightPos; // 4N	4N // 平行光：（世界空间方向, 0）。其他光：（世界空间位置, 1）。
         /// mat4 LightMatrix; // 16N	8N // 世界到光的矩阵。用于采样Cookie和衰减纹理。
         /// float ShadowStrength; // N	24N // 阴影强度。
+        /// float Bias; // N	25N // 基准值偏移。
         /// vec4[4] PointLight4Pos; // 16N	28N // 点光源位置
         /// vec4[4] PointLight4Color; // 16N	44N // 点光源颜色
         /// vec4[POINT_LIGHTS_COUNT] PointLight4Info; // 16N 60N// 点光源衰减 C=1.0, L=x, Q=y 衰减强度 = 1.0 / (C + L * d + Q * d^2) ，点光源近裁面z，点光源远裁面w

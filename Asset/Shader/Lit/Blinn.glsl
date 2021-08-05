@@ -39,10 +39,11 @@ layout (std140) uniform LIGHTING_DATA
     vec4 WorldSpaceLightPos; // 平行光：（世界空间方向, 0）。其他光：（世界空间位置, 1）。
     mat4 LightMatrix; // 世界到光的矩阵。用于采样Cookie和衰减纹理。
     float ShadowStrength; // 阴影强度。
+    float Bias; // 基准值偏移
     // 前向渲染使用4个点光源
     vec4[POINT_LIGHTS_COUNT] PointLight4Pos; // 点光源位置
     vec4[POINT_LIGHTS_COUNT] PointLight4Color; // 点光源颜色
-    vec4[POINT_LIGHTS_COUNT] PointLight4Info; // 点光源衰减 C=1.0, L=x, Q=y 衰减强度 = 1.0 / (C + L * d + Q * d^2) ，点光源近裁面z，点光源远裁面w
+    vec4[POINT_LIGHTS_COUNT] PointLight4Info; // 点光源衰减 C=1.0, L=x, Q=y 衰减强度 = 1.0 / (C + L * d + Q * d^2) ，z=点光源阴影强度，w=点光源远裁面
 };
 
 void main()
@@ -91,10 +92,11 @@ layout (std140) uniform LIGHTING_DATA
     vec4 WorldSpaceLightPos; // 平行光：（世界空间方向, 0）。其他光：（世界空间位置, 1）。
     mat4 LightMatrix; // 世界到光的矩阵。用于采样Cookie和衰减纹理。
     float ShadowStrength; // 阴影强度。
+    float Bias; // 基准值偏移
     // 前向渲染使用4个点光源
     vec4[POINT_LIGHTS_COUNT] PointLight4Pos; // 点光源位置
     vec4[POINT_LIGHTS_COUNT] PointLight4Color; // 点光源颜色
-    vec4[POINT_LIGHTS_COUNT] PointLight4Info; // 点光源衰减 C=1.0, L=x, Q=y 衰减强度 = 1.0 / (C + L * d + Q * d^2) ，点光源近裁面z，点光源远裁面w
+    vec4[POINT_LIGHTS_COUNT] PointLight4Info; // 点光源衰减 C=1.0, L=x, Q=y 衰减强度 = 1.0 / (C + L * d + Q * d^2) ，z=点光源阴影强度，w=点光源远裁面
 };
 
 layout (std140) uniform TIME

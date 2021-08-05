@@ -130,7 +130,7 @@ namespace OpenGL_Learn
             ImGui::ColorEdit3("Light Color", &dirLight->LightColor.r, ImGuiColorEditFlags_HDR);
 
             ImGui::SliderFloat("Strength", &dirLight->ShadowStrength, 0.f, 1.f, "Strength:%.3f");
-            ImGui::SliderFloat("Bias", &dirLight->Bias, 0.f, 0.001f, "Bias:%.6f");
+            ImGui::SliderFloat("Bias", &dirLight->Bias, 0.f, 0.01f, "Bias:%.6f");
             ImGui::SliderFloat("NormalBias", &dirLight->NormalBias, 0.f, 3.f, "NormalBias:%.4f");
 
             ImGui::DragFloat("Shadow Distance", &dirLight->ShadowDistance);

@@ -46,10 +46,11 @@ layout (std140) uniform LIGHTING_DATA
     vec4 WorldSpaceLightPos; // 平行光：（世界空间方向, 0）。其他光：（世界空间位置, 1）。
     mat4 LightMatrix; // 世界到光的矩阵。用于采样Cookie和衰减纹理。
     float ShadowStrength; // 阴影强度。
+    float Bias; // 基准值偏移
     // 前向渲染使用4个点光源
     vec4[POINT_LIGHTS_COUNT] PointLight4Pos; // 点光源位置
     vec4[POINT_LIGHTS_COUNT] PointLight4Color; // 点光源颜色
-    vec4[POINT_LIGHTS_COUNT] PointLight4Info; // 点光源衰减 C=1.0, L=x, Q=y 衰减强度 = 1.0 / (C + L * d + Q * d^2) ，点光源近裁面z，点光源远裁面w
+    vec4[POINT_LIGHTS_COUNT] PointLight4Info; // 点光源衰减 C=1.0, L=x, Q=y 衰减强度 = 1.0 / (C + L * d + Q * d^2) ，z=点光源阴影强度，w=点光源远裁面
 };
 
 void main()
@@ -62,7 +63,7 @@ void main()
     
     f.localNormal = vec4(normal, 0.0f);
     f.localTangent = vec4(tangent, 0.0f);
-    //f.localTangent = normalize(T - dot(T, N) * N);
+    //f.localTangent = normalize(T - dot(T, N) * N); // 施密特正交化
     f.localBitangent = vec4(cross(tangent, normal), 0.0f);
     
 }
@@ -106,6 +107,7 @@ layout (std140) uniform LIGHTING_DATA
     vec4 WorldSpaceLightPos; // 平行光：（世界空间方向, 0）。其他光：（世界空间位置, 1）。
     mat4 LightMatrix; // 世界到光的矩阵。用于采样Cookie和衰减纹理。
     float ShadowStrength; // 阴影强度。
+    float Bias; // 基准值偏移
     // 前向渲染使用4个点光源
     vec4[POINT_LIGHTS_COUNT] PointLight4Pos; // 点光源位置
     vec4[POINT_LIGHTS_COUNT] PointLight4Color; // 点光源颜色
@@ -132,30 +134,14 @@ uniform float _NormalStrength;
 uniform sampler2D _ShadowMap;
 uniform samplerCube[POINT_LIGHTS_COUNT] _PointLight4ShadowMap;
 
+uniform int _PCFSample; // PCF半边采样数
 
-// float DirectionalLightShadowCalculation(vec4 lightSpacePosition)
-// {
-//     vec3 projCoords = lightSpacePosition.xyz / lightSpacePosition.w; // 执行透视除法
-//     if(projCoords.z > 1.0f) return 0.0f;
-//     projCoords = projCoords * 0.5f + 0.5f;
-//     float currentDepth = projCoords.z;
-    
-//     float shadow = 0.0;
-//     vec2 texelSize = 1.0 / textureSize(_ShadowMap, 0);
-//     for(int x = -1; x <= 1; ++x)
-//         for(int y = -1; y <= 1; ++y)
-//         {
-//             float pcfDepth = texture(_ShadowMap, projCoords.xy + vec2(x, y) * texelSize).r; 
-//             shadow += currentDepth > pcfDepth ? 0.0 : 1.0;
-//         }
-//     shadow /= 9.0;
-//     return shadow; // 深度：该像素不在阴影处返回1
-// }
 
 vec3 CalcDirectionalLight(vec3 normal, vec3 viewDir, vec3 lightDir, 
     vec3 lightColor, vec3 diffuseColor, vec3 specularColor)
 {
-    vec3 lambert = max((dot(normal, lightDir) + 1) * 0.5f, 0.0f) * diffuseColor;
+    vec3 lambert = max(dot(normal, lightDir), 0.0f) * diffuseColor;
+    // vec3 lambert = max((dot(normal, lightDir) + 1) * 0.5f, 0.0f) * diffuseColor;
     vec3 specular = pow(max(dot(viewDir, reflect(-lightDir, normal)), 0.0f), _Shininess) * specularColor;
     
     // 阴影
@@ -165,13 +151,16 @@ vec3 CalcDirectionalLight(vec3 normal, vec3 viewDir, vec3 lightDir,
     {
         projCoords = projCoords * 0.5f + 0.5f;
         vec2 texelSize = 1.0 / textureSize(_ShadowMap, 0);
-        for(int x = -1; x <= 1; ++x)
-            for(int y = -1; y <= 1; ++y)
+        int sampleCount = _PCFSample;
+        for(int x = -sampleCount; x <= sampleCount; ++x)
+            for(int y = -sampleCount; y <= sampleCount; ++y)
             {
-                float pcfDepth = texture(_ShadowMap, projCoords.xy + vec2(x, y) * texelSize).r; 
+                float pcfDepth = texture(_ShadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+                float bias = clamp(Bias * tan(acos(dot(normal, lightDir))), 0.0f, Bias);
+                pcfDepth += bias;
                 shadow += projCoords.z > pcfDepth ? 0.0 : 1.0;
             }
-        shadow /= 9.0; // 深度：该像素不在阴影处返回1
+        shadow /= pow(float(sampleCount * 2 + 1), 2); // 深度：该像素不在阴影处返回1
         shadow = max(shadow, 1.0 - ShadowStrength);
     }
     else shadow = 1.0;
@@ -221,10 +210,12 @@ void main()
     color += CalcPointLight(3, normal, viewDir, diffTexColor.rgb, specTexColor.rgb);
     
     FragColor = vec4(color, diffTexColor.a);
-    //FragColor = vec4(f.worldPosition.xyz, 1.0);
-    //FragColor = vec4(normal, diffTexColor.a);
-    //FragColor = vec4(vec3(attenuation), diffTexColor.a);
+    // FragColor = vec4(f.worldPosition.xyz, 1.0);
+    // FragColor = vec4(dirLightDir, diffTexColor.a);
+    // FragColor = vec4(f.localNormal.xyz, diffTexColor.a);
+    // FragColor = vec4(vec3(tan(acos(dot(normal, dirLightDir)))), diffTexColor.a);
     //FragColor = LightColor;
+    // FragColor = vec4(Bias);
 }
 _!GLSL_FragmentProgram_End
 }

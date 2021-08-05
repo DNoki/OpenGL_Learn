@@ -26,7 +26,7 @@ namespace OpenGL_Core
 	{
 		Transform = make_unique<UniformBufferObject>("TRANSFORM", 3 * sizeof(Matrix4x4), 0);
 		CameraData = make_unique<UniformBufferObject>("CAMERA_DATA", 3 * sizeof(Vector4), 1);
-		LightingData = make_unique<UniformBufferObject>("LIGHTING_DATA", 76 * sizeof(float), 2);
+		LightingData = make_unique<UniformBufferObject>("LIGHTING_DATA", 80 * sizeof(float), 2);
 		Time = make_unique<UniformBufferObject>("TIME", 1 * sizeof(Vector4), 3);
 	}
 

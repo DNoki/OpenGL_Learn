@@ -164,6 +164,8 @@ namespace OpenGL_Core
                         dirLight->GetLightSpaceMatrix(camera).GetPtr());
                     UniformManager::LightingData->SetSubData(24 * sizeof(float), sizeof(float),
                         &dirLight->ShadowStrength);
+                    UniformManager::LightingData->SetSubData(25 * sizeof(float), sizeof(float),
+                        &dirLight->Bias);
 
                     dirLight->RenderShadowMap(nullptr, &geometrys, nullptr, nullptr, nullptr);
                 }

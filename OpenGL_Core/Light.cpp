@@ -65,7 +65,7 @@ namespace OpenGL_Core
         glClear(GL_DEPTH_BUFFER_BIT);
         for (size_t i = 0; i < DirectionalLightShadowmapMaterial->GetPassCount(); i++)
         {
-            (*DirectionalLightShadowmapMaterial)[i]->SetFloat("_Bias", this->Bias * ShadowDistance);
+            //(*DirectionalLightShadowmapMaterial)[i]->SetFloat("_Bias", this->Bias * ShadowDistance);
             (*DirectionalLightShadowmapMaterial)[i]->SetFloat("_NormalBias", this->NormalBias);
         }
 
@@ -167,7 +167,7 @@ namespace OpenGL_Core
             PointLightShadowmapShader->HideFlag = HideFlagType::STATIC;
             PointLightShadowmapShader->State.DepthTestMode = TestModeType::LESS;
             PointLightShadowmapShader->State.CullFace = true;
-            PointLightShadowmapShader->State.CullFaceMode = CullFaceModeType::FRONT;
+            PointLightShadowmapShader->State.CullFaceMode = CullFaceModeType::BACK;
 
             PointLightShadowmapMaterial =
                 unique_ptr<Material>(new Material("PointLight ShadowMap Material", { PointLightShadowmapShader.get() }));
