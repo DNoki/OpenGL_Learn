@@ -13,13 +13,13 @@ layout (location = 1) in vec3 normal;
 //layout (location = 3) in vec3 color;
 //layout (location = 4) in vec2 texCoord;
 
-out v2f
-{
+// out v2f
+// {
     //vec4 WorldSpacePosition;
-    vec3 WorldSpaceNormal;
+    // vec3 WorldSpaceNormal;
     //vec2 uv;
-    vec4 LightSpacePosition;
-} f;
+    // vec4 LightSpacePosition;
+// } f;
 
 layout (std140) uniform TRANSFORM
 {
@@ -46,9 +46,9 @@ uniform float _NormalBias;
 
 void main()
 {
-    f.WorldSpaceNormal = transpose(inverse(mat3(Matrix_M))) * normal;
+    // f.WorldSpaceNormal = transpose(inverse(mat3(Matrix_M))) * normal;
     vec4 worldPos = Matrix_M * vec4(position, 1.0f);
-    worldPos.xyz = worldPos.xyz - normalize(f.WorldSpaceNormal) * _NormalBias;
+    // worldPos.xyz = worldPos.xyz - normalize(f.WorldSpaceNormal) * _NormalBias;
     gl_Position = LightMatrix * worldPos;
 }
 _!GLSL_VertexProgram_End
@@ -57,13 +57,13 @@ _!GLSL_VertexProgram_End
 {_!GLSL_FragmentProgram_Start
 #version 330 core
 
-in v2f
-{
+// in v2f
+// {
     //vec4 WorldSpacePosition;
-    vec3 WorldSpaceNormal;
+    // vec3 WorldSpaceNormal;
     //vec2 uv;
-    vec4 LightSpacePosition;
-} f;
+    // vec4 LightSpacePosition;
+// } f;
 
 #define POINT_LIGHTS_COUNT 4
 layout (std140) uniform LIGHTING_DATA
@@ -83,8 +83,8 @@ uniform float _Bias; // 基准值偏移
 
 void main()
 {
-    vec3 normal = normalize(f.WorldSpaceNormal);
-    vec3 lightDir = normalize(WorldSpaceLightPos.xyz);
+    // vec3 normal = normalize(f.WorldSpaceNormal);
+    // vec3 lightDir = normalize(WorldSpaceLightPos.xyz);
     
     // 根据法线方向调整偏移
     // float bias = max(10.0f * _Bias * (1.0f - dot(normal, lightDir)), _Bias); // 微调需要在表面着色中实现

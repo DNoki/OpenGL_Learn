@@ -53,27 +53,27 @@ namespace OpenGL_Learn
 
         // 天空盒
         Skybox* skybox = nullptr;
-        {
-            auto faces = List<string>(
-                {
-                    "../Asset/Skybox/right.jpg",
-                    "../Asset/Skybox/left.jpg",
-                    "../Asset/Skybox/top.jpg",
-                    "../Asset/Skybox/bottom.jpg",
-                    "../Asset/Skybox/front.jpg",
-                    "../Asset/Skybox/back.jpg"
-                });
-            auto skyboxTexture = AddResourceObject(TextureCube::CreateTextureCube("Cube_SkyCube", faces, true,
-                WrapType::CLAMP_TO_EDGE, ScaleFilterType::LINEAR, false));
+        //{
+        //    auto faces = List<string>(
+        //        {
+        //            "../Asset/Skybox/right.jpg",
+        //            "../Asset/Skybox/left.jpg",
+        //            "../Asset/Skybox/top.jpg",
+        //            "../Asset/Skybox/bottom.jpg",
+        //            "../Asset/Skybox/front.jpg",
+        //            "../Asset/Skybox/back.jpg"
+        //        });
+        //    auto skyboxTexture = AddResourceObject(TextureCube::CreateTextureCube("Cube_SkyCube", faces, true,
+        //        WrapType::CLAMP_TO_EDGE, ScaleFilterType::LINEAR, false));
 
-            auto skyboxShader = AddResourceObject(make_unique<Shader>("Skybox Shader", "../Asset/Shader/Skybox.glsl"));
-            skyboxShader->BindTexture(*skyboxTexture, "_CubeTexture", 0);
-            skyboxShader->State.DepthTestMode = TestModeType::LEQUAL;
-            skyboxShader->State.DepthMask = false;
-            skyboxShader->State.CullFaceMode = CullFaceModeType::FRONT;
-            auto skyboxMaterial = AddResourceObject(make_unique<Material>("Skybox Material", skyboxShader));
-            skybox = AddResourceObject(make_unique<Skybox>("天空盒", skyboxMaterial));
-        }
+        //    auto skyboxShader = AddResourceObject(make_unique<Shader>("Skybox Shader", "../Asset/Shader/Skybox.glsl"));
+        //    skyboxShader->BindTexture(*skyboxTexture, "_CubeTexture", 0);
+        //    skyboxShader->State.DepthTestMode = TestModeType::LEQUAL;
+        //    skyboxShader->State.DepthMask = false;
+        //    skyboxShader->State.CullFaceMode = CullFaceModeType::FRONT;
+        //    auto skyboxMaterial = AddResourceObject(make_unique<Material>("Skybox Material", skyboxShader));
+        //    skybox = AddResourceObject(make_unique<Skybox>("天空盒", skyboxMaterial));
+        //}
 
         // 相机
         auto& cameraObj = AddGameObject(make_unique<GameObject>("Camera Object"));

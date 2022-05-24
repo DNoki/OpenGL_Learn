@@ -134,6 +134,7 @@ uniform float _NormalStrength;
 uniform sampler2D _ShadowMap;
 uniform samplerCube[POINT_LIGHTS_COUNT] _PointLight4ShadowMap;
 
+uniform float _PCFLightSize;
 uniform int _PCFSample; // PCF半边采样数
 
 
@@ -146,18 +147,20 @@ vec3 CalcDirectionalLight(vec3 normal, vec3 viewDir, vec3 lightDir,
     
     // 阴影
     float shadow = 0.0;
+    // 计算光源空间的投影坐标
     vec3 projCoords = f.lightSpacePosition.xyz / f.lightSpacePosition.w; // 执行透视除法
     if(projCoords.z <= 1.0f) 
     {
+        // 由于NDC坐标范围是[-1, 1]，需要转化为[0, 1]
         projCoords = projCoords * 0.5f + 0.5f;
         vec2 texelSize = 1.0 / textureSize(_ShadowMap, 0);
+        float bias = clamp(Bias * tan(acos(max(dot(normal, lightDir), 0))), 0.0f, Bias);
+
         int sampleCount = _PCFSample;
         for(int x = -sampleCount; x <= sampleCount; ++x)
             for(int y = -sampleCount; y <= sampleCount; ++y)
             {
-                float pcfDepth = texture(_ShadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
-                float bias = clamp(Bias * tan(acos(dot(normal, lightDir))), 0.0f, Bias);
-                pcfDepth += bias;
+                float pcfDepth = texture(_ShadowMap, projCoords.xy + vec2(x, y) * texelSize).r + bias;
                 shadow += projCoords.z > pcfDepth ? 0.0 : 1.0;
             }
         shadow /= pow(float(sampleCount * 2 + 1), 2); // 深度：该像素不在阴影处返回1
